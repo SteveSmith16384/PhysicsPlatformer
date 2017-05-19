@@ -2,7 +2,7 @@ package krakatoa;
 
 import java.awt.Color;
 
-public class MyUserData {
+public class MyUserData { // For attaching to bodies
 	
 	public enum Type {Player, Crate, Floor, Rock, Rope, StickyRope, Tanker};
 	

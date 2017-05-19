@@ -12,6 +12,10 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import krakatoa.entity.Entity;
+import krakatoa.entity.components.IDrawable;
+import krakatoa.entity.systems.DrawingSystem;
+
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
@@ -26,15 +30,8 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
-/*
- * TODO:-
- * Raise/lower rope
- * Add body to tanker shape 
- * Locate volcano and launch rocks
- * Rocket attacks
- * Shooting
- * Use polygons for map to give map angled edges
- */
+import ssmith.util.TSArrayList;
+
 public class Main extends JFrame implements IObjectList, KeyListener, ContactListener {
 
 	private static final long serialVersionUID = 1L;
@@ -52,8 +49,7 @@ public class Main extends JFrame implements IObjectList, KeyListener, ContactLis
 	private static final int WORLD_HEIGHT_LOGICAL = WINDOW_HEIGHT / WORLD_TO_PIXELS;
 
 	private BufferStrategy BS;
-	private List<Body> objects = new ArrayList<Body>();
-	private List<Body> objects_to_remove = new ArrayList<Body>();
+	private TSArrayList<Entity> objects = new TSArrayList<Entity>();
 	private World world;
 	private boolean keys[] = new boolean[256];
 	private Body chopper;
@@ -61,7 +57,8 @@ public class Main extends JFrame implements IObjectList, KeyListener, ContactLis
 	//private List<RevoluteJointDef> waiting = new ArrayList<RevoluteJointDef>();
 	private List<RevoluteJointDef> ropelist;
 	private int rope_length;
-
+	private DrawingSystem drawingSystem;
+	
 	private static final Random rnd = new Random();
 
 	public static void main(String[] args) {
@@ -82,6 +79,8 @@ public class Main extends JFrame implements IObjectList, KeyListener, ContactLis
 
 
 	private void start() {
+		drawingSystem = new DrawingSystem();
+		
 		Vec2 gravity = new Vec2(0f, 10.0f);
 		world = new World(gravity);
 
@@ -99,6 +98,18 @@ public class Main extends JFrame implements IObjectList, KeyListener, ContactLis
 
 		long rock_counter = 1000;
 		while (true) {
+			
+			Graphics g = BS.getDrawGraphics();
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, 800, 600);
+
+			for (Entity e : this.objects) {
+				if (e instanceof IDrawable) {
+					IDrawable id = (IDrawable)e;
+					drawingSystem.process(g, id);
+				}
+			}
+			
 			//p("Applying force: " + chopper.body.getAngle());
 			if (keys[KeyEvent.VK_UP]) {
 				Vec2 force = new Vec2();
@@ -129,14 +140,11 @@ public class Main extends JFrame implements IObjectList, KeyListener, ContactLis
 				world.createJoint(wjd);
 			}
 			
-			while (objects_to_remove.size() > 0) {
+			/*while (objects_to_remove.size() > 0) {
 				Body b = objects_to_remove.get(0);
 				this.remove(b);
-			}
-
-			Graphics g = BS.getDrawGraphics();
-			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, 800, 600);
+			}*/
+			this.objects.refresh();
 
 			// do stuff
 			Vec2 cam_centre = this.chopper.getWorldCenter().clone();
@@ -370,13 +378,7 @@ public class Main extends JFrame implements IObjectList, KeyListener, ContactLis
 					p("BeginContact A:" + ba.getUserData());
 					p("BeginContact B:" + bb.getUserData());
 					if (ba_ud.type == MyUserData.Type.Crate) {
-						objects_to_remove.add(ba);
-						//this.remove(ba);
-						//this.world.desroyBody(ba);
-					} else {
-						objects_to_remove.add(ba);
-						//this.remove(bb);
-						//this.world.destroyBody(bb);
+						this.objects.remove(ba);
 					}
 				}
 			}
