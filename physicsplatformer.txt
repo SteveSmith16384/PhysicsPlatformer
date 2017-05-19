@@ -1,0 +1,7 @@
+Use csv
+Barrels rolling down
+Ladders
+Get to exit
+Crates floating in water
+Trampoline
+Avoid lava
