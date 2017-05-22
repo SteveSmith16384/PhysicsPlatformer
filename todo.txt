@@ -1,8 +1,8 @@
 TODO
-Rename packages
-Separate out JFrame
+Load map from csv
 
-Use csv
+
+LATER
 Barrels rolling down
 Ladders
 Get to exit
@@ -10,3 +10,10 @@ Crates floating in water
 Trampoline
 Avoid lava
 Wind
+Bridge the wobbles
+
+
+
+GAMEPLAY
+Build up momentum
+Push each other into harms way
