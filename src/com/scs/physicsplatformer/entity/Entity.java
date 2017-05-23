@@ -1,6 +1,6 @@
 package com.scs.physicsplatformer.entity;
-/*
-public class Entity { // todo - deloete this?
+
+public class Entity { 
 	
 	public int id;
 	private static int next_id = 0;
@@ -10,4 +10,3 @@ public class Entity { // todo - deloete this?
 	}
 
 }
-*/

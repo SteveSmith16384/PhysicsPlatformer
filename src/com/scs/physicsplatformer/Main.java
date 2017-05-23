@@ -15,9 +15,8 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
-import ssmith.util.TSArrayList;
-
 import com.scs.physicsplatformer.entity.DrawableBody;
+import com.scs.physicsplatformer.entity.Entity;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IPlayerControllable;
@@ -28,11 +27,13 @@ import com.scs.physicsplatformer.input.DeviceThread;
 import com.scs.physicsplatformer.input.IInputDevice;
 import com.scs.physicsplatformer.input.NewControllerListener;
 
+import ssmith.util.TSArrayList;
+
 public class Main implements ContactListener, NewControllerListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private TSArrayList<Object> objects = new TSArrayList<Object>();
+	private TSArrayList<Entity> objects = new TSArrayList<Entity>();
 	private World world;
 	private List<RevoluteJointDef> new_joints_waiting = new ArrayList<RevoluteJointDef>(); // todo - rename
 	private List<RevoluteJointDef> ropelist;
@@ -378,14 +379,14 @@ public class Main implements ContactListener, NewControllerListener {
 		BodyUserData bud = new BodyUserData("Player", BodyUserData.Type.Player, Color.black);
 		Body body = JBox2DFunctions.AddRectangle(bud, world, 50, 10, 10, 4, BodyType.DYNAMIC, .2f, .2f, .4f);
 		DrawableBody b = new DrawableBody(body);
-		this.addEntity(b);
+		//this.addEntity(b);
 
 		PlayersAvatar avatar = new PlayersAvatar(input, b);
 		synchronized (avatars) {
 			this.avatars.add(avatar);
 		}
 
-		this.addEntity(b);
+		this.addEntity(avatar);
 	}
 
 
