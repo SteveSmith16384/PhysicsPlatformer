@@ -8,14 +8,6 @@ public interface IInputDevice {
 	
 	boolean isJumpPressed();
 
-	/*boolean isUpPressed();
-	
-	boolean isDownPressed();*/
-	
 	float getStickDistance();
 	
-	/*boolean isThrowPressed();
-	
-	int getAngle();*/
-
 }

@@ -127,7 +127,6 @@ public class FilledPolygons extends JFrame implements ContactListener {
 			try {
 				Thread.sleep(1000/FPS);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -165,7 +164,6 @@ public class FilledPolygons extends JFrame implements ContactListener {
 		
 		/*Vec2 prev = shape.getVertex(shape.getVertexCount()-1);
 		for (int i=0 ; i<shape.getVertexCount() ; i++) {
-			// todo - only convert once
 			int x1 = (int)(b.getWorldPoint(prev).x*WORLD_TO_PIXELS);
 			int y1 = (int)(b.getWorldPoint(prev).y*WORLD_TO_PIXELS);
 			Vec2 v = shape.getVertex(i);
@@ -200,14 +198,12 @@ public class FilledPolygons extends JFrame implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		// TODO Auto-generated method stub
 
 	}
 

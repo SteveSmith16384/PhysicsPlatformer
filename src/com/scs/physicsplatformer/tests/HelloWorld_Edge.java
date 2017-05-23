@@ -131,7 +131,6 @@ public class HelloWorld_Edge extends JFrame implements ContactListener {
 			try {
 				Thread.sleep(1000/FPS);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -2,9 +2,6 @@ package com.scs.physicsplatformer.entity.components;
 
 public interface IPlayerControllable {
 
-	void process();
+	void processInput();
 	
-/*	void leftPressed();
-
-	void rightPressed();*/
 }

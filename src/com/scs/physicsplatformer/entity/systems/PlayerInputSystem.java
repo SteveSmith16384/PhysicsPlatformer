@@ -8,8 +8,9 @@ public class PlayerInputSystem {
 	}
 
 
-	public void process(IPlayerControllable chopper) {
-		chopper.process();
+	public void process(IPlayerControllable avatar) {
+		avatar.processInput();
+		
 		//p("Applying force: " + chopper.body.getAngle());
 		/*if (keys[KeyEvent.VK_UP]) {
 			Vec2 force = new Vec2();

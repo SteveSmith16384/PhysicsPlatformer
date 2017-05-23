@@ -15,10 +15,11 @@ import org.jbox2d.particle.ParticleType;
 
 public class JBox2DFunctions {
 
-	public static Body AddCircle(Object name, World world, float centre_x, float centre_y, float rad, float weight_kgm2, float friction, float restitution) {
+	public static Body AddCircle(BodyUserData name, World world, float centre_x, float centre_y, float rad, 
+			BodyType bodytype, float restitution, float friction, float weight_kgm2) {
 		BodyDef bd = new BodyDef();
 		bd.position.set(centre_x, centre_y);  
-		bd.type = BodyType.DYNAMIC;
+		bd.type = bodytype; //BodyType.DYNAMIC;
 		bd.userData = name;
 
 		CircleShape cs = new CircleShape();
@@ -45,20 +46,20 @@ public class JBox2DFunctions {
 	}
 	
 	
-	public static Body AddRectangle(BodyUserData name, World world, float centre_x, float centre_y, float width, float height, BodyType bodytype, float restitution, float friction, float weight_kgm2) {
+	public static Body AddRectangle(BodyUserData name, World world, float centre_x, float centre_y, float width, float height, 
+			BodyType bodytype, float restitution, float friction, float weight_kgm2) {
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(width/2,height/2);
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = ps;
 		fd.restitution = restitution;
-		fd.density = weight_kgm2;//2f; // Weight kg/m2
+		fd.density = weight_kgm2;
 		fd.friction = friction;
 
 		BodyDef bd = new BodyDef();
 		bd.type = bodytype;//BodyType.STATIC;
-		bd.position= new Vec2(centre_x, centre_y);//HEIGHT);//-10f);
-		//bd.userData = name + "_BodyDef";
+		bd.position= new Vec2(centre_x, centre_y);
 
 		Body b = world.createBody(bd);
 		b.createFixture(fd);
@@ -69,14 +70,14 @@ public class JBox2DFunctions {
 
 
 	public static Body AddEdgeShapeByMiddle(World world, float x1, float y1, float x2, float y2, BodyType bodyType, 
-			float density, float restitution, float friction){
+			float restitution, float friction, float weight_kgm2) {
 		Vec2 centre = new Vec2((x1+x2)/2, (y1+y2)/2);
 		EdgeShape es=new EdgeShape();
 		//SETTING THE POINTS AS OFFSET DISTANCE FROM CENTER
 		es.set(new Vec2(x1-centre.x, y1-centre.y), new Vec2(x2-centre.x, y2-centre.y));
 
 		FixtureDef fixtureDef=new FixtureDef();
-		fixtureDef.density=density;
+		fixtureDef.density=weight_kgm2;
 		fixtureDef.restitution=restitution;
 		fixtureDef.friction=friction;
 		fixtureDef.shape=es;
@@ -93,13 +94,13 @@ public class JBox2DFunctions {
 	}
 
 
-	public static Body AddEdgeShapeByTL(World world, Object name, float x1, float y1, float x2, float y2, 
-			BodyType bodyType, float restitution, float friction) {
+	public static Body AddEdgeShapeByTL(World world, BodyUserData name, float x1, float y1, float x2, float y2, 
+			BodyType bodyType, float restitution, float friction, float weight_kgm2) {
 		EdgeShape es=new EdgeShape();
 		es.set(new Vec2(0, 0), new Vec2(x2-x1, y2-y1));
 
 		FixtureDef fixtureDef=new FixtureDef();
-		fixtureDef.density=1;
+		fixtureDef.density=weight_kgm2;
 		fixtureDef.restitution = restitution;//0.4f;
 		fixtureDef.friction = friction;
 		fixtureDef.shape = es;
@@ -107,7 +108,6 @@ public class JBox2DFunctions {
 		BodyDef bd = new BodyDef();
 		bd.type = bodyType;
 		bd.position= new Vec2(x1, y1);
-		//bd.userData = name + "_BodyDef";
 
 		Body b = world.createBody(bd);
 		b.createFixture(fixtureDef);
@@ -116,14 +116,14 @@ public class JBox2DFunctions {
 	}
 
 
-	public static Body AddChainShape(World world, Object name, float x, float y, Vec2 vertices[], 
-			BodyType bodyType, float restitution, float friction) {
+	public static Body AddChainShape(World world, BodyUserData name, float x, float y, Vec2 vertices[], 
+			BodyType bodyType, float restitution, float friction, float weight_kgm2) {
 		
 		ChainShape es = new ChainShape();
 		es.createChain(vertices, vertices.length);
 
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.density=1;
+		fixtureDef.density=weight_kgm2;
 		fixtureDef.restitution = restitution;//0.4f;
 		fixtureDef.friction = friction;//0.4f;
 		fixtureDef.shape = es;

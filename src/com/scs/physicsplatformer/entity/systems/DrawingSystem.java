@@ -29,11 +29,12 @@ public class DrawingSystem {
 	
 	private Point getPixelPos(Vec2 worldpos, Vec2 cam_centre) { // todo - pass Point, don't create each time
 		//Vec2 worldpos = b.getWorldPoint(v);
-		int x1 = (int)((worldpos.x * Statics.LOGICAL_TO_PIXELS)-cam_centre.x);
-		int y1 = (int)((worldpos.y * Statics.LOGICAL_TO_PIXELS)-cam_centre.y);
+		int x1 = (int)((worldpos.x * Statics.LOGICAL_TO_PIXELS)-cam_centre.x + (Statics.WINDOW_WIDTH/2));
+		int y1 = (int)((worldpos.y * Statics.LOGICAL_TO_PIXELS)-cam_centre.y + (Statics.WINDOW_HEIGHT/2));
 		return new Point(x1, y1);
 	}
 
+	
 	public void drawShape(Graphics g, Body b, Vec2 cam_centre) {
 		BodyUserData userdata = (BodyUserData)b.getUserData();
 		if (userdata != null) {
@@ -46,10 +47,6 @@ public class DrawingSystem {
 			PolygonShape shape = (PolygonShape)b.getFixtureList().getShape();
 			for (int i=0 ; i<shape.getVertexCount() ; i++) {
 				Vec2 v = shape.getVertex(i);
-				/*Vec2 worldpos = b.getWorldPoint(v);
-				int x1 = (int)((worldpos.x-cam_centre.x)*Statics.WORLD_TO_PIXELS);
-				int y1 = (int)((worldpos.y-cam_centre.y)*Statics.WORLD_TO_PIXELS);
-				p.addPoint(x1, y1);*/
 				Point p2 = getPixelPos(b.getWorldPoint(v), cam_centre);
 				polygon.addPoint(p2.x, p2.y);
 			}
@@ -92,11 +89,9 @@ public class DrawingSystem {
 		} else if (b.getFixtureList().getShape() instanceof CircleShape) {
 			CircleShape shape2 = (CircleShape)b.getFixtureList().getShape();
 			Vec2 worldpos = b.getPosition();//b.getWorldPoint(b.getPosition());
-			//int x = (int)(((worldpos.x-cam_centre.x)-shape2.getRadius()) * Statics.WORLD_TO_PIXELS);
-			//int y = (int)(((worldpos.y-cam_centre.y)-shape2.getRadius()) * Statics.WORLD_TO_PIXELS);
 			Point p2 = getPixelPos(worldpos, cam_centre);
-			int h = (int)(shape2.getRadius()*2 * Statics.LOGICAL_TO_PIXELS);
-			g.fillOval(p2.x, p2.y, h, h);
+			int diam = (int)(shape2.getRadius()*2 * Statics.LOGICAL_TO_PIXELS);
+			g.fillOval((int)(p2.x-(shape2.getRadius() * Statics.LOGICAL_TO_PIXELS)), (int)(p2.y-(shape2.getRadius() * Statics.LOGICAL_TO_PIXELS)), diam, diam);
 			
 		} else {
 			throw new RuntimeException("Cannot draw " + b);

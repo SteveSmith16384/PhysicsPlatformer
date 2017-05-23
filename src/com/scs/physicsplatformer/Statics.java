@@ -2,15 +2,19 @@ package com.scs.physicsplatformer;
 
 import java.util.Random;
 
+import org.jbox2d.common.Vec2;
+
 public class Statics {
 
 	public static final boolean DEBUG = true;
 	
+	public static final float PLAYER_WIDTH = 100f;
+	public static final float PLAYER_FORCE = .2f; // 100f;
+	
 	public static final int FPS = 30;
-	public static final int LOGICAL_TO_PIXELS = 10; // todo - rename to LOGICAL_TO_PIXELS
-	public static final float TURN_TORQUE = 80*3f;
-	public static final float ROTOR_FORCE = 80*5f;
+	public static final int LOGICAL_TO_PIXELS = 10;
 	public static final int MAX_ROPE_LENGTH = 8;
+	public static final Vec2 VEC_CENTRE = new Vec2(0, 0);
 
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;

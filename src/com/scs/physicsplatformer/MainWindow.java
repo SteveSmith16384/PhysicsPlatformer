@@ -4,10 +4,9 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-public class MainWindow extends JFrame {//implements KeyListener {
+public class MainWindow extends JFrame {
 
 	public BufferStrategy BS;
-//	private boolean keys[] = new boolean[256];
 
 	public MainWindow() {
 		this.setSize(Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
@@ -18,27 +17,6 @@ public class MainWindow extends JFrame {//implements KeyListener {
 		this.createBufferStrategy(2);
 		BS = this.getBufferStrategy();
 	}
-
-/*
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		keys[arg0.getKeyCode()] = true;
-
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		keys[arg0.getKeyCode()] = false;
-
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}*/
 
 
 }
