@@ -15,22 +15,19 @@ import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class Barrel extends Entity implements IDrawable {
 
-	private Body drawableBody;
+	private Body body;
 	
 	public Barrel(World world, float x, float y, float rad) {
 		super();
 		
-		BodyUserData bud = new BodyUserData("Crate", BodyUserData.Type.Crate, Color.yellow, this);
-		drawableBody = JBox2DFunctions.AddCircle(bud, world, x, y, rad, BodyType.DYNAMIC, .1f, .2f, 1f);
-		//drawableBody = new DrawableBody(crate);
-		
+		BodyUserData bud = new BodyUserData("Crate", BodyUserData.Type.Crate, Color.yellow, this, true);
+		body = JBox2DFunctions.AddCircle(bud, world, x, y, rad, BodyType.DYNAMIC, .1f, .2f, 1f);
 	}
 
 
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
-		system.drawShape(g, drawableBody, cam_centre);
-		//drawableBody.draw(g, system, cam_centre);
+		system.drawShape(g, body, cam_centre);
 		
 	}
 	

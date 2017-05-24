@@ -16,10 +16,12 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 import ssmith.util.TSArrayList;
 
+import com.scs.physicsplatformer.entity.Barrel;
 import com.scs.physicsplatformer.entity.Crate;
 import com.scs.physicsplatformer.entity.Enemy;
 import com.scs.physicsplatformer.entity.Entity;
 import com.scs.physicsplatformer.entity.Ground;
+import com.scs.physicsplatformer.entity.MovingPlatform;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 import com.scs.physicsplatformer.entity.Trampoline;
 import com.scs.physicsplatformer.entity.components.ICollideable;
@@ -79,7 +81,7 @@ public class Main implements ContactListener, NewControllerListener {
 
 		world.setContactListener(this);
 
-		createObjects();
+		createWorld();
 		gameLoop();
 	}
 
@@ -98,6 +100,14 @@ public class Main implements ContactListener, NewControllerListener {
 				}
 			}
 
+			// Preprocess
+			for (Entity e : this.entities) {
+				if (e instanceof IProcessable) {
+					IProcessable id = (IProcessable)e;
+					id.preprocess();
+				}
+			}
+
 			Graphics g = window.BS.getDrawGraphics();
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, 800, 600);
@@ -107,10 +117,6 @@ public class Main implements ContactListener, NewControllerListener {
 				if (e instanceof IPlayerControllable) {
 					IPlayerControllable id = (IPlayerControllable)e;
 					this.playerInputSystem.process(id);
-				}
-				if (e instanceof IProcessable) {
-					IProcessable id = (IProcessable)e;
-					id.process();
 				}
 			}
 
@@ -136,8 +142,11 @@ public class Main implements ContactListener, NewControllerListener {
 			for (Entity e : this.entities) {
 				if (e instanceof IDrawable) {
 					IDrawable sprite = (IDrawable)e;
-					//drawingSystem.process(g, sprite, cam_centre);
 					sprite.draw(g, drawingSystem, cam_centre);
+				}
+				if (e instanceof IProcessable) {
+					IProcessable id = (IProcessable)e;
+					id.postprocess();
 				}
 			}
 
@@ -147,7 +156,6 @@ public class Main implements ContactListener, NewControllerListener {
 			}*/
 
 			this.entities.refresh();
-
 
 			//DrawParticles(g, world, cam_centre);
 
@@ -163,13 +171,23 @@ public class Main implements ContactListener, NewControllerListener {
 	}
 
 
-	private void createObjects() {
-		/*BodyUserData bud = new BodyUserData("Ground", BodyUserData.Type.Floor, Color.green);
-		Body ground = JBox2DFunctions.AddRectangle(bud, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-3, Statics.WORLD_WIDTH_LOGICAL, 3, 
-				BodyType.STATIC, .1f, .1f, 0.8f);
-		DrawableBody bd = new DrawableBody(ground);*/
+	private void createWorld() {
 		Ground ground = new Ground(world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-1, Statics.WORLD_WIDTH_LOGICAL, 1);
 		this.addEntity(ground);
+
+		Ground ceiling = new Ground(world, Statics.WORLD_WIDTH_LOGICAL/2, 1, Statics.WORLD_WIDTH_LOGICAL, 1);
+		this.addEntity(ceiling);
+
+		Vec2[] vertices = new Vec2[4];
+		vertices[0] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_HEIGHT_LOGICAL*.5f);
+		vertices[1] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.75f, Statics.WORLD_HEIGHT_LOGICAL*.6f);
+		vertices[2] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.75f, Statics.WORLD_HEIGHT_LOGICAL*.7f);
+		vertices[3] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_HEIGHT_LOGICAL*.6f);
+		Ground ground2 = new Ground(world, vertices);
+		this.addEntity(ground2);
+		
+		Barrel barrel = new Barrel(world, Statics.WORLD_WIDTH_LOGICAL*.3f, Statics.WORLD_HEIGHT_LOGICAL*.4f, 1f);
+		this.addEntity(barrel);
 
 		Ground leftWall = new Ground(world, .5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
 		this.addEntity(leftWall);
@@ -182,67 +200,19 @@ public class Main implements ContactListener, NewControllerListener {
 
 		Enemy enemy = new Enemy(world, Statics.WORLD_WIDTH_LOGICAL * .75f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, 1);
 		this.addEntity(enemy);
-
-		/*chopper = JBox2DFunctions.AddRectangle("Chopper", world, 50, 10, 10, 4, BodyType.DYNAMIC, .2f, .2f, .4f);
-		chopper.setUserData(new MyUserData("Player", MyUserData.Type.Player, Color.black));
-		this.objects.add(chopper);
-		 */
+		
+		MovingPlatform moving = new MovingPlatform(world, Statics.WORLD_WIDTH_LOGICAL * .5f, Statics.WORLD_HEIGHT_LOGICAL*.8f, 3, 1);
+		this.addEntity(moving);
 
 		/*JBox2DFunctions.AddRopeShape(new MyUserData("Rope", MyUserData.Type.Rope, Color.yellow),
 				new MyUserData("Rope_End", MyUserData.Type.StickyRope, Color.yellow),
 						world, this, chopper, 8, 10);
 		 */
 
-		// Create floor
-		/*int land_data[]   = {2,2,4,6,5,5,5,4,4,4,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,5,7,9,9,9,8,6,7,4,4,3,3,4,5,6,4,2,2,2};
-		int object_data[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-		int NUM = land_data.length;
-		final int len = Statics.WORLD_WIDTH_LOGICAL/NUM;
-		float prev_y = 0;
-		float width = 0;
-		float last_x = 0;
-		for (int i=0 ; i<NUM ; i++) {
-			float act_y = ((land_data[i]/10f)*Statics.WORLD_HEIGHT_LOGICAL);
-			if (prev_y != act_y) {
-				float x = last_x;
-				float y = Statics.WORLD_HEIGHT_LOGICAL-prev_y;
-				BodyUserData bud = new BodyUserData("Floor", BodyUserData.Type.Floor, Color.green);
-				Body body = JBox2DFunctions.AddRectangleTL(bud, world, x, y, width, 20f, BodyType.STATIC, .1f, .2f, 0.8f);
-				//p("x, y = " + i + ": " + x + "," + y);
-				DrawableBody db = new DrawableBody(body, bud);
-				this.addEntity(db);
-
-				last_x = last_x + width;
-				width = len;
-			} else {
-				width += len;
-			}
-			prev_y = act_y;
-		}*/
-
-		// create edges
-		/*Body left_wall = JBox2DFunctions.AddEdgeShapeByTL(world, new BodyUserData("Edge", BodyUserData.Type.Floor, Color.black), 
-				0, -Statics.WORLD_HEIGHT_LOGICAL, 0, Statics.WORLD_HEIGHT_LOGICAL*2, BodyType.STATIC, 
-				0.1f, 0f);
-		DrawableBody db = new DrawableBody(left_wall);
-		this.objects.add(db);
-
-		Body right_wall = JBox2DFunctions.AddEdgeShapeByTL(world, new BodyUserData("Edge", BodyUserData.Type.Floor, Color.black), 
-				Statics.WORLD_WIDTH_LOGICAL, prev_y, Statics.WORLD_WIDTH_LOGICAL, Statics.WORLD_HEIGHT_LOGICAL-prev_y, BodyType.STATIC, 
-				0.1f, 0f);
-		DrawableBody dbr = new DrawableBody(right_wall);
-		this.objects.add(dbr);
-		 */
-		
-		this.createCrate();
+		Crate crate = new Crate(world, 40, 20, 3, 3);
+		this.entities.add(crate);
 
 		//JBox2DFunctions.AddWater(world, new Vec2(160, 40));
-
-		/*Body tanker = JBox2DFunctions.AddRectangleTL(new BodyUserData("Tanker", BodyUserData.Type.Tanker, Color.darkGray), world, 
-				130, 0, 40, 5, BodyType.DYNAMIC, .2f, .2f, 0.6f);
-		bd = new DrawableBody(tanker);
-		this.addEntity(bd);*/
 
 	}
 
@@ -262,18 +232,6 @@ public class Main implements ContactListener, NewControllerListener {
 	}*/
 
 
-	private void createCrate() {
-		/*BodyUserData bud = new BodyUserData("Crate", BodyUserData.Type.Crate, Color.red);
-		Body crate = JBox2DFunctions.AddRectangle(bud, world, 40, 20, 3f, 3f, BodyType.DYNAMIC, .1f, .2f, 1f);
-		DrawableBody db = new DrawableBody(crate);
-		bud.entity = db;*/
-		
-		Crate crate = new Crate(world, 40, 20, 3, 3);
-		this.entities.add(crate);
-	}
-
-	
-	
 	private void processCollision(Contact contact) {
 		Body ba = contact.getFixtureA().getBody();
 		Body bb = contact.getFixtureB().getBody();
@@ -292,10 +250,10 @@ public class Main implements ContactListener, NewControllerListener {
 
 		if (entityA instanceof ICollideable) {
 			ICollideable ic = (ICollideable) entityA;
-			ic.collided(entityB);
+			ic.collided(entityB, bb);
 		} else if (entityB instanceof ICollideable) {
 			ICollideable ic = (ICollideable) entityB;
-			ic.collided(entityA);
+			ic.collided(entityA, ba);
 		}
 		//Collisions.Collision(entityA, entityB);
 		
@@ -339,13 +297,9 @@ public class Main implements ContactListener, NewControllerListener {
 		//Statics.p("BeginContact Entity A:" + entityA);
 		//Statics.p("BeginContact Entity B:" + entityB);
 		
+		//if (entityA)
 
 	}
-
-
-	/*private Body getBody(MyUserData bodyA, MyUserData bodyB, Type type) {
-		return bodyA.type == type ? bodyA.
-	}*/
 
 
 	@Override
@@ -367,13 +321,7 @@ public class Main implements ContactListener, NewControllerListener {
 	}
 
 
-	/*@Override
-	public void add(Body body) {
-		this.objects.add(body);
-
-	}*/
 	/*
-
 	private void ropeAllDown() {
 		if (new_joints_waiting.size() == 0) {
 			if (this.ropelist == null) {
@@ -455,8 +403,7 @@ public class Main implements ContactListener, NewControllerListener {
 	
 	
 	private void loadPlayer(IInputDevice input) {
-		PlayersAvatar avatar = new PlayersAvatar(input, world);
-		//bud.entity = avatar;
+		PlayersAvatar avatar = new PlayersAvatar(input, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL * 0.65f);
 		
 		synchronized (avatars) {
 			this.avatars.add(avatar);

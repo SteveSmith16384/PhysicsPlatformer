@@ -7,7 +7,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.contacts.ContactEdge;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
@@ -18,20 +17,23 @@ import com.scs.physicsplatformer.entity.components.IPlayerControllable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 import com.scs.physicsplatformer.input.IInputDevice;
 
-public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawable, ICollideable {
+public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawable, ICollideable {//, IProcessable {
+
+	final static float MAX_VELOCITY = 7f;		
 
 	private IInputDevice input;
 	private Body body;
-	//public boolean canJump = false;
+	public boolean canJump = false;
 
-	public PlayersAvatar(IInputDevice _input, World world) {
+	public PlayersAvatar(IInputDevice _input, World world, float x, float y) {
 		super();
 
 		input = _input;
 
-		BodyUserData bud = new BodyUserData("Player", BodyUserData.Type.Player, Color.black, this);
+		BodyUserData bud = new BodyUserData("Player", BodyUserData.Type.Player, Color.black, this, false);
 		//Body body = JBox2DFunctions.AddRectangle(bud, world, 50, 10, 4, 4, BodyType.DYNAMIC, .2f, .2f, .4f);
-		body = JBox2DFunctions.AddCircle(bud, world, 50, 10, .5f, BodyType.DYNAMIC, .1f, .1f, .5f);
+		body = JBox2DFunctions.AddCircle(bud, world, x, y, .5f, BodyType.DYNAMIC, .1f, .1f, .5f);
+		body.setFixedRotation(true);
 		body.setBullet(true);
 
 	}
@@ -40,44 +42,63 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 	@Override
 	public void processInput() {
 		if (input.isLeftPressed()) {
-			//Statics.p("Left pressed");
-			Vec2 force = new Vec2();
-			force.x = -Statics.PLAYER_FORCE;//20f;//(float)Math.sin(chopper.getAngle());
-			//body.body.applyForceToCenter(force);//, v);
-			body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
-			//drawableBody.setLinearVelocity(force);
+			Vec2 vel = body.getLinearVelocity();
+			if (vel.x > -MAX_VELOCITY) {
+				//Statics.p("Left pressed");
+				Vec2 force = new Vec2();
+				force.x = -Statics.PLAYER_FORCE;//20f;
+				//body.body.applyForceToCenter(force);//, v);
+				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
+				//drawableBody.setLinearVelocity(force);
+			} else {
+				//Statics.p("Max speed reached");
+			}
 		} else if (input.isRightPressed()) {
-			Vec2 force = new Vec2();
-			force.x = Statics.PLAYER_FORCE;//20f;//(float)Math.sin(chopper.getAngle());
-			//body.body.applyForceToCenter(force);//, v);
-			body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
-			//drawableBody.setLinearVelocity(force);
+			Vec2 vel = body.getLinearVelocity();
+			if (vel.x < MAX_VELOCITY) {
+				Vec2 force = new Vec2();
+				force.x = Statics.PLAYER_FORCE;//20f;
+				//body.body.applyForceToCenter(force);//, v);
+				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
+				//drawableBody.setLinearVelocity(force);
+			} else {
+				//Statics.p("Max speed reached");
+			}
 		} else if (input.isJumpPressed()) {
-			if (this.isOnGround()) {
-				Statics.p("JUMP!");
+			if (canJump) { //this.isOnGround()) {
 				//if (canJump) {
 				Vec2 force = new Vec2();
 				force.y = -Statics.PLAYER_FORCE*4;//20f;//(float)Math.sin(chopper.getAngle());
 				//drawableBody.applyForceToCenter(force);//, v);
+
+				// Move slightly up
+				Vec2 pos = body.getPosition();
+				pos.y += 0.01f;
+				body.setTransform(pos, 0);
+
 				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
+			} else {
+				//Statics.p("Not on ground");
 			}
 		}
-		//canJump = false; // Set by collision
+		canJump = false; // Set by collision
 
 	}
 
 
-	private boolean isOnGround() {
+	/*private boolean isOnGround() {
 		ContactEdge list = body.getContactList();
 		while (list != null) {
+			if (list.contact.isTouching())
 			BodyUserData bud = (BodyUserData) list.other.getUserData();
-			if (bud.entity instanceof Ground || bud.entity instanceof Trampoline) {
+			if (bud.entity instanceof Ground || bud.entity instanceof Trampoline) { // todo - check more
+				Statics.p("JUMP!" + bud.entity);
 				return true;
 			}
 			list = list.next;
 		}
 		return false;
-	}
+	}*/
 
 
 	@Override
@@ -89,9 +110,12 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 
 
 	@Override
-	public void collided(Entity other) {
-		Statics.p(this.toString() + "Collided!");
-		//this.canJump = true;
+	public void collided(Entity other, Body body) {
+		Statics.p(this.toString() + " Collided!");
+		BodyUserData bud = (BodyUserData) body.getUserData();
+		if (bud.canJumpFrom) {
+			this.canJump = true; // todo - check the platform is below us!
+		}
 	}
 
 
@@ -100,4 +124,17 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 		return this.getClass().getSimpleName();
 	}
 
+
+	/*	@Override
+	public void preprocess() {
+
+	}
+
+
+	@Override
+	public void postprocess() {
+		//this.canJump = false; // Set to true by collisions
+
+	}
+	 */
 }

@@ -2,22 +2,18 @@ http://www.badlogicgames.com/wordpress/?p=2017
 
 
 TODO
-Moving platforms
-Add platform at an angle
-	Jumping
-	Add higher walls to edge
-	Clean up drawing system
-Don't allow player to keep accelerating
-	Not drawing circle in centre
-Load map from csv
+Don't allow jumping from walls
+	Put ceiling on top
+Prevent jumping off walls
+	Don't allow player to keep accelerating
+Harmful blocks
 
 
 LATER
-Barrels rolling down
+Load map from csv
 Ladders
 Get to exit
 Crates floating in water
-	Trampoline
 Avoid lava
 Wind
 Bridge that wobbles
@@ -27,6 +23,8 @@ Aspects that need co-operation
 GAMEPLAY
 Build up momentum
 Push each other into harms way
+Throw rocks at each other
+
 
 NOTES
 restitution = bounciness

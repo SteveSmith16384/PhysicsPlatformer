@@ -69,6 +69,29 @@ public class JBox2DFunctions {
 	}
 
 
+	public static Body AddComplexRectangle(BodyUserData name, World world, Vec2[] vertices, 
+			BodyType bodytype, float restitution, float friction, float weight_kgm2) {
+		PolygonShape ps = new PolygonShape();
+		ps.set(vertices, vertices.length);
+
+		FixtureDef fd = new FixtureDef();
+		fd.shape = ps;
+		fd.restitution = restitution;
+		fd.density = weight_kgm2;
+		fd.friction = friction;
+
+		BodyDef bd = new BodyDef();
+		bd.type = bodytype;
+		//bd.position= new Vec2(centre_x, centre_y);
+
+		Body b = world.createBody(bd);
+		b.createFixture(fd);
+		b.setUserData(name);
+
+		return b;
+	}
+
+
 	public static Body AddEdgeShapeByMiddle(World world, float x1, float y1, float x2, float y2, BodyType bodyType, 
 			float restitution, float friction, float weight_kgm2) {
 		Vec2 centre = new Vec2((x1+x2)/2, (y1+y2)/2);

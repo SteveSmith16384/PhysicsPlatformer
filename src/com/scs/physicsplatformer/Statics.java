@@ -12,7 +12,7 @@ public class Statics {
 	public static final float PLAYER_FORCE = .2f; // 100f;
 	
 	public static final int FPS = 30;
-	public static final int LOGICAL_TO_PIXELS = 10;
+	public static final int LOGICAL_TO_PIXELS = 20;
 	public static final int MAX_ROPE_LENGTH = 8;
 	public static final Vec2 VEC_CENTRE = new Vec2(0, 0);
 

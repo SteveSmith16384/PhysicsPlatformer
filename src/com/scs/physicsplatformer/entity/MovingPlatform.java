@@ -12,25 +12,29 @@ import ssmith.util.Interval;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 	
-	private static final int MAX_MOVES = 50;
+	private static final int MAX_DIST = 5;
 
 	private Body body;
-	private Interval interval = new Interval(100);
-	private int leftCount;
+	private Interval interval = new Interval(1000);
+
+	//Vec2 pos = new Vec2();
+	Vec2 dir = new Vec2();
+	float dist = 0;
+	//float maxDist = 0;		
 	
 	public MovingPlatform(World world, float x, float y, float w, float h) {
 		super();
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this);
-		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, .1f, .2f, 1f);
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this, true);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, .2f, 1f);
 		
+		dir.x = 1;
 	}
 
 
@@ -43,16 +47,16 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 
 
 	@Override
-	public void process() {
+	public void postprocess() {
 		if (interval.hitInterval()) {
-			Vec2 pos = body.getTransform().p;
-			if (leftCount > 0) {
-				leftCount--;
-				pos.x++;
-			} else {
-				
+			dist += dir.length();
+			if(dist > MAX_DIST) {
+				dir.mulLocal(-1);
+				dist = 0;
 			}
-			body.setTransform(pos, 0);
+			
+			body.setLinearVelocity(dir);			
+
 		}
 	}
 
@@ -60,6 +64,13 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
+	}
+
+
+	@Override
+	public void preprocess() {
+		// Do nothing
+		
 	}
 
 }

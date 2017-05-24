@@ -20,7 +20,7 @@ public class Trampoline extends Entity implements IDrawable {
 	public Trampoline(World world, float x, float y, float w, float h) {
 		super();
 		
-		BodyUserData bud = new BodyUserData("Trampoline", BodyUserData.Type.Floor, Color.pink, this);
+		BodyUserData bud = new BodyUserData("Trampoline", BodyUserData.Type.Floor, Color.pink, this, true);
 		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, 1f, .1f, 0.8f);
 		//drawableBody = new DrawableBody(ground);
 	}

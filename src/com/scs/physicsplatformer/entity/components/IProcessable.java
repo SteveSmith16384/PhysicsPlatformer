@@ -2,6 +2,8 @@ package com.scs.physicsplatformer.entity.components;
 
 public interface IProcessable {
 
-	void process();
+	void preprocess(); // todo - remove?
+	
+	void postprocess();
 	
 }

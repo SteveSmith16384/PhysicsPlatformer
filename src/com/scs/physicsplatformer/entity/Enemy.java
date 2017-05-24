@@ -25,7 +25,7 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 	public Enemy(World world, float x, float y, float w, float h) {
 		super();
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this);
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this, false);
 		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .2f, 1f);
 		//drawableBody = new DrawableBody(crate);
 		
@@ -41,7 +41,7 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 
 
 	@Override
-	public void process() {
+	public void postprocess() {
 		if (interval.hitInterval()) {
 			Vec2 force = new Vec2();
 			force.y = -Statics.PLAYER_FORCE;//20f;//(float)Math.sin(chopper.getAngle());
@@ -54,6 +54,14 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
+	}
+
+
+
+	@Override
+	public void preprocess() {
+		// Do nothing
+		
 	}
 
 }
