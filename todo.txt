@@ -1,17 +1,20 @@
 http://www.badlogicgames.com/wordpress/?p=2017
-
+https://www.reddit.com/r/Cinemagraphs/
 
 TODO
 Don't allow jumping from walls
-	Put ceiling on top
-Prevent jumping off walls
-	Don't allow player to keep accelerating
+Create a proper level
+Stop moving left/right in air when left/right not pressed
+Get the feel right
+	Can't press left and jump at the same time
 Harmful blocks
+Show animated gif in background?
 
 
 LATER
+Look at JBox2D examples
 Load map from csv
-Ladders
+Ladders?
 Get to exit
 Crates floating in water
 Avoid lava
@@ -21,7 +24,6 @@ Aspects that need co-operation
 
 
 GAMEPLAY
-Build up momentum
 Push each other into harms way
 Throw rocks at each other
 

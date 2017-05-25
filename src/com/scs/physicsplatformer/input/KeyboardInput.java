@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 
 public class KeyboardInput implements IInputDevice, KeyListener {
 
-	private volatile boolean left, right, jump, up, down, fire;
-	private boolean lastMoveWasLeft = false;
+	private volatile boolean left, right, jump;//, up, down, fire;
+	//private boolean lastMoveWasLeft = false;
 	private int id;
 
 	public KeyboardInput(JFrame frame, int _id) {
@@ -21,18 +21,18 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 
 	@Override
 	public boolean isLeftPressed() {
-		if (left) {
+		/*if (left) {
 			lastMoveWasLeft = true;
-		}
+		}*/
 		return left;
 	}
 
 
 	@Override
 	public boolean isRightPressed() {
-		if (right) {
+		/*if (right) {
 			lastMoveWasLeft = false;
-		}
+		}*/
 		return right;
 	}
 
@@ -56,18 +56,18 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 				break;
 
 			case KeyEvent.VK_UP:
-				up = true;
+				//up = true;
 				jump = true;
 				break;
 
-			case KeyEvent.VK_DOWN:
+			/*case KeyEvent.VK_DOWN:
 				down = true;
 				break;
 
 			case KeyEvent.VK_CONTROL:
 				fire = true;
 				//firePressedTime = System.currentTimeMillis();
-				break;
+				break;*/
 			}
 		} else if (id == 2) {
 			switch (ke.getKeyCode()) {
@@ -80,18 +80,18 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 				break;
 
 			case KeyEvent.VK_W:
-				up = true;
+				//up = true;
 				jump = true;
 				break;
 
-			case KeyEvent.VK_S:
+			/*case KeyEvent.VK_S:
 				down = true;
 				break;
 
 			case KeyEvent.VK_SPACE:
 				fire = true;
 				//firePressedTime = System.currentTimeMillis();
-				break;
+				break;*/
 			}
 
 		}
@@ -112,11 +112,11 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 				break;
 
 			case KeyEvent.VK_UP:
-				up = false;
+				//up = false;
 				jump = false;
 				break;
 
-			case KeyEvent.VK_DOWN:
+			/*case KeyEvent.VK_DOWN:
 				down = false;
 				break;
 
@@ -124,7 +124,7 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 				fire = false;
 				//this.duration = System.currentTimeMillis() - this.firePressedTime;
 				break;
-
+*/
 			}
 
 		} else if (id == 2) {
@@ -138,18 +138,18 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 				break;
 
 			case KeyEvent.VK_W:
-				up = false;
+				//up = false;
 				jump = false;
 				break;
 
-			case KeyEvent.VK_S:
+			/*case KeyEvent.VK_S:
 				down = false;
 				break;
 
 			case KeyEvent.VK_SPACE:
 				fire = false;
 				//firePressedTime = System.currentTimeMillis();
-				break;
+				break;*/
 			}
 
 		}

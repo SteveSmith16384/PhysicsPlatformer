@@ -52,6 +52,8 @@ public class Main implements ContactListener, NewControllerListener {
 
 	private DrawingSystem drawingSystem;
 	private PlayerInputSystem playerInputSystem;
+	private List<Contact> collisions = new LinkedList<>();
+
 
 	public static void main(String[] args) {
 		Main hw = new Main();
@@ -91,8 +93,6 @@ public class Main implements ContactListener, NewControllerListener {
 		int velocityIterations = 6;//8;//6;
 		int positionIterations = 4;//3;//2;
 
-		List<Contact> collisions = new LinkedList<>();
-
 		while (true) {
 			synchronized (newControllers) {
 				while (this.newControllers.isEmpty() == false) {
@@ -110,7 +110,7 @@ public class Main implements ContactListener, NewControllerListener {
 
 			Graphics g = window.BS.getDrawGraphics();
 			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, 800, 600);
+			g.fillRect(0, 0, Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
 
 			// Player input first
 			for (Entity e : this.entities) {
@@ -298,6 +298,8 @@ public class Main implements ContactListener, NewControllerListener {
 		//Statics.p("BeginContact Entity B:" + entityB);
 		
 		//if (entityA)
+		
+		this.collisions.add(contact);
 
 	}
 

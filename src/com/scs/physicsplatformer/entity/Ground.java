@@ -15,13 +15,15 @@ import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class Ground extends Entity implements IDrawable {
 
+	private static final float FRICTION = 0.8f;
+	
 	private Body body;
 	
 	public Ground(World world, Vec2[] vertices) {
 		super();
 		
 		BodyUserData bud = new BodyUserData("Ground", BodyUserData.Type.Floor, Color.green, this, true);
-		body = JBox2DFunctions.AddComplexRectangle(bud, world, vertices, BodyType.STATIC, .1f, .1f, 0.8f);
+		body = JBox2DFunctions.AddComplexRectangle(bud, world, vertices, BodyType.STATIC, .1f, FRICTION, 0.8f);
 	}
 
 	
@@ -29,7 +31,7 @@ public class Ground extends Entity implements IDrawable {
 		super();
 		
 		BodyUserData bud = new BodyUserData("Ground", BodyUserData.Type.Floor, Color.darkGray, this, true);
-		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, .1f, .1f, 0.8f);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, .1f, FRICTION, 0.8f);
 	}
 
 	

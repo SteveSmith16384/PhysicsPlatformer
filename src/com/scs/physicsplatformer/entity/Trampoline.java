@@ -15,13 +15,15 @@ import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class Trampoline extends Entity implements IDrawable {
 
-	private Body drawableBody;
+	private static final float FRICTION = 1f;
+	
+	private Body body;
 	
 	public Trampoline(World world, float x, float y, float w, float h) {
 		super();
 		
 		BodyUserData bud = new BodyUserData("Trampoline", BodyUserData.Type.Floor, Color.pink, this, true);
-		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, 1f, .1f, 0.8f);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, 1f, FRICTION, 0.8f);
 		//drawableBody = new DrawableBody(ground);
 	}
 
@@ -29,7 +31,7 @@ public class Trampoline extends Entity implements IDrawable {
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		//drawableBody.draw(g, system, cam_centre);
-		system.drawShape(g, drawableBody, cam_centre);
+		system.drawShape(g, body, cam_centre);
 		
 	}
 

@@ -19,7 +19,7 @@ import com.scs.physicsplatformer.input.IInputDevice;
 
 public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawable, ICollideable {//, IProcessable {
 
-	final static float MAX_VELOCITY = 7f;		
+	final static float MAX_VELOCITY = 5;//7f;		
 
 	private IInputDevice input;
 	private Body body;
@@ -32,7 +32,7 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 
 		BodyUserData bud = new BodyUserData("Player", BodyUserData.Type.Player, Color.black, this, false);
 		//Body body = JBox2DFunctions.AddRectangle(bud, world, 50, 10, 4, 4, BodyType.DYNAMIC, .2f, .2f, .4f);
-		body = JBox2DFunctions.AddCircle(bud, world, x, y, .5f, BodyType.DYNAMIC, .1f, .1f, .5f);
+		body = JBox2DFunctions.AddCircle(bud, world, x, y, .5f, BodyType.DYNAMIC, .1f, .6f, .5f);
 		body.setFixedRotation(true);
 		body.setBullet(true);
 
@@ -41,6 +41,10 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 
 	@Override
 	public void processInput() {
+		/*if (this.canJump) {
+			Statics.p("Can Jump");
+		}*/
+
 		if (input.isLeftPressed()) {
 			Vec2 vel = body.getLinearVelocity();
 			if (vel.x > -MAX_VELOCITY) {
@@ -64,24 +68,33 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 			} else {
 				//Statics.p("Max speed reached");
 			}
-		} else if (input.isJumpPressed()) {
+		}
+		if (input.isJumpPressed()) {
 			if (canJump) { //this.isOnGround()) {
 				//if (canJump) {
 				Vec2 force = new Vec2();
-				force.y = -Statics.PLAYER_FORCE*4;//20f;//(float)Math.sin(chopper.getAngle());
+				force.y = -Statics.PLAYER_FORCE/2;//20f;//(float)Math.sin(chopper.getAngle());
 				//drawableBody.applyForceToCenter(force);//, v);
 
 				// Move slightly up
 				Vec2 pos = body.getPosition();
 				pos.y += 0.01f;
 				body.setTransform(pos, 0);
-
 				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
+				canJump = false; // todo - remove?  unset somehow
 			} else {
 				//Statics.p("Not on ground");
 			}
 		}
-		canJump = false; // Set by collision
+
+		Vec2 vel = body.getLinearVelocity();
+		// cap max velocity on x		
+		if(Math.abs(vel.x) > MAX_VELOCITY) {			
+			vel.x = Math.signum(vel.x) * MAX_VELOCITY;
+			body.setLinearVelocity(vel);
+		}
+
+		//canJump = false; // Set by collision
 
 	}
 
@@ -125,16 +138,4 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 	}
 
 
-	/*	@Override
-	public void preprocess() {
-
-	}
-
-
-	@Override
-	public void postprocess() {
-		//this.canJump = false; // Set to true by collisions
-
-	}
-	 */
 }

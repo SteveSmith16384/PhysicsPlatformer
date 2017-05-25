@@ -18,6 +18,8 @@ import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 	
+	private static final float FRICTION = 1f;
+	
 	private static final int MAX_DIST = 5;
 
 	private Body body;
@@ -32,7 +34,7 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 		super();
 		
 		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this, true);
-		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, .2f, 1f);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, FRICTION, 1f);
 		
 		dir.x = 1;
 	}
