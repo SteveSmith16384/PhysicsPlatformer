@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.particle.ParticleGroupDef;
@@ -46,7 +47,7 @@ public class JBox2DFunctions {
 	}
 	
 	
-	public static Body AddRectangle(BodyUserData name, World world, float centre_x, float centre_y, float width, float height, 
+	public static Body AddRectangle(BodyUserData bud, World world, float centre_x, float centre_y, float width, float height, 
 			BodyType bodytype, float restitution, float friction, float weight_kgm2) {
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(width/2,height/2);
@@ -62,8 +63,10 @@ public class JBox2DFunctions {
 		bd.position= new Vec2(centre_x, centre_y);
 
 		Body b = world.createBody(bd);
-		b.createFixture(fd);
-		b.setUserData(name);
+		Fixture f = b.createFixture(fd);
+		
+		f.setUserData(bud);
+		b.setUserData(bud);
 
 		return b;
 	}

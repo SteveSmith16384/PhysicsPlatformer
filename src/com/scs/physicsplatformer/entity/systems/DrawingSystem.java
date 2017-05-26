@@ -10,6 +10,7 @@ import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.Fixture;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.Statics;
@@ -20,13 +21,13 @@ public class DrawingSystem {
 	public DrawingSystem() {
 
 	}
-	
-	
+
+
 	public void process(Graphics g, IDrawable sprite, Vec2 cam_centre) {
 		sprite.draw(g, this, cam_centre);
 	}
 
-	
+
 	private Point getPixelPos(Vec2 worldpos, Vec2 cam_centre) { // todo - pass Point, don't create each time
 		//Vec2 worldpos = b.getWorldPoint(v);
 		int x1 = (int)((worldpos.x * Statics.LOGICAL_TO_PIXELS)-cam_centre.x + (Statics.WINDOW_WIDTH/2));
@@ -34,7 +35,7 @@ public class DrawingSystem {
 		return new Point(x1, y1);
 	}
 
-	
+
 	public void drawShape(Graphics g, Body b, Vec2 cam_centre) {
 		BodyUserData userdata = (BodyUserData)b.getUserData();
 		if (userdata != null) {
@@ -42,35 +43,38 @@ public class DrawingSystem {
 		} else {
 			g.setColor(Color.gray);
 		}
-		if (b.getFixtureList().getShape() instanceof PolygonShape) {
-			Polygon polygon = new Polygon();
-			PolygonShape shape = (PolygonShape)b.getFixtureList().getShape();
-			for (int i=0 ; i<shape.getVertexCount() ; i++) {
-				Vec2 v = shape.getVertex(i);
-				Point p2 = getPixelPos(b.getWorldPoint(v), cam_centre);
-				polygon.addPoint(p2.x, p2.y);
-			}
-			g.fillPolygon(polygon);
-			
-		} else if (b.getFixtureList().getShape() instanceof EdgeShape) {
-			EdgeShape shape = (EdgeShape)b.getFixtureList().getShape();
-			Vec2 prev = shape.m_vertex1;
-			Vec2 v = shape.m_vertex2;
-			Vec2 worldpos = b.getWorldPoint(prev);
-			Point p = getPixelPos(worldpos, cam_centre);
 
-			//int x1 = (int)((worldpos.x-cam_centre.x)*Statics.WORLD_TO_PIXELS);
-			//int y1 = (int)((worldpos.y-cam_centre.y)*Statics.WORLD_TO_PIXELS);
+		Fixture f = b.getFixtureList();
+		while (f != null) {
+			if (f.getShape() instanceof PolygonShape) {
+				Polygon polygon = new Polygon();
+				PolygonShape shape = (PolygonShape)f.getShape();
+				for (int i=0 ; i<shape.getVertexCount() ; i++) {
+					Vec2 v = shape.getVertex(i);
+					Point p2 = getPixelPos(b.getWorldPoint(v), cam_centre);
+					polygon.addPoint(p2.x, p2.y);
+				}
+				g.fillPolygon(polygon);
 
-			worldpos = b.getWorldPoint(v);
-			//int x2 = (int)((worldpos.x-cam_centre.x)*Statics.WORLD_TO_PIXELS);
-			//int y2 = (int)((worldpos.y-cam_centre.y)*Statics.WORLD_TO_PIXELS);
-			Point p2 = getPixelPos(worldpos, cam_centre);
+			} else if (f.getShape() instanceof EdgeShape) {
+				EdgeShape shape = (EdgeShape)f.getShape();
+				Vec2 prev = shape.m_vertex1;
+				Vec2 v = shape.m_vertex2;
+				Vec2 worldpos = b.getWorldPoint(prev);
+				Point p = getPixelPos(worldpos, cam_centre);
 
-			g.drawLine(p.x, p.y, p2.x, p2.y);
-			
-		/*todo } else if (b.getFixtureList().getShape() instanceof ChainShape) {
-			ChainShape shape2 = (ChainShape)b.getFixtureList().getShape();
+				//int x1 = (int)((worldpos.x-cam_centre.x)*Statics.WORLD_TO_PIXELS);
+				//int y1 = (int)((worldpos.y-cam_centre.y)*Statics.WORLD_TO_PIXELS);
+
+				worldpos = b.getWorldPoint(v);
+				//int x2 = (int)((worldpos.x-cam_centre.x)*Statics.WORLD_TO_PIXELS);
+				//int y2 = (int)((worldpos.y-cam_centre.y)*Statics.WORLD_TO_PIXELS);
+				Point p2 = getPixelPos(worldpos, cam_centre);
+
+				g.drawLine(p.x, p.y, p2.x, p2.y);
+
+				/*todo } else if (f.getShape() instanceof ChainShape) {
+			ChainShape shape2 = (ChainShape)f.getShape();
 			EdgeShape shape = new EdgeShape();
 			for (int i=0 ; i<shape2.getChildCount() ; i++) {
 				shape2.getChildEdge(shape, i);
@@ -85,21 +89,24 @@ public class DrawingSystem {
 
 				g.drawLine(x1, y1, x2, y2);
 			}*/
-			
-		} else if (b.getFixtureList().getShape() instanceof CircleShape) {
-			CircleShape shape2 = (CircleShape)b.getFixtureList().getShape();
-			Vec2 worldpos = b.getPosition();//b.getWorldPoint(b.getPosition());
-			Point p2 = getPixelPos(worldpos, cam_centre);
-			int diam = (int)(shape2.getRadius()*2 * Statics.LOGICAL_TO_PIXELS);
-			g.fillOval((int)(p2.x-(shape2.getRadius() * Statics.LOGICAL_TO_PIXELS)), (int)(p2.y-(shape2.getRadius() * Statics.LOGICAL_TO_PIXELS)), diam, diam);
-			
-		} else {
-			throw new RuntimeException("Cannot draw " + b);
-		}
 
+			} else if (f.getShape() instanceof CircleShape) {
+				CircleShape shape2 = (CircleShape)f.getShape();
+				Vec2 worldpos = b.getPosition();
+				Point p2 = getPixelPos(worldpos, cam_centre);
+				int rad = (int)(shape2.getRadius() * Statics.LOGICAL_TO_PIXELS);
+				g.fillOval((int)(p2.x-rad), (int)(p2.y-rad), rad*2, rad*2);
+
+			} else {
+				throw new RuntimeException("Cannot draw " + b);
+			}
+
+			f = f.getNext();
+
+		}
 	}
 
-/*todo 
+	/*todo 
 	private void DrawParticles(Graphics g, World world, Vec2 cam_centre) {
 		int particleCount = world.getParticleCount();// system.getParticleCount();
 		if (particleCount != 0) {
@@ -122,5 +129,5 @@ public class DrawingSystem {
 
 		}
 	}
-*/
+	 */
 }

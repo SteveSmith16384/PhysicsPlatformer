@@ -18,9 +18,9 @@ public class Crate extends Entity implements IDrawable {
 	private Body drawableBody;
 	
 	public Crate(World world, float x, float y, float w, float h) {
-		super();
+		super(Crate.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData("Crate", BodyUserData.Type.Crate, Color.darkGray, this, true);
+		BodyUserData bud = new BodyUserData("Crate", Color.darkGray, this, true);
 		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .2f, 1f);
 		//drawableBody = new DrawableBody(crate);
 		

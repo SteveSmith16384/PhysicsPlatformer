@@ -23,9 +23,9 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 	private Interval interval = new Interval(1000);
 	
 	public Enemy(World world, float x, float y, float w, float h) {
-		super();
+		super(Enemy.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this, false);
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, false);
 		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .2f, 1f);
 		//drawableBody = new DrawableBody(crate);
 		

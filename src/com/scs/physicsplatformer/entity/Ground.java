@@ -17,20 +17,22 @@ public class Ground extends Entity implements IDrawable {
 
 	private static final float FRICTION = 0.8f;
 	
-	private Body body;
+	public Body body;
 	
-	public Ground(World world, Vec2[] vertices) {
-		super();
+	/*public Ground(String name, World world, Vec2[] vertices) {
+		super(name);
 		
-		BodyUserData bud = new BodyUserData("Ground", BodyUserData.Type.Floor, Color.green, this, true);
+		BodyUserData bud = new BodyUserData("Ground", Color.green, this, true);
 		body = JBox2DFunctions.AddComplexRectangle(bud, world, vertices, BodyType.STATIC, .1f, FRICTION, 0.8f);
-	}
+		
+		//body.sett
+	}*/
 
 	
-	public Ground(World world, float x, float y, float w, float h) {
-		super();
+	public Ground(String name, World world, float x, float y, float w, float h) {
+		super(name);
 		
-		BodyUserData bud = new BodyUserData("Ground", BodyUserData.Type.Floor, Color.darkGray, this, true);
+		BodyUserData bud = new BodyUserData("Ground", Color.darkGray, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, .1f, FRICTION, 0.8f);
 	}
 

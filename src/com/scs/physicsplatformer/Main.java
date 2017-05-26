@@ -89,6 +89,7 @@ public class Main implements ContactListener, NewControllerListener {
 
 
 	private void gameLoop() {
+		while (window.isVisible()) {
 		float timeStep = 1.0f / Statics.FPS;//10.f;
 		int velocityIterations = 6;//8;//6;
 		int positionIterations = 4;//3;//2;
@@ -167,50 +168,53 @@ public class Main implements ContactListener, NewControllerListener {
 				e.printStackTrace();
 			}
 		}
-
+		}
 	}
 
 
 	private void createWorld() {
-		Ground ground = new Ground(world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-1, Statics.WORLD_WIDTH_LOGICAL, 1);
+		
+		// Borders
+		
+		Ground ground = new Ground("ground", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-1, Statics.WORLD_WIDTH_LOGICAL, 1);
 		this.addEntity(ground);
 
-		Ground ceiling = new Ground(world, Statics.WORLD_WIDTH_LOGICAL/2, 1, Statics.WORLD_WIDTH_LOGICAL, 1);
+		Ground leftWall = new Ground("leftWall", world, .5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
+		this.addEntity(leftWall);
+
+		Ground rightWall = new Ground("rightWall", world, Statics.WORLD_WIDTH_LOGICAL-.5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
+		this.addEntity(rightWall);
+
+		Ground ceiling = new Ground("ceiling", world, Statics.WORLD_WIDTH_LOGICAL/2, 1, Statics.WORLD_WIDTH_LOGICAL, 1);
 		this.addEntity(ceiling);
 
-		Vec2[] vertices = new Vec2[4];
-		vertices[0] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_HEIGHT_LOGICAL*.5f);
-		vertices[1] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.75f, Statics.WORLD_HEIGHT_LOGICAL*.6f);
-		vertices[2] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.75f, Statics.WORLD_HEIGHT_LOGICAL*.7f);
-		vertices[3] = new Vec2(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_HEIGHT_LOGICAL*.6f);
-		Ground ground2 = new Ground(world, vertices);
-		this.addEntity(ground2);
+		//Platforms
+		
+		/*Ground platform = new Ground("platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f);
+		platform.body.setTransform(new Vec2(Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2), 0.06f);
+		this.addEntity(platform);
+		
+		Trampoline tramp = new Trampoline(world, Statics.WORLD_WIDTH_LOGICAL/4, Statics.WORLD_HEIGHT_LOGICAL-3, 2, .5f);
+		this.addEntity(tramp);
+
+		MovingPlatform moving = new MovingPlatform(world, Statics.WORLD_WIDTH_LOGICAL * .5f, Statics.WORLD_HEIGHT_LOGICAL*.8f, 3, 1);
+		this.addEntity(moving);
+
+		// Moving stuff
 		
 		Barrel barrel = new Barrel(world, Statics.WORLD_WIDTH_LOGICAL*.3f, Statics.WORLD_HEIGHT_LOGICAL*.4f, 1f);
 		this.addEntity(barrel);
 
-		Ground leftWall = new Ground(world, .5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
-		this.addEntity(leftWall);
-
-		Ground rightWall = new Ground(world, Statics.WORLD_WIDTH_LOGICAL-.5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
-		this.addEntity(rightWall);
-
-		Trampoline tramp = new Trampoline(world, Statics.WORLD_WIDTH_LOGICAL/4, Statics.WORLD_HEIGHT_LOGICAL-3, 2, .5f);
-		this.addEntity(tramp);
-
 		Enemy enemy = new Enemy(world, Statics.WORLD_WIDTH_LOGICAL * .75f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, 1);
 		this.addEntity(enemy);
 		
-		MovingPlatform moving = new MovingPlatform(world, Statics.WORLD_WIDTH_LOGICAL * .5f, Statics.WORLD_HEIGHT_LOGICAL*.8f, 3, 1);
-		this.addEntity(moving);
+		Crate crate = new Crate(world, 40, 20, 3, 3);
+		this.entities.add(crate);*/
 
 		/*JBox2DFunctions.AddRopeShape(new MyUserData("Rope", MyUserData.Type.Rope, Color.yellow),
-				new MyUserData("Rope_End", MyUserData.Type.StickyRope, Color.yellow),
-						world, this, chopper, 8, 10);
-		 */
-
-		Crate crate = new Crate(world, 40, 20, 3, 3);
-		this.entities.add(crate);
+		new MyUserData("Rope_End", MyUserData.Type.StickyRope, Color.yellow),
+				world, this, chopper, 8, 10);
+ */
 
 		//JBox2DFunctions.AddWater(world, new Vec2(160, 40));
 
@@ -250,10 +254,10 @@ public class Main implements ContactListener, NewControllerListener {
 
 		if (entityA instanceof ICollideable) {
 			ICollideable ic = (ICollideable) entityA;
-			ic.collided(entityB, bb);
+			ic.collided(contact, true);
 		} else if (entityB instanceof ICollideable) {
 			ICollideable ic = (ICollideable) entityB;
-			ic.collided(entityA, ba);
+			ic.collided(contact, false);
 		}
 		//Collisions.Collision(entityA, entityB);
 		
@@ -282,7 +286,8 @@ public class Main implements ContactListener, NewControllerListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		Body ba = contact.getFixtureA().getBody();
+		Statics.p("Generic collision");
+		/*Body ba = contact.getFixtureA().getBody();
 		Body bb = contact.getFixtureB().getBody();
 
 		BodyUserData ba_ud = (BodyUserData)ba.getUserData();
@@ -297,7 +302,7 @@ public class Main implements ContactListener, NewControllerListener {
 		//Statics.p("BeginContact Entity A:" + entityA);
 		//Statics.p("BeginContact Entity B:" + entityB);
 		
-		//if (entityA)
+		//if (entityA)*/
 		
 		this.collisions.add(contact);
 

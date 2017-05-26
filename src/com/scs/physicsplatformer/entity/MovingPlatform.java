@@ -31,9 +31,9 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 	//float maxDist = 0;		
 	
 	public MovingPlatform(World world, float x, float y, float w, float h) {
-		super();
+		super(MovingPlatform.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), BodyUserData.Type.Irrelevant, Color.red, this, true);
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, FRICTION, 1f);
 		
 		dir.x = 1;
