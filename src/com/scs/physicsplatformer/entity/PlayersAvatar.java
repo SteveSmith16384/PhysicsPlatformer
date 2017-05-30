@@ -31,8 +31,9 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 	private Body body;
 	private boolean isOnGround = false;
 	private long lastJumpTime = 0;
-	private boolean jetpac = false;
+	private boolean jetpac = false; // todo - test
 	private Fixture feetFixture;
+
 
 	public PlayersAvatar(IInputDevice _input, World world, float x, float y) {
 		super(PlayersAvatar.class.getSimpleName());
@@ -63,8 +64,6 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 		/*if (this.canJump) {
 			Statics.p("Can Jump");
 		}*/
-
-
 
 		if (input.isLeftPressed()) {
 			Vec2 vel = body.getLinearVelocity();
@@ -194,27 +193,28 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 
 	@Override
 	public void preprocess() {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
 	public void postprocess() {
-		isOnGround = false; // todo - check contact list of feet
+		isOnGround = false;
 
 		ContactEdge edge = feetFixture.getBody().getContactList();
 		while (edge != null) {
 			Contact contact = edge.contact;
-			BodyUserData feetBUD = (BodyUserData) contact.m_fixtureA.getUserData();
-			BodyUserData groundBUD = (BodyUserData) contact.m_fixtureB.getUserData();
-			if (feetBUD != null && groundBUD != null) {
-				if (feetBUD.isFeet || groundBUD.isFeet) {
-					if (feetBUD.canJumpFrom || groundBUD.canJumpFrom) {
-						Statics.p(this.toString() + " isOnGround!");
-						this.isOnGround = true;
-						break;
-					}			
+			if (contact.isTouching()) {
+				BodyUserData feetBUD = (BodyUserData) contact.m_fixtureA.getUserData();
+				BodyUserData groundBUD = (BodyUserData) contact.m_fixtureB.getUserData();
+				if (feetBUD != null && groundBUD != null) {
+					if (feetBUD.isFeet || groundBUD.isFeet) {
+						if (feetBUD.canJumpFrom || groundBUD.canJumpFrom) {
+							Statics.p(this.toString() + " isOnGround!");
+							this.isOnGround = true;
+							break;
+						}			
+					}
 				}
 			}
 

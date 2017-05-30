@@ -6,11 +6,8 @@ import com.scs.physicsplatformer.entity.Entity;
 
 public class BodyUserData { // For attaching to bodies
 	
-	//public enum Type {Irrelevant, Player, Crate, Floor, Rock, Rope, StickyRope}; // todo - remove
-	
 	public String name;
 	public Entity entity;
-	//public Type type;
 	public Color col;
 	public boolean canJumpFrom;
 	public boolean isFeet = false;
@@ -20,7 +17,6 @@ public class BodyUserData { // For attaching to bodies
 		super();
 		
 		name = _name;
-		//type = t;
 		col = c;
 		entity = e;
 		canJumpFrom = _canJumpFrom;

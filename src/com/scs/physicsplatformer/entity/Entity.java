@@ -7,11 +7,17 @@ public abstract class Entity {
 
 	public String name;
 	
-	public Entity(String _name) { // todo - add name
+	public Entity(String _name) {
 		super();
 		
 		id = next_id++;
 		name =_name;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 

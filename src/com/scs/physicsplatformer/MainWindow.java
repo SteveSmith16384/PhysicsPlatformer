@@ -22,12 +22,13 @@ public class MainWindow extends JFrame implements KeyListener, WindowListener {
 		BS = this.getBufferStrategy();
 	}
 
+
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
+	
 	@Override
 	public void keyReleased(KeyEvent ke) {
 		if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -39,50 +40,42 @@ public class MainWindow extends JFrame implements KeyListener, WindowListener {
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		//todo Statics.this.thread.setRunning(false);
 		this.dispose();
 		
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 

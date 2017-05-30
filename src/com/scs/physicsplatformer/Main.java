@@ -190,7 +190,7 @@ public class Main implements ContactListener, NewControllerListener {
 
 		//Platforms
 		
-		/*Ground platform = new Ground("platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f);
+		Ground platform = new Ground("platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f);
 		platform.body.setTransform(new Vec2(Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2), 0.06f);
 		this.addEntity(platform);
 		
@@ -209,7 +209,7 @@ public class Main implements ContactListener, NewControllerListener {
 		this.addEntity(enemy);
 		
 		Crate crate = new Crate(world, 40, 20, 3, 3);
-		this.entities.add(crate);*/
+		this.entities.add(crate);
 
 		/*JBox2DFunctions.AddRopeShape(new MyUserData("Rope", MyUserData.Type.Rope, Color.yellow),
 		new MyUserData("Rope_End", MyUserData.Type.StickyRope, Color.yellow),

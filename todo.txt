@@ -3,15 +3,16 @@ http://www.iforce2d.net/b2dtut/jumpability
 http://www.badlogicgames.com/wordpress/?p=2017
 https://www.reddit.com/r/Cinemagraphs/
 
+
 TODO
-	Don't allow jumping from walls
+Don't allow jumping from walls
+Get the feel right
 	Thread not stopping when window closed
 Create a proper level
 Stop moving left/right in air when left/right not pressed
-	Get the feel right
 Harmful blocks
 Overlay sprites
-	Players have jetpacks
+Players have jetpacks
 
 
 LATER
