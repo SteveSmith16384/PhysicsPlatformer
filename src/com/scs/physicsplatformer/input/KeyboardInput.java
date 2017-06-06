@@ -120,7 +120,7 @@ public class KeyboardInput implements IInputDevice, KeyListener {
 				down = false;
 				break;
 
-			case KeyEvent.VK_SPACE:
+			case KeyEvent.VK_CONTROL:
 				fire = false;
 				//this.duration = System.currentTimeMillis() - this.firePressedTime;
 				break;

@@ -1,7 +1,19 @@
 http://www.iforce2d.net/b2dtut/jumpability
-
 http://www.badlogicgames.com/wordpress/?p=2017
 https://www.reddit.com/r/Cinemagraphs/
+
+
+GAMEPLAY
+	Knock over pile of crates to avoid damage below
+Must fill in holes to get over them
+Balance on rolling barrel to get across harm
+
+Push each other into harms way
+Throw rocks at each other
+Blocks drop from sky, players must get to the top
+Barrels rolling down levels, players must jump over them
+Zub level
+
 
 TODO
 Pivot on platforms
@@ -13,23 +25,20 @@ Stop moving left/right in air when left/right not pressed
 Harmful blocks
 Overlay sprites
 	Players have jetpacks
+"Restart Level" option 
+Exit
+	Create a proper level
+Look at JBox2D examples
 
 
 LATER
-Look at JBox2D examples
-Load map from csv
+Stop moving left/right in air when left/right not pressed
 Ladders?  (Edge)
 Get to exit
 Crates floating in water
-Avoid lava
 Wind
 Bridge that wobbles
 Aspects that need co-operation
-
-
-GAMEPLAY
-Push each other into harms way
-Throw rocks at each other
 
 
 NOTES

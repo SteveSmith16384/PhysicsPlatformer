@@ -10,6 +10,7 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
+import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
@@ -29,18 +30,18 @@ public class Ground extends Entity implements IDrawable {
 	}*/
 
 	
-	public Ground(String name, World world, float x, float y, float w, float h) {
-		super(name);
+	public Ground(Main main, String name, World world, float cx, float cy, float w, float h) {
+		super(main, name);
 		
 		BodyUserData bud = new BodyUserData("Ground", Color.darkGray, this, true);
-		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.STATIC, .1f, FRICTION, 0.8f);
+		body = JBox2DFunctions.AddRectangle(bud, world, cx, cy, w, h, BodyType.STATIC, .1f, FRICTION, 0.8f);
 	}
 
 	
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		//drawableBody.draw(g, system, cam_centre);
-		system.drawShape(g, body, cam_centre);
+		system.drawShape(tmpPoint, g, body, cam_centre);
 
 	}
 

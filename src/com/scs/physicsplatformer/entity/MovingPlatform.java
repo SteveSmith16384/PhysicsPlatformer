@@ -12,6 +12,7 @@ import ssmith.util.Interval;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
+import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
@@ -30,8 +31,8 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 	float dist = 0;
 	//float maxDist = 0;		
 	
-	public MovingPlatform(World world, float x, float y, float w, float h) {
-		super(MovingPlatform.class.getSimpleName());
+	public MovingPlatform(Main main, World world, float x, float y, float w, float h) {
+		super(main, MovingPlatform.class.getSimpleName());
 		
 		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, FRICTION, 1f);
@@ -43,13 +44,13 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		//drawableBody.draw(g, system, cam_centre);
-		system.drawShape(g, body, cam_centre);
+		system.drawShape(tmpPoint, g, body, cam_centre);
 		
 	}
 
 
 	@Override
-	public void postprocess() {
+	public void postprocess(long interpol) {
 		if (interval.hitInterval()) {
 			dist += dir.length();
 			if(dist > MAX_DIST) {
@@ -70,7 +71,7 @@ public class MovingPlatform extends Entity implements IDrawable, IProcessable {
 
 
 	@Override
-	public void preprocess() {
+	public void preprocess(long interpol) {
 		// Do nothing
 		
 	}
