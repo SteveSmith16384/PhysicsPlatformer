@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.jbox2d.common.Vec2;
 
+import ssmith.awt.ImageCache;
+
 public class Statics {
 
 	public static final boolean DEBUG = true;
@@ -23,6 +25,8 @@ public class Statics {
 	public static final int WORLD_HEIGHT_LOGICAL = WINDOW_HEIGHT / LOGICAL_TO_PIXELS;
 
 	public static final Random rnd = new Random();
+
+	public static ImageCache img_cache;
 
 	private Statics() {
 

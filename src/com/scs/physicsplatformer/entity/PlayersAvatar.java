@@ -2,6 +2,7 @@ package com.scs.physicsplatformer.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -14,6 +15,7 @@ import org.jbox2d.dynamics.contacts.ContactEdge;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
+import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.components.ICollideable;
 import com.scs.physicsplatformer.entity.components.IDrawable;
@@ -24,19 +26,19 @@ import com.scs.physicsplatformer.input.IInputDevice;
 
 public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawable, ICollideable, IProcessable {
 
-	private static final float RAD = 0.5f;
+	public static final float RAD = 0.5f;
 	private static final float MAX_VELOCITY = 5;//7f;	
 
 	private IInputDevice input;
-	private Body body;
+	public Body body;
 	private boolean isOnGround = false;
 	private long lastJumpTime = 0;
-	private boolean jetpac = false; // todo - test
+	private boolean jetpac = false;
 	private Fixture feetFixture;
+	private BufferedImage img;
 
-
-	public PlayersAvatar(IInputDevice _input, World world, float x, float y) {
-		super(PlayersAvatar.class.getSimpleName());
+	public PlayersAvatar(IInputDevice _input, Main main, World world, float x, float y) {
+		super(main, PlayersAvatar.class.getSimpleName());
 
 		input = _input;
 
@@ -49,13 +51,14 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(RAD/2, RAD/10, new Vec2(0, RAD), 0);
 
-		BodyUserData bud2 = new BodyUserData("Player_Feet", Color.black, this, false);
+		BodyUserData bud2 = new BodyUserData("Player_Feet", null, this, false);
 		bud2.isFeet = true;
 		feetFixture = body.createFixture(ps, 0f);
 		//Fixture fixture = new Fixture();
 		feetFixture.setUserData(bud2);
 		feetFixture.setSensor(true);
 
+		img = Statics.img_cache.getImage("ninja0_l0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
 	}
 
 
@@ -117,71 +120,32 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 			body.setLinearVelocity(vel);
 		}
 
-		//canJump = false; // Set by collision
-
 	}
-
-
-	/*private boolean isOnGround() {
-		ContactEdge list = body.getContactList();
-		while (list != null) {
-			if (list.contact.isTouching())
-			BodyUserData bud = (BodyUserData) list.other.getUserData();
-			if (bud.entity instanceof Ground || bud.entity instanceof Trampoline) { // todo - check more
-				Statics.p("JUMP!" + bud.entity);
-				return true;
-			}
-			list = list.next;
-		}
-		return false;
-	}*/
 
 
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
-		//drawableBody.draw(g, system, cam_centre);
-		system.drawShape(g, body, cam_centre);
-		//this.feetFixture;
+		//system.drawShape(g, body, cam_centre);
+		system.drawImage(tmpPoint, img, g, body, cam_centre);
 	}
 
 
 	@Override
 	public void collided(Contact contact, boolean weAreA) {
-		/*Statics.p(this.toString() + " Collided!");
-		Fixture feet = null; 
-		Fixture platform = null;
+		Fixture f = null;
 		if (weAreA) {
-			feet = contact.m_fixtureA;
-			platform = contact.m_fixtureB;
+			f = contact.getFixtureB();
 		} else {
-			feet = contact.m_fixtureB;
-			platform = contact.m_fixtureA;
+			f = contact.getFixtureA();
 		}
-		BodyUserData feetBUD = (BodyUserData) feet.getUserData();
-		if (feetBUD != null && feetBUD.isFeet) {
-			BodyUserData groundBUD = (BodyUserData) platform.getUserData();
-			if (groundBUD != null && groundBUD.canJumpFrom) {
-				Statics.p(this.toString() + " isOnGround!");
-				this.isOnGround = true;
-			}			
-		}*/
-
-
-		//BodyUserData bud = (BodyUserData) body.getUserData();
-		//if (bud.canJumpFrom) {
-		/*Vec2 pos = body.getPosition();
-			Manifold manifold = contact.getManifold();
-			boolean below = true;
-			for(int j = 0; j < manifold.pointCount ; j++) {
-				ManifoldPoint p = manifold.points[j]; 
-				if (p.localPoint.x != 0 || p.localPoint.y != 0) {
-					Statics.p("Here!");
-				}
-				below &= (p.localPoint.y < pos.y - 0.5f);
+		//Statics.p("Player collided with " + f);
+		BodyUserData bud = (BodyUserData)f.getUserData();
+		if (bud != null) {
+			if (bud.harmsPlayer) {
+				Statics.p("Death!");
+				main.restartAvatar(this);
 			}
-			this.canJump = below;*/
-		//this.isOnGround = true;
-		//	}
+		}
 	}
 
 
@@ -192,13 +156,13 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 
 
 	@Override
-	public void preprocess() {
+	public void preprocess(long interpol) {
 
 	}
 
 
 	@Override
-	public void postprocess() {
+	public void postprocess(long interpol) {
 		isOnGround = false;
 
 		ContactEdge edge = feetFixture.getBody().getContactList();
@@ -210,7 +174,7 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 				if (feetBUD != null && groundBUD != null) {
 					if (feetBUD.isFeet || groundBUD.isFeet) {
 						if (feetBUD.canJumpFrom || groundBUD.canJumpFrom) {
-							Statics.p(this.toString() + " isOnGround!");
+							//Statics.p(this.toString() + " isOnGround!");
 							this.isOnGround = true;
 							break;
 						}			

@@ -11,6 +11,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.particle.ParticleGroupDef;
 import org.jbox2d.particle.ParticleType;
 
@@ -169,8 +170,8 @@ public class JBox2DFunctions {
 	/*
 	 * Giving rope too many segments compared to length makes it too elastic
 	 */
-	/*public static List<RevoluteJointDef> AddRopeShape(Object name, Object name_end, World world, Body anchorBody, 
-			float tot_len, int num_segments) {
+	public static void AddRopeShape(World world, BodyUserData bud, Body anchorBodyStart, Body anchorBodyEnd, float tot_len, int num_segments, 
+			float restitution, float friction, float weight_kgm2) {
 		final float len = tot_len/num_segments;
 
 		PolygonShape shape = new PolygonShape();
@@ -178,37 +179,40 @@ public class JBox2DFunctions {
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
-		fd.density = 1f; // Was 0.1, made rope strtech like crazy
-		fd.friction = 0.2f;
-		fd.restitution = .1f;
+		fd.restitution = restitution;//.1f;
+		fd.friction = friction;//0.2f;
+		fd.density = weight_kgm2;//1f; // Was 0.1, made rope strtech like crazy
 		fd.filter.categoryBits = 0x0001;
 		fd.filter.maskBits = 0xFFFF & ~0x0002;
 
-		List<RevoluteJointDef> jointlist = new ArrayList<RevoluteJointDef>();
+		//List<RevoluteJointDef> jointlist = new ArrayList<RevoluteJointDef>();
 		
-		Body prev = anchorBody;
-		for (int i = 0; i < num_segments; ++i) {
+		Body prev = anchorBodyStart;
+		for (int i = 0; i < num_segments; i++) {
 			BodyDef bd = new BodyDef();
 			bd.type = BodyType.DYNAMIC;
 			bd.position.set(prev.getPosition().x, prev.getPosition().y+(len*2));
+			
 			Body body = world.createBody(bd);
 			body.createFixture(fd);
-			if (i+1 == num_segments) {
-				body.setUserData(name_end);
-			} else {
-				body.setUserData(name);
-			}
-			list.add(body);
+			body.setUserData(bud);
+			//list.add(body);
 
 			RevoluteJointDef jd = new RevoluteJointDef();
 			jd.collideConnected = false;
 			jd.initialize(prev, body, new Vec2(prev.getPosition().x, prev.getPosition().y+(len)));
 			world.createJoint(jd);
-			jointlist.add(jd);
+			//jointlist.add(jd);
 			prev = body;
 		}
-		return jointlist;
-	}*/
+
+		RevoluteJointDef jd = new RevoluteJointDef();
+		jd.collideConnected = false;
+		jd.initialize(prev, anchorBodyEnd, new Vec2(prev.getPosition().x, prev.getPosition().y+(len)));
+		world.createJoint(jd);
+
+		//return jointlist;
+	}
 	
 
 	public static void AddWater(World world, Vec2 centre) {

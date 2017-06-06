@@ -189,7 +189,6 @@ public class HelloWorld_Edge extends JFrame implements ContactListener {
 			PolygonShape shape = (PolygonShape)b.getFixtureList().getShape();
 			Vec2 prev = shape.getVertex(shape.getVertexCount()-1);
 			for (int i=0 ; i<shape.getVertexCount() ; i++) {
-				// todo - only convert once
 				int x1 = (int)(b.getWorldPoint(prev).x*WORLD_TO_PIXELS);
 				int y1 = (int)(b.getWorldPoint(prev).y*WORLD_TO_PIXELS);
 				Vec2 v = shape.getVertex(i);
@@ -202,7 +201,6 @@ public class HelloWorld_Edge extends JFrame implements ContactListener {
 			EdgeShape shape = (EdgeShape)b.getFixtureList().getShape();
 			Vec2 prev = shape.m_vertex1;
 			Vec2 v = shape.m_vertex2;
-			// todo - only convert once
 			int x1 = (int)(b.getWorldPoint(prev).x*WORLD_TO_PIXELS);
 			int y1 = (int)(b.getWorldPoint(prev).y*WORLD_TO_PIXELS);
 			//Vec2 v = shape.getVertex(i);
