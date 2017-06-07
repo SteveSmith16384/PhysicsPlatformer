@@ -18,9 +18,8 @@ import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class Enemy extends Entity implements IDrawable, IProcessable {
+public class Enemy extends PhysicalEntity implements IDrawable, IProcessable {
 
-	private Body drawableBody;
 	private Interval interval = new Interval(1000);
 	
 	public Enemy(Main main, World world, float x, float y, float w, float h) {
@@ -28,7 +27,7 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 		
 		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, false);
 		bud.harmsPlayer = true;
-		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .2f, 1f);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .2f, 1f);
 		//drawableBody = new DrawableBody(crate);
 		
 	}
@@ -37,7 +36,7 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		//drawableBody.draw(g, system, cam_centre);
-		system.drawShape(tmpPoint, g, drawableBody, cam_centre);
+		system.drawShape(tmpPoint, g, body, cam_centre);
 		
 	}
 
@@ -47,7 +46,7 @@ public class Enemy extends Entity implements IDrawable, IProcessable {
 		if (interval.hitInterval()) {
 			Vec2 force = new Vec2();
 			force.y = -Statics.PLAYER_FORCE;//20f;//(float)Math.sin(chopper.getAngle());
-			drawableBody.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
+			body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
 
 		}
 	}

@@ -7,6 +7,7 @@ import org.jbox2d.dynamics.World;
 import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Crate;
+import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 
@@ -41,11 +42,14 @@ public class Level1 extends AbstractLevel {
 		
 		
 		// Crates
-		int CRATE_SIZE = 3;
-		for (int i=0 ; i<5 ; i++) {
+		int CRATE_SIZE = 2;
+		for (int i=0 ; i<8 ; i++) {
 			Crate crate = new Crate(main, world, Statics.WORLD_WIDTH_LOGICAL/2, i*(CRATE_SIZE+1), CRATE_SIZE, CRATE_SIZE);
 			main.addEntity(crate);
 		}
+		
+		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 3, 2, 2);
+		main.addEntity(eol);
 
 	}
 	

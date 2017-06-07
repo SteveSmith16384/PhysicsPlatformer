@@ -14,14 +14,14 @@ import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class Crate extends PhysicalEntity implements IDrawable {
+public class EndOfLevel extends PhysicalEntity implements IDrawable {
 
-	public Crate(Main main, World world, float x, float y, float w, float h) {
-		super(main, Crate.class.getSimpleName());
+	public EndOfLevel(Main main, World world, float x, float y, float w, float h) {
+		super(main, HarmfulBlock.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData("Crate", Color.magenta, this, true);
-		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .5f, 1f);
-		//drawableBody = new DrawableBody(crate);
+		BodyUserData bud = new BodyUserData("EndOfLevel", Color.pink, this, true);
+		bud.endOfLevel = true;
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, 0f, 1f, 10f);
 		
 	}
 
@@ -29,8 +29,7 @@ public class Crate extends PhysicalEntity implements IDrawable {
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		system.drawShape(tmpPoint, g, body, cam_centre);
-		//drawableBody.draw(g, system, cam_centre);
-		
+	
 	}
 
 

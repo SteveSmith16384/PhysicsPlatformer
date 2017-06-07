@@ -17,13 +17,12 @@ import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class MovingPlatform extends Entity implements IDrawable, IProcessable {
+public class MovingPlatform extends PhysicalEntity implements IDrawable, IProcessable {
 	
 	private static final float FRICTION = 1f;
 	
 	private static final int MAX_DIST = 5;
 
-	private Body body;
 	private Interval interval = new Interval(1000);
 
 	//Vec2 pos = new Vec2();

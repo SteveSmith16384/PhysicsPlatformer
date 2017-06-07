@@ -14,23 +14,21 @@ import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class HarmfulBlock extends Entity implements IDrawable {
+public class HarmfulBlock extends PhysicalEntity implements IDrawable {
 
-	public Body drawableBody;
-	
 	public HarmfulBlock(Main main, World world, float x, float y, float w, float h) {
 		super(main, HarmfulBlock.class.getSimpleName());
 		
 		BodyUserData bud = new BodyUserData("HarmfulBlock", Color.orange, this, true);
 		bud.harmsPlayer= true;
-		drawableBody = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, 0f, .2f, 1f);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, 0f, .2f, 1f);
 		
 	}
 
 
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
-		system.drawShape(tmpPoint, g, drawableBody, cam_centre);
+		system.drawShape(tmpPoint, g, body, cam_centre);
 	
 	}
 

@@ -14,11 +14,9 @@ import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class Ground extends Entity implements IDrawable {
+public class Ground extends PhysicalEntity implements IDrawable {
 
 	private static final float FRICTION = 0.8f;
-	
-	public Body body;
 	
 	/*public Ground(String name, World world, Vec2[] vertices) {
 		super(name);

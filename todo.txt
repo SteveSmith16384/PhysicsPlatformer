@@ -4,34 +4,28 @@ https://www.reddit.com/r/Cinemagraphs/
 
 
 GAMEPLAY
+Zub level
 	Knock over pile of crates to avoid damage below
-Must fill in holes to get over them
+	Must fill in holes to get over them
 Balance on rolling barrel to get across harm
 
 Push each other into harms way
 Throw rocks at each other
 Blocks drop from sky, players must get to the top
 Barrels rolling down levels, players must jump over them
-Zub level
 
 
 TODO
+Not ending whn level ends
+	Next level!  Add to levels
+Left sprite
 Pivot on platforms
-	Don't allow jumping from walls
-	Thread not stopping when window closed
-Create a proper level
-Stop moving left/right in air when left/right not pressed
-	Get the feel right
-Harmful blocks
-Overlay sprites
-	Players have jetpacks
 "Restart Level" option 
 Exit
-	Create a proper level
-Look at JBox2D examples
 
 
 LATER
+Look at JBox2D examples
 Stop moving left/right in air when left/right not pressed
 Ladders?  (Edge)
 Get to exit

@@ -24,18 +24,17 @@ import com.scs.physicsplatformer.entity.components.IProcessable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 import com.scs.physicsplatformer.input.IInputDevice;
 
-public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawable, ICollideable, IProcessable {
+public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable, IDrawable, ICollideable, IProcessable {
 
 	public static final float RAD = 0.5f;
 	private static final float MAX_VELOCITY = 5;//7f;	
 
 	private IInputDevice input;
-	public Body body;
 	private boolean isOnGround = false;
 	private long lastJumpTime = 0;
 	private boolean jetpac = false;
 	private Fixture feetFixture;
-	private BufferedImage img;
+	private BufferedImage imgl, imgr;
 
 	public PlayersAvatar(IInputDevice _input, Main main, World world, float x, float y) {
 		super(main, PlayersAvatar.class.getSimpleName());
@@ -58,7 +57,8 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 		feetFixture.setUserData(bud2);
 		feetFixture.setSensor(true);
 
-		img = Statics.img_cache.getImage("ninja0_l0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
+		imgl = Statics.img_cache.getImage("ninja0_l0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
+		imgr = Statics.img_cache.getImage("ninja0_r0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
 	}
 
 
@@ -126,7 +126,7 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		//system.drawShape(g, body, cam_centre);
-		system.drawImage(tmpPoint, img, g, body, cam_centre);
+		system.drawImage(tmpPoint, imgl, g, body, cam_centre);
 	}
 
 
@@ -144,6 +144,9 @@ public class PlayersAvatar extends Entity implements IPlayerControllable, IDrawa
 			if (bud.harmsPlayer) {
 				Statics.p("Death!");
 				main.restartAvatar(this);
+			} else if (bud.endOfLevel) {
+				main.removeEntity(this);
+				//main.nextLevel();
 			}
 		}
 	}

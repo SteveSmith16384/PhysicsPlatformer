@@ -12,6 +12,7 @@ public class BodyUserData { // For attaching to bodies
 	public boolean canJumpFrom;
 	public boolean isFeet = false;
 	public boolean harmsPlayer = false;
+	public boolean endOfLevel = false;
 
 	
 	public BodyUserData(String _name, Color c, Entity e, boolean _canJumpFrom) {

@@ -19,6 +19,7 @@ import ssmith.awt.ImageCache;
 import ssmith.util.TSArrayList;
 
 import com.scs.physicsplatformer.entity.Entity;
+import com.scs.physicsplatformer.entity.PhysicalEntity;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 import com.scs.physicsplatformer.entity.components.ICollideable;
 import com.scs.physicsplatformer.entity.components.IDrawable;
@@ -30,26 +31,26 @@ import com.scs.physicsplatformer.input.DeviceThread;
 import com.scs.physicsplatformer.input.IInputDevice;
 import com.scs.physicsplatformer.input.NewControllerListener;
 import com.scs.physicsplatformer.levels.AbstractLevel;
-import com.scs.physicsplatformer.levels.Level2;
 
 public class Main implements ContactListener, NewControllerListener {
 
 	public World world;
 	private MainWindow window;
 
-	private TSArrayList<Entity> entities = new TSArrayList<Entity>();
+	private TSArrayList<Entity> entities;// = new TSArrayList<Entity>();
 	private List<IInputDevice> newControllers = new ArrayList<>();
-	private List<PlayersAvatar> avatars = new ArrayList<>();
+	//private List<PlayersAvatar> avatars;// = new ArrayList<>();
 	private List<Player> players = new ArrayList<>();
 
 	private DrawingSystem drawingSystem;
 	private PlayerInputSystem playerInputSystem;
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
+	private int levelNum = 3;
 
 	public static void main(String[] args) {
 		Main hw = new Main();
-		hw.start();
+		//hw.start();
 	}
 
 
@@ -65,39 +66,53 @@ public class Main implements ContactListener, NewControllerListener {
 		Statics.img_cache = ImageCache.GetInstance(null);
 		Statics.img_cache.c = window;
 
-		start();
+		startLevel();
 	}
 
 
-	private void start() {
+	private void startLevel() {
+		entities = new TSArrayList<Entity>();
+		//avatars = new ArrayList<>();
+		
 		drawingSystem = new DrawingSystem();
 		playerInputSystem = new PlayerInputSystem();
 
 		Vec2 gravity = new Vec2(0f, 10.0f);
 		world = new World(gravity);
-
 		world.setContactListener(this);
 
-		level = new Level2(this);// TestLevel();
+		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// TestLevel();
 		level.createWorld(world, this);
 		this.addEntity(level);
+		
+		// Create avatars
+		for (Player player : this.players) {
+			this.createAvatar(player);
+		}
+		
 		gameLoop();
 	}
 
 
 	private void gameLoop() {
 		long interpol = 30;
-		while (window.isVisible()) {
-			float timeStep = 1.0f / Statics.FPS;//10.f;
-			int velocityIterations = 6;//8;//6;
-			int positionIterations = 4;//3;//2;
+		final float timeStep = 1.0f / Statics.FPS;//10.f;
+		final int velocityIterations = 6;//8;//6;
+		final int positionIterations = 4;//3;//2;
+		boolean anyAvatars = true;
 
+		while (window.isVisible()) {
 			while (true) {
 				synchronized (newControllers) {
 					while (this.newControllers.isEmpty() == false) {
 						this.loadPlayer(this.newControllers.remove(0));
 					}
 				}
+				
+				if (this.players.size() > 0 && !anyAvatars) {
+					//todo this.nextLevel();
+				}
+				anyAvatars = false;
 
 				// Preprocess
 				for (Entity e : this.entities) {
@@ -116,6 +131,7 @@ public class Main implements ContactListener, NewControllerListener {
 					if (e instanceof IPlayerControllable) {
 						IPlayerControllable id = (IPlayerControllable)e;
 						this.playerInputSystem.process(id);
+						anyAvatars = true;
 					}
 				}
 
@@ -344,8 +360,12 @@ public class Main implements ContactListener, NewControllerListener {
 	}
 
 	 */
-	private void remove(Body b) {
-		world.destroyBody(b);
+	public void removeEntity(Entity b) {
+		if (b instanceof PhysicalEntity) {
+			PhysicalEntity pe = (PhysicalEntity)b;
+			world.destroyBody(pe.body);
+		}
+			
 		synchronized (entities) {
 			this.entities.remove(b);
 		}		
@@ -361,19 +381,25 @@ public class Main implements ContactListener, NewControllerListener {
 
 
 	private void loadPlayer(IInputDevice input) {
-		//PlayersAvatar avatar = new PlayersAvatar(input, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL * 0.65f);
-		Point p = this.level.getPlayerStartPos();
-		PlayersAvatar avatar = new PlayersAvatar(input, this, world, p.x, p.y);
-
-		synchronized (avatars) {
-			this.avatars.add(avatar);
-		}
-		this.addEntity(avatar);
-
-		Player player = new Player();
+		Player player = new Player(input);
 		synchronized (players) {
 			this.players.add(player);
 		}
+		this.createAvatar(player);
+
+	}
+	
+	
+	private void createAvatar(Player player) {
+		//PlayersAvatar avatar = new PlayersAvatar(input, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL * 0.65f);
+		Point p = this.level.getPlayerStartPos();
+		PlayersAvatar avatar = new PlayersAvatar(player.input, this, world, p.x, p.y);
+
+		/*synchronized (avatars) {
+			this.avatars.add(avatar);
+		}*/
+		this.addEntity(avatar);
+
 
 	}
 
@@ -381,6 +407,12 @@ public class Main implements ContactListener, NewControllerListener {
 	public void restartAvatar(PlayersAvatar avatar) {
 		Point p = this.level.getPlayerStartPos();
 		avatar.body.setTransform(new Vec2(p.x, p.y), 0);
+	}
+	
+	
+	public void nextLevel() {
+		levelNum++;
+		this.startLevel();
 	}
 
 
@@ -390,9 +422,6 @@ public class Main implements ContactListener, NewControllerListener {
 				if (this.entities.contains(o)) {
 					throw new RuntimeException(o + " has already been added");
 				}
-				/*if (o instanceof Body) {
-					throw new RuntimeException(o + " is a Body - add DrawableBody at least!");
-				}*/
 			}
 			this.entities.add(o);
 		}

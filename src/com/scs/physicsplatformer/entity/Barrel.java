@@ -14,10 +14,8 @@ import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class Barrel extends Entity implements IDrawable {
+public class Barrel extends PhysicalEntity implements IDrawable {
 
-	private Body body;
-	
 	public Barrel(Main main, World world, float x, float y, float rad) {
 		super(main, "Barrel");
 		
