@@ -52,7 +52,8 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = 6;
+	private int levelNum = 1; // 4 = no exit todo, 1=too hard
+	
 
 	public static void main(String[] args) {
 		new Main();

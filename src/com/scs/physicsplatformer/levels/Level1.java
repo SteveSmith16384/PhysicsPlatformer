@@ -23,6 +23,7 @@ public class Level1 extends AbstractLevel {
 		super(main);
 	}
 
+	
 	@Override
 	public void createWorld(World world, Main main) {
 		super.addFrame(world, main);
