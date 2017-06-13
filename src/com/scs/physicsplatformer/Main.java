@@ -433,7 +433,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 			//this.setVisible(false);
 			//this.dispose();
 			restartLevel = true;
-			//startLevel(); // todo - raise flag!
+			//startLevel();
 		}
 
 	}

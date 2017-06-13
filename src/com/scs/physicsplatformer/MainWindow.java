@@ -12,7 +12,7 @@ public class MainWindow extends JFrame {
 		this.setSize(Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
 		this.setVisible(true);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.addWindowListener(main);
+		//this.addWindowListener(main);
 		this.addKeyListener(main);
 
 		this.createBufferStrategy(2);
