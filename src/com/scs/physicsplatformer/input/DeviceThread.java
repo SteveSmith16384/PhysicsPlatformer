@@ -24,10 +24,13 @@ public final class DeviceThread extends Thread {
 	private Map<Integer, IInputDevice> createdDevices = new HashMap<>();
 	private IInputDevice keyboard1, keyboard2;
 	private List<NewControllerListener> listeners = new ArrayList<>();
-
-	public DeviceThread(JFrame window) {
+	private JFrame window;
+	
+	public DeviceThread(JFrame _window) {
 		super(DeviceThread.class.getSimpleName());
 
+		window = _window;
+		
 		this.setDaemon(true);
 
 		try {
@@ -42,8 +45,6 @@ public final class DeviceThread extends Thread {
 		keyboard1 = new KeyboardInput(window, 1);
 		keyboard2 = new KeyboardInput(window, 2);
 
-		//start();
-
 	}
 
 
@@ -53,7 +54,7 @@ public final class DeviceThread extends Thread {
 
 	public void run() {
 		try {
-			while (true) {
+			while (window.isVisible()) {
 				if (USE_CONTROLLERS) {
 					IController[] gamepads = null;
 					Controllers.checkControllers();

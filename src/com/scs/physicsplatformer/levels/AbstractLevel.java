@@ -20,6 +20,12 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 			return new Level2(main);
 		case 3:
 			return new Level3(main);
+		case 4:
+			return new Level4(main);
+		case 5:
+			return new Level5(main);
+		case 6:
+			return new Level6(main);
 		default:
 			throw new RuntimeException("No such level: " + id);
 		}

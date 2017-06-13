@@ -1,9 +1,12 @@
 package com.scs.physicsplatformer.entity.systems;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import org.jbox2d.collision.shapes.CircleShape;
@@ -19,13 +22,18 @@ import com.scs.physicsplatformer.entity.components.IDrawable;
 
 public class DrawingSystem {
 
+	private Stroke stroke;
+	
 	public DrawingSystem() {
-
+		stroke = new BasicStroke(4);
 	}
 
 
 	public void process(Graphics g, IDrawable sprite, Vec2 cam_centre) {
 		sprite.draw(g, this, cam_centre);
+
+		//Graphics2D g2 = (Graphics2D)g;
+		//g2.setStroke(stroke);
 	}
 
 

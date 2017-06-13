@@ -5,6 +5,7 @@ import java.awt.Point;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Barrel;
@@ -59,13 +60,14 @@ public class Level3 extends AbstractLevel {
 	public void preprocess(long interpol) {
 		this.nextBarrel -= interpol;
 		if (nextBarrel < 0) {		
-			Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/6, 3, .5f); // todo - barrels harm
+			Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/6, 3, .5f, 2f);
+			BodyUserData bud = (BodyUserData)barrel.body.getUserData();
+			bud.harmsPlayer = true;
 			main.addEntity(barrel);
 			
 			nextBarrel = BARREL_INTERVAL;
 		}
 	}
-
 
 
 }

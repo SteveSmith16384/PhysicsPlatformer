@@ -25,10 +25,8 @@ public class MovingPlatform extends PhysicalEntity implements IDrawable, IProces
 
 	private Interval interval = new Interval(1000);
 
-	//Vec2 pos = new Vec2();
-	Vec2 dir = new Vec2();
-	float dist = 0;
-	//float maxDist = 0;		
+	private Vec2 dir = new Vec2();
+	private float dist = 0;
 	
 	public MovingPlatform(Main main, World world, float x, float y, float w, float h) {
 		super(main, MovingPlatform.class.getSimpleName());

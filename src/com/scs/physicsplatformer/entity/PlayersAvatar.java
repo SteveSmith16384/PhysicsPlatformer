@@ -34,7 +34,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 	private long lastJumpTime = 0;
 	private boolean jetpac = false;
 	private Fixture feetFixture;
-	private BufferedImage imgl, imgr;
+	private BufferedImage imgl, imgr, img;
 
 	public PlayersAvatar(IInputDevice _input, Main main, World world, float x, float y) {
 		super(main, PlayersAvatar.class.getSimpleName());
@@ -59,6 +59,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 
 		imgl = Statics.img_cache.getImage("ninja0_l0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
 		imgr = Statics.img_cache.getImage("ninja0_r0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
+		img = imgl;
 	}
 
 
@@ -69,6 +70,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 		}*/
 
 		if (input.isLeftPressed()) {
+			img = imgl;
 			Vec2 vel = body.getLinearVelocity();
 			if (vel.x > -MAX_VELOCITY) {
 				//Statics.p("Left pressed");
@@ -81,6 +83,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 				//Statics.p("Max speed reached");
 			}
 		} else if (input.isRightPressed()) {
+			img = imgr;
 			Vec2 vel = body.getLinearVelocity();
 			if (vel.x < MAX_VELOCITY) {
 				Vec2 force = new Vec2();
@@ -126,7 +129,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		//system.drawShape(g, body, cam_centre);
-		system.drawImage(tmpPoint, imgl, g, body, cam_centre);
+		system.drawImage(tmpPoint, img, g, body, cam_centre);
 	}
 
 
@@ -146,7 +149,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 				main.restartAvatar(this);
 			} else if (bud.endOfLevel) {
 				main.removeEntity(this);
-				//main.nextLevel();
+				//main.nextLevel(); NO as there might be other avatars!
 			}
 		}
 	}

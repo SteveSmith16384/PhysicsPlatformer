@@ -3,9 +3,15 @@ package com.scs.physicsplatformer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -32,65 +38,49 @@ import com.scs.physicsplatformer.input.IInputDevice;
 import com.scs.physicsplatformer.input.NewControllerListener;
 import com.scs.physicsplatformer.levels.AbstractLevel;
 
-public class Main implements ContactListener, NewControllerListener {
+public class Main implements ContactListener, NewControllerListener, KeyListener {//, WindowListener {
 
 	public World world;
 	private MainWindow window;
 
-	private TSArrayList<Entity> entities;// = new TSArrayList<Entity>();
+	private TSArrayList<Entity> entities;
 	private List<IInputDevice> newControllers = new ArrayList<>();
-	//private List<PlayersAvatar> avatars;// = new ArrayList<>();
 	private List<Player> players = new ArrayList<>();
 
 	private DrawingSystem drawingSystem;
 	private PlayerInputSystem playerInputSystem;
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
-	private int levelNum = 3;
+	private boolean restartLevel = false;
+	private int levelNum = 6;
 
 	public static void main(String[] args) {
-		Main hw = new Main();
-		//hw.start();
+		new Main();
 	}
 
 
 	public Main() {
 		super();
 
-		window = new MainWindow();
+		window = new MainWindow(this);
 
-		DeviceThread dt = new DeviceThread(window);
-		dt.addListener(this);
-		dt.start();
+		try {
+			DeviceThread dt = new DeviceThread(window);
+			dt.addListener(this);
+			dt.start();
 
-		Statics.img_cache = ImageCache.GetInstance(null);
-		Statics.img_cache.c = window;
+			Statics.img_cache = ImageCache.GetInstance(null);
+			Statics.img_cache.c = window;
 
-		startLevel();
-	}
+			drawingSystem = new DrawingSystem();
+			playerInputSystem = new PlayerInputSystem();
 
-
-	private void startLevel() {
-		entities = new TSArrayList<Entity>();
-		//avatars = new ArrayList<>();
-		
-		drawingSystem = new DrawingSystem();
-		playerInputSystem = new PlayerInputSystem();
-
-		Vec2 gravity = new Vec2(0f, 10.0f);
-		world = new World(gravity);
-		world.setContactListener(this);
-
-		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// TestLevel();
-		level.createWorld(world, this);
-		this.addEntity(level);
-		
-		// Create avatars
-		for (Player player : this.players) {
-			this.createAvatar(player);
+			startLevel();
+			this.gameLoop();
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(window, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		gameLoop();
 	}
 
 
@@ -99,91 +89,101 @@ public class Main implements ContactListener, NewControllerListener {
 		final float timeStep = 1.0f / Statics.FPS;//10.f;
 		final int velocityIterations = 6;//8;//6;
 		final int positionIterations = 4;//3;//2;
-		boolean anyAvatars = true;
-
+		
 		while (window.isVisible()) {
-			while (true) {
-				synchronized (newControllers) {
-					while (this.newControllers.isEmpty() == false) {
-						this.loadPlayer(this.newControllers.remove(0));
-					}
-				}
-				
-				if (this.players.size() > 0 && !anyAvatars) {
-					//todo this.nextLevel();
-				}
-				anyAvatars = false;
-
-				// Preprocess
-				for (Entity e : this.entities) {
-					if (e instanceof IProcessable) {
-						IProcessable id = (IProcessable)e;
-						id.preprocess(interpol);
-					}
-				}
-
-				Graphics g = window.BS.getDrawGraphics();
-				g.setColor(Color.WHITE);
-				g.fillRect(0, 0, Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
-
-				// Player input first
-				for (Entity e : this.entities) {
-					if (e instanceof IPlayerControllable) {
-						IPlayerControllable id = (IPlayerControllable)e;
-						this.playerInputSystem.process(id);
-						anyAvatars = true;
-					}
-				}
-
-				collisions.clear();
-				world.step(timeStep, velocityIterations, positionIterations);
-				while (collisions.isEmpty() == false) {
-					processCollision(collisions.remove(0));
-				}
-
-				// Position cam based on players
-				Vec2 cam_centre = new Vec2();//this.chopper.getWorldCenter().clone();
-				cam_centre.x = (Statics.WINDOW_WIDTH / 2);// / Statics.WORLD_TO_PIXELS);
-				cam_centre.y = (Statics.WINDOW_HEIGHT / 2);// / Statics.WORLD_TO_PIXELS);
-
-				// Clamp the cam
-				/*if (cam_centre.y < -Statics.WINDOW_HEIGHT/2) {
-				cam_centre.y = -Statics.WINDOW_HEIGHT/2;
-			} else if (cam_centre.y > 0) {//WORLD_HEIGHT_LOGICAL /2) {
-				cam_centre.y = 0;//WORLD_HEIGHT_LOGICAL/2;
-			}*/
-
-				// Draw screen
-				for (Entity e : this.entities) {
-					if (e instanceof IDrawable) {
-						IDrawable sprite = (IDrawable)e;
-						sprite.draw(g, drawingSystem, cam_centre);
-					}
-					if (e instanceof IProcessable) {
-						IProcessable id = (IProcessable)e;
-						id.postprocess(interpol);
-					}
-				}
-
-				/*while (this.new_joints_waiting.size() > 0){
-				RevoluteJointDef wjd = this.new_joints_waiting.remove(0);
-				world.createJoint(wjd);
-			}*/
-
-				this.entities.refresh();
-
-				//DrawParticles(g, world, cam_centre);
-
-				window.BS.show();
-
-				try {
-					interpol = 1000/Statics.FPS;
-					Thread.sleep(interpol); // todo -calc start-end diff
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			synchronized (newControllers) {
+				while (this.newControllers.isEmpty() == false) {
+					this.loadPlayer(this.newControllers.remove(0));
+					//this.entities.refresh(); // To add avatars to the main list
 				}
 			}
+
+			this.entities.refresh();
+
+			boolean anyAvatars = false;
+
+			// Preprocess
+			for (Entity e : this.entities) {
+				if (e instanceof IProcessable) {
+					IProcessable id = (IProcessable)e;
+					id.preprocess(interpol);
+				}
+			}
+
+			// Player input first
+			for (Entity e : this.entities) {
+				if (e instanceof IPlayerControllable) {
+					IPlayerControllable id = (IPlayerControllable)e;
+					this.playerInputSystem.process(id);
+					anyAvatars = true;
+				}
+			}
+
+			collisions.clear();
+			world.step(timeStep, velocityIterations, positionIterations);
+			while (collisions.isEmpty() == false) {
+				processCollision(collisions.remove(0));
+			}
+
+			// Position cam based on players
+			Vec2 cam_centre = new Vec2();//this.chopper.getWorldCenter().clone();
+			cam_centre.x = (Statics.WINDOW_WIDTH / 2);// / Statics.WORLD_TO_PIXELS);
+			cam_centre.y = (Statics.WINDOW_HEIGHT / 2);// / Statics.WORLD_TO_PIXELS);
+
+
+			// Draw screen
+			Graphics g = window.BS.getDrawGraphics();
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
+
+			for (Entity e : this.entities) {
+				if (e instanceof IDrawable) {
+					IDrawable sprite = (IDrawable)e;
+					sprite.draw(g, drawingSystem, cam_centre);
+				}
+				if (e instanceof IProcessable) {
+					IProcessable id = (IProcessable)e;
+					id.postprocess(interpol);
+				}
+			}
+
+			if (this.players.size() > 0 && anyAvatars == false) {
+				this.nextLevel();
+			} else if (restartLevel) {
+				restartLevel = false;
+				this.startLevel();
+			}
+
+			window.BS.show();
+
+			try {
+				interpol = 1000/Statics.FPS;
+				Thread.sleep(interpol); // todo - calc start-end diff
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		System.exit(0);
+	}
+
+
+	private void startLevel() {
+		entities = new TSArrayList<Entity>();
+
+		Vec2 gravity = new Vec2(0f, 10.0f);
+		world = new World(gravity);
+		world.setContactListener(this);
+
+		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// TestLevel();
+		level.createWorld(world, this);
+		this.addEntity(level);
+
+		// Create avatars
+		for (Player player : this.players) {
+			this.createAvatar(player);
+		}
+
+		//gameLoop();
 	}
 
 
@@ -365,7 +365,7 @@ public class Main implements ContactListener, NewControllerListener {
 			PhysicalEntity pe = (PhysicalEntity)b;
 			world.destroyBody(pe.body);
 		}
-			
+
 		synchronized (entities) {
 			this.entities.remove(b);
 		}		
@@ -388,19 +388,12 @@ public class Main implements ContactListener, NewControllerListener {
 		this.createAvatar(player);
 
 	}
-	
-	
+
+
 	private void createAvatar(Player player) {
-		//PlayersAvatar avatar = new PlayersAvatar(input, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL * 0.65f);
 		Point p = this.level.getPlayerStartPos();
 		PlayersAvatar avatar = new PlayersAvatar(player.input, this, world, p.x, p.y);
-
-		/*synchronized (avatars) {
-			this.avatars.add(avatar);
-		}*/
 		this.addEntity(avatar);
-
-
 	}
 
 
@@ -408,8 +401,8 @@ public class Main implements ContactListener, NewControllerListener {
 		Point p = this.level.getPlayerStartPos();
 		avatar.body.setTransform(new Vec2(p.x, p.y), 0);
 	}
-	
-	
+
+
 	public void nextLevel() {
 		levelNum++;
 		this.startLevel();
@@ -426,5 +419,65 @@ public class Main implements ContactListener, NewControllerListener {
 			this.entities.add(o);
 		}
 	}
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			//this.setVisible(false);
+			//this.dispose();
+			restartLevel = true;
+			//startLevel(); // todo - raise flag!
+		}
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+
+	}
+/*
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		//this.dispose();
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+
+	}
+
+*/
 }
 
