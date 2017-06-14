@@ -14,11 +14,11 @@ import com.scs.physicsplatformer.entity.RotatingCube;
 /*
  * Player must get across chasm using a big spinning square
  */
-public class Level5 extends AbstractLevel {
+public class Level5_BigSpinner extends AbstractLevel {
 
 	private Point playerStart;
 	
-	public Level5(Main main) {
+	public Level5_BigSpinner(Main main) {
 		super(main);
 	}
 
@@ -32,11 +32,11 @@ public class Level5 extends AbstractLevel {
 		playerStart= new Point((int)(landWidth/2), (int)(landHeight-(PlayersAvatar.RAD*2)));
 		
 		// Left land
-		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight);
+		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
 		main.addEntity(platform);
 
 		// Right land
-		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight);
+		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
 		main.addEntity(platform);
 
 		// Giant square

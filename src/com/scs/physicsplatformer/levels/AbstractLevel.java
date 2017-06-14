@@ -19,13 +19,15 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 		case 2:
 			return new Level2(main);
 		case 3:
-			return new Level3(main);
+			return new Level3_DonkeyKong(main);
 		case 4:
-			return new Level4(main);
+			return new Level4_FallingCrates(main);
 		case 5:
-			return new Level5(main);
+			return new Level5_BigSpinner(main);
 		case 6:
-			return new Level6(main);
+			return new Level6_Warehouse(main);
+		case 7:
+			return new Level7_Dominoes(main);
 		default:
 			throw new RuntimeException("No such level: " + id);
 		}
@@ -55,16 +57,16 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 
 	protected void addFrame(World world, Main main) {
 		// Borders
-		Ground ground = new Ground(main, "ground", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-1, Statics.WORLD_WIDTH_LOGICAL, 1);
+		Ground ground = new Ground(main, "ground", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-1, Statics.WORLD_WIDTH_LOGICAL, 1, 0.1f);
 		main.addEntity(ground);
 
-		Ground leftWall = new Ground(main, "leftWall", world, .5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
+		Ground leftWall = new Ground(main, "leftWall", world, .5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL, 0.1f);
 		main.addEntity(leftWall);
 
-		Ground rightWall = new Ground(main, "rightWall", world, Statics.WORLD_WIDTH_LOGICAL-.5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL);
+		Ground rightWall = new Ground(main, "rightWall", world, Statics.WORLD_WIDTH_LOGICAL-.5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL, 0.1f);
 		main.addEntity(rightWall);
 
-		Ground ceiling = new Ground(main, "ceiling", world, Statics.WORLD_WIDTH_LOGICAL/2, 1, Statics.WORLD_WIDTH_LOGICAL, 1);
+		Ground ceiling = new Ground(main, "ceiling", world, Statics.WORLD_WIDTH_LOGICAL/2, 1, Statics.WORLD_WIDTH_LOGICAL, 1, 0.1f);
 		main.addEntity(ceiling);
 
 

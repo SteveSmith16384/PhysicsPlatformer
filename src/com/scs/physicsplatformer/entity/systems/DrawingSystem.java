@@ -3,7 +3,6 @@ package com.scs.physicsplatformer.entity.systems;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Stroke;

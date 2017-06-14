@@ -11,15 +11,11 @@ import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 
-/*
- * Player must jump across chasm using a precarious pile of crates. 
- *
- */
-public class Level1 extends AbstractLevel {
+public class Level7_Dominoes extends AbstractLevel {
 
 	private Point playerStart;
 	
-	public Level1(Main main) {
+	public Level7_Dominoes(Main main) {
 		super(main);
 	}
 
@@ -28,10 +24,10 @@ public class Level1 extends AbstractLevel {
 	public void createWorld(World world, Main main) {
 		super.addFrame(world, main);
 		
-		float landWidth = Statics.WORLD_WIDTH_LOGICAL/3;
-		float landHeight = Statics.WORLD_WIDTH_LOGICAL/3;
+		float landWidth = Statics.WORLD_WIDTH_LOGICAL/5;
+		float landHeight = Statics.WORLD_WIDTH_LOGICAL/5;
 
-		playerStart= new Point((int)(landWidth/2), (int)(landHeight-(PlayersAvatar.RAD*2)));
+		playerStart = new Point((int)(landWidth/2), (int)(landHeight-(PlayersAvatar.RAD*2)));
 		
 		// Left land
 		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
@@ -42,10 +38,12 @@ public class Level1 extends AbstractLevel {
 		main.addEntity(platform);
 		
 		
-		// Crates
-		float CRATE_SIZE = 2.5f;
-		for (int i=0 ; i<8 ; i++) {
-			Crate crate = new Crate(main, world, Statics.WORLD_WIDTH_LOGICAL/2, i*(CRATE_SIZE+1), CRATE_SIZE, CRATE_SIZE);
+		// dominoes
+		float sx = landWidth;
+		float xInc = (Statics.WORLD_WIDTH_LOGICAL-(landWidth*2)) / 10f;
+		for (int i=0 ; i<7 ; i++) {
+			sx += xInc;
+			Crate crate = new Crate(main, world, sx, Statics.WORLD_HEIGHT_LOGICAL - 6, .3f, landHeight);
 			main.addEntity(crate);
 		}
 		

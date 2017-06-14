@@ -5,14 +5,13 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.gamepad4j.Controllers;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
@@ -52,7 +51,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = 1; // 4 = no exit todo, 1=too hard
+	private int levelNum = 7;
 	
 
 	public static void main(String[] args) {
@@ -112,6 +111,9 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 			}
 
 			// Player input first
+			if (DeviceThread.USE_CONTROLLERS) {
+				Controllers.checkControllers();
+			}
 			for (Entity e : this.entities) {
 				if (e instanceof IPlayerControllable) {
 					IPlayerControllable id = (IPlayerControllable)e;
@@ -134,8 +136,11 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 
 			// Draw screen
 			Graphics g = window.BS.getDrawGraphics();
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
+			
+			g.setColor(Color.white);
+			g.drawString("Press ESC to Restart", 20, 30);
 
 			for (Entity e : this.entities) {
 				if (e instanceof IDrawable) {

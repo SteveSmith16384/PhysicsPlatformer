@@ -15,13 +15,13 @@ import com.scs.physicsplatformer.entity.Ground;
 /*
  * Player must get to the top while avoiding rolling barrels
  */
-public class Level3 extends AbstractLevel {
+public class Level3_DonkeyKong extends AbstractLevel {
 
 	private static final int BARREL_INTERVAL = 10 * 1000;
 
 	private int nextBarrel = 0;
 
-	public Level3(Main main) {
+	public Level3_DonkeyKong(Main main) {
 		super(main);
 	}
 
@@ -37,7 +37,7 @@ public class Level3 extends AbstractLevel {
 
 		// Platforms
 		for (int i=0 ; i<6 ; i++) {
-			Ground platform = new Ground(main, "platform", world, 0, 0, Statics.WORLD_WIDTH_LOGICAL*.8f, .3f); // todo - make more bouncy
+			Ground platform = new Ground(main, "platform", world, 0, 0, Statics.WORLD_WIDTH_LOGICAL*.8f, .3f, .5f);
 			float x = Statics.WORLD_WIDTH_LOGICAL/2;
 			float ang = 0.07f;
 			if (i % 2 == 0) {
@@ -46,11 +46,11 @@ public class Level3 extends AbstractLevel {
 			} else {
 				x -= Statics.WORLD_WIDTH_LOGICAL*.2f;
 			}
-			platform.body.setTransform(new Vec2(x, (Statics.WORLD_HEIGHT_LOGICAL/6)*i), ang);
+			platform.body.setTransform(new Vec2(x, ((Statics.WORLD_HEIGHT_LOGICAL/6)*i)+2), ang);
 			main.addEntity(platform);
 		}
 
-		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 0, 2, 2);
+		EndOfLevel eol = new EndOfLevel(main, world, 3, 3, 2, 2);
 		main.addEntity(eol);
 
 	}

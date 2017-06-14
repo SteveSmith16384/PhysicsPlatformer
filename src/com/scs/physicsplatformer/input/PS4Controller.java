@@ -39,6 +39,12 @@ public final class PS4Controller implements IInputDevice {
 
 
 	@Override
+	public boolean isFirePressed() {
+		return gamepad.isButtonPressed(ButtonID.FACE_UP);
+	}
+
+
+	@Override
 	public float getStickDistance() {
 		StickPosition pos = gamepad.getStick(StickID.LEFT).getPosition();
 		/*if (Statics.DEBUG) {

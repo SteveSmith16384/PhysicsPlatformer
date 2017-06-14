@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
@@ -26,6 +25,7 @@ import com.scs.physicsplatformer.input.IInputDevice;
 
 public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable, IDrawable, ICollideable, IProcessable {
 
+	private static final int GRENADE_INT = 2000;
 	public static final float RAD = 0.5f;
 	private static final float MAX_VELOCITY = 5;//7f;	
 
@@ -35,6 +35,8 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 	private boolean jetpac = false;
 	private Fixture feetFixture;
 	private BufferedImage imgl, imgr, img;
+
+	private long lastGrenadeTime;
 
 	public PlayersAvatar(IInputDevice _input, Main main, World world, float x, float y) {
 		super(main, PlayersAvatar.class.getSimpleName());
@@ -57,28 +59,24 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 		feetFixture.setUserData(bud2);
 		feetFixture.setSensor(true);
 
-		imgl = Statics.img_cache.getImage("ninja0_l0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
-		imgr = Statics.img_cache.getImage("ninja0_r0", RAD * Statics.LOGICAL_TO_PIXELS*2, RAD * Statics.LOGICAL_TO_PIXELS*2);
+		float imgW = RAD * Statics.LOGICAL_TO_PIXELS * 1.8f;
+		float imgH = RAD * Statics.LOGICAL_TO_PIXELS * 2.2f;
+		imgl = Statics.img_cache.getImage("ninja0_l0", imgW, imgH);
+		imgr = Statics.img_cache.getImage("ninja0_r0", imgW, imgH);
 		img = imgl;
 	}
 
 
 	@Override
 	public void processInput() {
-		/*if (this.canJump) {
-			Statics.p("Can Jump");
-		}*/
-
 		if (input.isLeftPressed()) {
 			img = imgl;
 			Vec2 vel = body.getLinearVelocity();
 			if (vel.x > -MAX_VELOCITY) {
 				//Statics.p("Left pressed");
 				Vec2 force = new Vec2();
-				force.x = -Statics.PLAYER_FORCE;//20f;
-				//body.body.applyForceToCenter(force);//, v);
+				force.x = -Statics.PLAYER_FORCE;
 				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
-				//drawableBody.setLinearVelocity(force);
 			} else {
 				//Statics.p("Max speed reached");
 			}
@@ -88,9 +86,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 			if (vel.x < MAX_VELOCITY) {
 				Vec2 force = new Vec2();
 				force.x = Statics.PLAYER_FORCE;//20f;
-				//body.body.applyForceToCenter(force);//, v);
 				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
-				//drawableBody.setLinearVelocity(force);
 			} else {
 				//Statics.p("Max speed reached");
 			}
@@ -115,6 +111,13 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 				//Statics.p("Not on ground");
 			}
 		}
+		if (input.isFirePressed()) {
+			if (System.currentTimeMillis() > lastGrenadeTime + GRENADE_INT) {
+				Grenade grenade = new Grenade(main, this.body.getWorldCenter(), 1);
+				main.addEntity(grenade);
+				lastGrenadeTime = System.currentTimeMillis();
+			}
+		}
 
 		Vec2 vel = body.getLinearVelocity();
 		// cap max velocity on x		
@@ -128,7 +131,6 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
-		//system.drawShape(g, body, cam_centre);
 		system.drawImage(tmpPoint, img, g, body, cam_centre);
 	}
 
@@ -141,9 +143,10 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 		} else {
 			f = contact.getFixtureA();
 		}
-		//Statics.p("Player collided with " + f);
-		BodyUserData bud = (BodyUserData)f.getUserData();
+		//Statics.p("Player collided with " + f.getBody());
+		BodyUserData bud = (BodyUserData)f.getBody().getUserData();
 		if (bud != null) {
+			Statics.p("Player collided with " + bud.name + " at " + contact.getTangentSpeed());
 			if (bud.harmsPlayer) {
 				Statics.p("Death!");
 				main.restartAvatar(this);

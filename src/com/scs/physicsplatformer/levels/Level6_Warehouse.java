@@ -13,9 +13,9 @@ import com.scs.physicsplatformer.entity.PlayersAvatar;
 /*
  * Player must get over a high wall of crates
  */
-public class Level6 extends AbstractLevel {
+public class Level6_Warehouse extends AbstractLevel {
 
-	public Level6(Main main) {
+	public Level6_Warehouse(Main main) {
 		super(main);
 	}
 	

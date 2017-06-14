@@ -8,20 +8,20 @@ import ssmith.lang.Functions;
 
 import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
-import com.scs.physicsplatformer.entity.Barrel;
+import com.scs.physicsplatformer.entity.Crate;
 import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
 
 /*
  * Barrels fall from the sky
  */
-public class Level4 extends AbstractLevel {
+public class Level4_FallingCrates extends AbstractLevel {
 
 	private static final int BARREL_INTERVAL = 5 * 1000;
 
 	private int nextBarrel = 0;
 
-	public Level4(Main main) {
+	public Level4_FallingCrates(Main main) {
 		super(main);
 	}
 
@@ -41,14 +41,14 @@ public class Level4 extends AbstractLevel {
 		float landHeight = Statics.WORLD_WIDTH_LOGICAL/7;
 
 		// Left land
-		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight);
+		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
 		main.addEntity(platform);
 
 		// Right land
-		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight);
+		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
 		main.addEntity(platform);
 
-		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 0, 2, 2);
+		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 3, 2, 2);
 		main.addEntity(eol);
 
 	}
@@ -59,9 +59,12 @@ public class Level4 extends AbstractLevel {
 		this.nextBarrel -= interpol;
 		if (nextBarrel < 0) {		
 			float rad = Functions.rndFloat(.5f,  2f);
-			Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/2, 3, rad, .5f);
-			main.addEntity(barrel);
-			
+			//Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/2, 3, rad, .5f);
+			//main.addEntity(barrel);
+			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_WIDTH_LOGICAL*.75f);
+			Crate crate = new Crate(main, main.world, x, 4, rad, rad);
+			main.addEntity(crate);
+
 			nextBarrel = BARREL_INTERVAL;
 		}
 	}

@@ -25,7 +25,7 @@ public class TestLevel extends AbstractLevel {
 		
 		//Platforms
 		
-		Ground platform = new Ground(main, "platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f);
+		Ground platform = new Ground(main, "platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f, 0.1f);
 		platform.body.setTransform(new Vec2(Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2), 0.06f);
 		main.addEntity(platform);
 		

@@ -4,31 +4,23 @@ http://www.badlogicgames.com/wordpress/?p=2017
 
 LEVELS
 Zub level
-	Giant rotating cube
-	Knock over pile of crates to avoid damage below
-	Must fill in holes to get over them
 Balance on rolling barrel to get across harm
 Blocks drop from sky, players must get to the top
-	Barrels rolling down levels, players must jump over them
 
 
 URGENT
-	Raise flag when restarting level!
-	TEST Go to next level when get to end
-	Level3 - barrels should harm
-	Esc to restart level
-	Game not ending when win closed
-	Next level!  Add to levels
-	Left sprite
+Player harmed if collision too hard
+	Position player sprite better
+	Level3 - No exit
+	Grenade
+	Explosion
 
 
 TODO
-Position player sprite better
 Pivot on platforms
-	"Restart Level" option 
 Look at JBox2D examples
 Stop moving left/right in air when left/right not pressed
-Ladders?  (Edge)
+Ladders
 Crates floating in water
 Wind
 Bridge that wobbles

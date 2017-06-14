@@ -8,6 +8,8 @@ public interface IInputDevice {
 	
 	boolean isJumpPressed();
 
+	boolean isFirePressed();
+
 	float getStickDistance();
 	
 }

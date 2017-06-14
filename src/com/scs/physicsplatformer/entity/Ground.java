@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
@@ -28,11 +27,11 @@ public class Ground extends PhysicalEntity implements IDrawable {
 	}*/
 
 	
-	public Ground(Main main, String name, World world, float cx, float cy, float w, float h) {
+	public Ground(Main main, String name, World world, float cx, float cy, float w, float h, float bounciness) {
 		super(main, name);
 		
 		BodyUserData bud = new BodyUserData("Ground", Color.darkGray, this, true);
-		body = JBox2DFunctions.AddRectangle(bud, world, cx, cy, w, h, BodyType.STATIC, .1f, FRICTION, 0.8f);
+		body = JBox2DFunctions.AddRectangle(bud, world, cx, cy, w, h, BodyType.STATIC, bounciness, FRICTION, 0.8f);
 	}
 
 	
