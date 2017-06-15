@@ -9,6 +9,8 @@ Blocks drop from sky, players must get to the top
 
 
 URGENT
+Not exiting when window closed
+More barrels in donkey kong
 Player harmed if collision too hard
 	Position player sprite better
 	Level3 - No exit
