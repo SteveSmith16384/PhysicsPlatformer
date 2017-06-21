@@ -26,7 +26,7 @@ import com.scs.physicsplatformer.input.IInputDevice;
 public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable, IDrawable, ICollideable, IProcessable {
 
 	private static final int GRENADE_INT = 2000;
-	public static final float RAD = 0.5f;
+	public static final float RAD = 0.6f;
 	private static final float MAX_VELOCITY = 5;//7f;	
 
 	private IInputDevice input;
@@ -35,7 +35,6 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 	private boolean jetpac = false;
 	private Fixture feetFixture;
 	private BufferedImage imgl, imgr, img;
-
 	private long lastGrenadeTime;
 
 	public PlayersAvatar(IInputDevice _input, Main main, World world, float x, float y) {
@@ -55,7 +54,6 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 		BodyUserData bud2 = new BodyUserData("Player_Feet", null, this, false);
 		bud2.isFeet = true;
 		feetFixture = body.createFixture(ps, 0f);
-		//Fixture fixture = new Fixture();
 		feetFixture.setUserData(bud2);
 		feetFixture.setSensor(true);
 
@@ -75,29 +73,28 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 			if (vel.x > -MAX_VELOCITY) {
 				//Statics.p("Left pressed");
 				Vec2 force = new Vec2();
-				force.x = -Statics.PLAYER_FORCE;
+				force.x = -Statics.PLAYER_MOVE_FORCE;
 				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
 			} else {
-				//Statics.p("Max speed reached");
+				Statics.p("Max speed reached");
 			}
 		} else if (input.isRightPressed()) {
 			img = imgr;
 			Vec2 vel = body.getLinearVelocity();
 			if (vel.x < MAX_VELOCITY) {
 				Vec2 force = new Vec2();
-				force.x = Statics.PLAYER_FORCE;//20f;
+				force.x = Statics.PLAYER_MOVE_FORCE;//20f;
 				body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
 			} else {
-				//Statics.p("Max speed reached");
+				Statics.p("Max speed reached");
 			}
 		}
 		if (input.isJumpPressed()) {
-			if (jetpac || isOnGround) { //this.isOnGround()) {
+			if (jetpac || isOnGround) {
 				// Did we just jump?
 				if (System.currentTimeMillis() - lastJumpTime > 100) {
 					Vec2 force = new Vec2();
-					force.y = -Statics.PLAYER_FORCE/2;//20f;//(float)Math.sin(chopper.getAngle());
-					//drawableBody.applyForceToCenter(force);//, v);
+					force.y = -Statics.PLAYER_JUMP_FORCE/2;//20f;
 
 					// Move slightly up
 					Vec2 pos = body.getPosition();

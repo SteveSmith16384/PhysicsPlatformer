@@ -99,10 +99,10 @@ public class HW_Rope extends JFrame implements ContactListener {
 		//Body wall = addGround("Wall", world, 200/WORLD_TO_PIXELS, WALL_HEIGHT, 2, WALL_HEIGHT, BodyType.DYNAMIC);
 
 		// Chain
-		Vec2[] v = new Vec2[10];
+		/*Vec2[] v = new Vec2[10];
 		for (int i=0 ; i<10 ; i++) {
 			v[i] = new Vec2(i*5, rnd.nextInt(3));
-		}
+		}*/
 
 		addRopeShape(world);
 
@@ -226,7 +226,7 @@ public class HW_Rope extends JFrame implements ContactListener {
 
 	}
 
-
+/*
 	public static void DrawShape_OLD(Graphics g, Body b) {
 		PolygonShape shape = (PolygonShape)b.getFixtureList().getShape();
 		//Vec2 pos = b.getWorldCenter();
@@ -238,23 +238,19 @@ public class HW_Rope extends JFrame implements ContactListener {
 			Vec2 v = shape.getVertex(i);
 			int x2 = (int)(b.getWorldPoint(v).x*WORLD_TO_PIXELS);
 			int y2 = (int)(b.getWorldPoint(v).y*WORLD_TO_PIXELS);
-			/*int x1 = (int)prev.x + (int)pos.x;
-            int y1 = (int)prev.y +  + (int)pos.y;
-            int x2 = (int)v.x + (int)pos.x;
-            int y2 = (int)v.y + (int)pos.y;*/
 			g.drawLine(x1, y1, x2, y2);
 			prev = v;
 		}
 
 	}
 
-
+*/
 	public void addRopeShape(World world) {
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(0.5f, 0.125f);
+		PolygonShape ropeShape = new PolygonShape();
+		ropeShape.setAsBox(0.5f, 0.125f);
 
 		FixtureDef fd = new FixtureDef();
-		fd.shape = shape;
+		fd.shape = ropeShape;
 		fd.density = 20.0f;
 		fd.friction = 0.2f;
 		fd.filter.categoryBits = 0x0001;
@@ -271,11 +267,16 @@ public class HW_Rope extends JFrame implements ContactListener {
 		Body prevBody = null;
 		for (int i = 0; i < N; ++i) {
 			BodyDef bd = new BodyDef();
+			if (i == 0) {
+				bd.type = BodyType.STATIC;
+			} else {
 			bd.type = BodyType.DYNAMIC;
+			}
 			bd.position.set(0.5f + 1.0f * i, y);
+			
 			if (i == N - 1) {
 				// Create anchor box
-				shape.setAsBox(1.5f, 1.5f);
+				ropeShape.setAsBox(1.5f, 1.5f);
 				fd.density = 100.0f;
 				fd.filter.categoryBits = 0x0002;
 				bd.position.set(1.0f * i, y);
@@ -285,9 +286,7 @@ public class HW_Rope extends JFrame implements ContactListener {
 
 			Body body = world.createBody(bd);
 
-			//if (i < N-1) {
 			objects.add(body);
-			//}
 
 			body.createFixture(fd);
 
@@ -300,15 +299,9 @@ public class HW_Rope extends JFrame implements ContactListener {
 			prevBody = body;
 		}
 
-		//m_ropeDef.localAnchorB.setZero();
-
 		float extraLength = 0.01f;
 		m_ropeDef.maxLength = N - 1.0f + extraLength;
 		m_ropeDef.bodyB = prevBody;
-
-		//m_ropeDef.bodyA = wall;
-		//Joint m_rope = world.createJoint(m_ropeDef);
-
 	}
 
 
@@ -334,14 +327,12 @@ public class HW_Rope extends JFrame implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		// TODO Auto-generated method stub
 
 	}
 

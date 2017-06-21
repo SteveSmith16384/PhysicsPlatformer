@@ -72,4 +72,10 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 
 	}
 
+
+	@Override
+	public void cleanup(World world) {
+		// Do nothing
+	}
+
 }

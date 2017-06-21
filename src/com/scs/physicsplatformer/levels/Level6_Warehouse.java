@@ -31,7 +31,7 @@ public class Level6_Warehouse extends AbstractLevel {
 			float sx = Statics.WORLD_WIDTH_LOGICAL/4;
 			for (int x=0 ; x<4 ; x++) {
 				//if (y <= x) {
-				Crate crate = new Crate(main, world, sx, sy, CRATE_SIZE, CRATE_SIZE);
+				Crate crate = new Crate(main, world, sx, sy, CRATE_SIZE, CRATE_SIZE, 1f);
 				main.addEntity(crate);
 				//}
 				sx += CRATE_SIZE+1;

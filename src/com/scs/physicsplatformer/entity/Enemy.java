@@ -44,7 +44,7 @@ public class Enemy extends PhysicalEntity implements IDrawable, IProcessable {
 	public void postprocess(long interpol) {
 		if (interval.hitInterval()) {
 			Vec2 force = new Vec2();
-			force.y = -Statics.PLAYER_FORCE;//20f;//(float)Math.sin(chopper.getAngle());
+			force.y = -Statics.PLAYER_JUMP_FORCE;//20f;//(float)Math.sin(chopper.getAngle());
 			body.applyLinearImpulse(force, Statics.VEC_CENTRE, true);
 
 		}

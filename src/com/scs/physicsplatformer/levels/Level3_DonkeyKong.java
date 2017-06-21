@@ -17,7 +17,7 @@ import com.scs.physicsplatformer.entity.Ground;
  */
 public class Level3_DonkeyKong extends AbstractLevel {
 
-	private static final int BARREL_INTERVAL = 10 * 1000;
+	private static final int BARREL_INTERVAL = 5 * 1000;
 
 	private int nextBarrel = 0;
 

@@ -43,7 +43,7 @@ public class Level7_Dominoes extends AbstractLevel {
 		float xInc = (Statics.WORLD_WIDTH_LOGICAL-(landWidth*2)) / 10f;
 		for (int i=0 ; i<7 ; i++) {
 			sx += xInc;
-			Crate crate = new Crate(main, world, sx, Statics.WORLD_HEIGHT_LOGICAL - 6, .3f, landHeight);
+			Crate crate = new Crate(main, world, sx, Statics.WORLD_HEIGHT_LOGICAL - 6, .3f, landHeight, 1f);
 			main.addEntity(crate);
 		}
 		

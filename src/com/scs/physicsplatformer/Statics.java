@@ -10,8 +10,8 @@ public class Statics {
 
 	public static final boolean DEBUG = true;
 	
-	public static final float PLAYER_WIDTH = 100f;
-	public static final float PLAYER_FORCE = 5f;//.2f; // 100f;
+	public static final float PLAYER_MOVE_FORCE = .5f; // 5f;//.2f; // 100f;
+	public static final float PLAYER_JUMP_FORCE = 9f;//.2f; // 100f;
 	
 	public static final int FPS = 30;
 	public static final int LOGICAL_TO_PIXELS = 20;

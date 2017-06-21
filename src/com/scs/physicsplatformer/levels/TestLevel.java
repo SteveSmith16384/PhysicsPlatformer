@@ -7,10 +7,10 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
-import com.scs.physicsplatformer.entity.Crate;
 import com.scs.physicsplatformer.entity.Ground;
 import com.scs.physicsplatformer.entity.HarmfulBlock;
 import com.scs.physicsplatformer.entity.MovingPlatform;
+import com.scs.physicsplatformer.entity.RopeBridge;
 import com.scs.physicsplatformer.entity.Trampoline;
 
 public class TestLevel extends AbstractLevel {
@@ -36,10 +36,13 @@ public class TestLevel extends AbstractLevel {
 		main.addEntity(moving);
 		
 		// Rope bridge
-		Crate crate1 = new Crate(main, world, 10, 20, 1, 1);
+		//RopeBridge rb = new RopeBridge(main, 10f, 20f, 20);
+		//main.addEntity(rb);
+		
+		/*Crate crate1 = new Crate(main, world, 10, 20, 1, 1, 1f);
 		main.addEntity(crate1);
-		Crate crate2 = new Crate(main, world, 30, 20, 1, 1);
-		main.addEntity(crate2);
+		Crate crate2 = new Crate(main, world, 30, 20, 1, 1, 1f);
+		main.addEntity(crate2);*/
 		
 /*		JBox2DFunctions.AddRopeShape(world, new BodyUserData("Rope", Color.yellow, null, true), crate1.drawableBody, crate2.drawableBody, 20f, 7, .1f, .2f, 1);
 		this.entities.add(crate2); - -todo make entity

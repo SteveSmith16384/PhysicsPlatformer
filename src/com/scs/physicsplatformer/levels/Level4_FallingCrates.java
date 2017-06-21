@@ -62,7 +62,7 @@ public class Level4_FallingCrates extends AbstractLevel {
 			//Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/2, 3, rad, .5f);
 			//main.addEntity(barrel);
 			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_WIDTH_LOGICAL*.75f);
-			Crate crate = new Crate(main, main.world, x, 4, rad, rad);
+			Crate crate = new Crate(main, main.world, x, 4, rad, rad, .5f);
 			main.addEntity(crate);
 
 			nextBarrel = BARREL_INTERVAL;

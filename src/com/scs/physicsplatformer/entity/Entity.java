@@ -2,6 +2,8 @@ package com.scs.physicsplatformer.entity;
 
 import java.awt.Point;
 
+import org.jbox2d.dynamics.World;
+
 import com.scs.physicsplatformer.Main;
 
 public abstract class Entity { 
@@ -21,6 +23,8 @@ public abstract class Entity {
 		name =_name;
 	}
 	
+
+	public abstract void cleanup(World world);
 	
 	@Override
 	public String toString() {

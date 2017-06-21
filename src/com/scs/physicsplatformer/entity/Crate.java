@@ -15,20 +15,18 @@ import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class Crate extends PhysicalEntity implements IDrawable {
 
-	public Crate(Main main, World world, float x, float y, float w, float h) {
+	public Crate(Main main, World world, float x, float y, float w, float h, float weight) {
 		super(main, Crate.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData("Crate", Color.magenta, this, true);
-		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .5f, 1f);
-		//drawableBody = new DrawableBody(crate);
-		
+		BodyUserData bud = new BodyUserData("Crate", Color.white, this, true);
+		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .5f, weight);
+	
 	}
 
 
 	@Override
 	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
 		system.drawShape(tmpPoint, g, body, cam_centre);
-		//drawableBody.draw(g, system, cam_centre);
 		
 	}
 

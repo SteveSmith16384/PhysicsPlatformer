@@ -3,6 +3,7 @@ package com.scs.physicsplatformer.entity.systems;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Stroke;
@@ -22,7 +23,7 @@ import com.scs.physicsplatformer.entity.components.IDrawable;
 public class DrawingSystem {
 
 	private Stroke stroke;
-	
+
 	public DrawingSystem() {
 		stroke = new BasicStroke(4);
 	}
@@ -31,8 +32,6 @@ public class DrawingSystem {
 	public void process(Graphics g, IDrawable sprite, Vec2 cam_centre) {
 		sprite.draw(g, this, cam_centre);
 
-		//Graphics2D g2 = (Graphics2D)g;
-		//g2.setStroke(stroke);
 	}
 
 
@@ -56,9 +55,12 @@ public class DrawingSystem {
 		g.drawImage(img, (int)(tmp.x-rad), (int)(tmp.y-rad), null);
 
 	}
-	
-	
+
+
 	public void drawShape(Point tmp, Graphics g, Body b, Vec2 cam_centre) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setStroke(stroke);
+
 		/*BodyUserData userdata = (BodyUserData)b.getUserData();
 		if (userdata != null) {
 			g.setColor(userdata.col);
@@ -86,7 +88,7 @@ public class DrawingSystem {
 					getPixelPos(tmp, b.getWorldPoint(v), cam_centre);
 					polygon.addPoint(tmp.x, tmp.y);
 				}
-				g.fillPolygon(polygon);
+				g.drawPolygon(polygon);
 
 			} else if (f.getShape() instanceof EdgeShape) {
 				EdgeShape shape = (EdgeShape)f.getShape();
@@ -128,7 +130,7 @@ public class DrawingSystem {
 				Vec2 worldpos = b.getPosition();
 				getPixelPos(tmp, worldpos, cam_centre);
 				int rad = (int)(shape2.getRadius() * Statics.LOGICAL_TO_PIXELS);
-				g.fillOval((int)(tmp.x-rad), (int)(tmp.y-rad), rad*2, rad*2);
+				g.drawOval((int)(tmp.x-rad), (int)(tmp.y-rad), rad*2, rad*2);
 
 			} else {
 				throw new RuntimeException("Cannot draw " + b);
@@ -139,7 +141,7 @@ public class DrawingSystem {
 		}
 	}
 
-/*
+	/*
 	private void DrawParticles(Graphics g, World world, Vec2 cam_centre) {
 		int particleCount = world.getParticleCount();// system.getParticleCount();
 		if (particleCount != 0) {
@@ -162,5 +164,5 @@ public class DrawingSystem {
 
 		}
 	}
-*/
+	 */
 }

@@ -50,7 +50,7 @@ public class Level2 extends AbstractLevel {
 		// Crates
 		int CRATE_SIZE = 2;
 		for (int i=0 ; i<7 ; i++) {
-			Crate crate = new Crate(main, world, landWidth-CRATE_SIZE,Statics.WORLD_HEIGHT_LOGICAL-landHeight-(i*(CRATE_SIZE+.5f)), CRATE_SIZE, CRATE_SIZE);
+			Crate crate = new Crate(main, world, landWidth-CRATE_SIZE,Statics.WORLD_HEIGHT_LOGICAL-landHeight-(i*(CRATE_SIZE+.5f)), CRATE_SIZE, CRATE_SIZE, 1f);
 			main.addEntity(crate);
 		}
 

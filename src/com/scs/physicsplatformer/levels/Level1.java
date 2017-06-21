@@ -45,7 +45,7 @@ public class Level1 extends AbstractLevel {
 		// Crates
 		float CRATE_SIZE = 2.5f;
 		for (int i=0 ; i<8 ; i++) {
-			Crate crate = new Crate(main, world, Statics.WORLD_WIDTH_LOGICAL/2, i*(CRATE_SIZE+1), CRATE_SIZE, CRATE_SIZE);
+			Crate crate = new Crate(main, world, Statics.WORLD_WIDTH_LOGICAL/2, i*(CRATE_SIZE+1), CRATE_SIZE, CRATE_SIZE, .5f);
 			main.addEntity(crate);
 		}
 		

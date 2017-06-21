@@ -24,7 +24,6 @@ import ssmith.awt.ImageCache;
 import ssmith.util.TSArrayList;
 
 import com.scs.physicsplatformer.entity.Entity;
-import com.scs.physicsplatformer.entity.PhysicalEntity;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 import com.scs.physicsplatformer.entity.components.ICollideable;
 import com.scs.physicsplatformer.entity.components.IDrawable;
@@ -79,6 +78,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 			this.gameLoop();
 			
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			JOptionPane.showMessageDialog(window, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -180,7 +180,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 		world = new World(gravity);
 		world.setContactListener(this);
 
-		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// TestLevel();
+		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// new TestLevel(this);// 
 		level.createWorld(world, this);
 		this.addEntity(level);
 
@@ -218,6 +218,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 		//Statics.p("BeginContact BodyUserData A:" + ba_ud);
 		//Statics.p("BeginContact BodyUserData B:" + bb_ud);
 
+		if (ba_ud != null && bb_ud != null) {
 		Entity entityA = ba_ud.entity;
 		Entity entityB = bb_ud.entity;
 
@@ -230,6 +231,8 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 		} else if (entityB instanceof ICollideable) {
 			ICollideable ic = (ICollideable) entityB;
 			ic.collided(contact, false);
+		}
+		
 		}
 		//Collisions.Collision(entityA, entityB);
 
@@ -367,10 +370,11 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 
 	 */
 	public void removeEntity(Entity b) {
-		if (b instanceof PhysicalEntity) {
+		b.cleanup(world);
+		/*if (b instanceof PhysicalEntity) {
 			PhysicalEntity pe = (PhysicalEntity)b;
 			world.destroyBody(pe.body);
-		}
+		}*/
 
 		synchronized (entities) {
 			this.entities.remove(b);

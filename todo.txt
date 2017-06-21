@@ -2,20 +2,16 @@ http://www.iforce2d.net/b2dtut/jumpability
 http://www.badlogicgames.com/wordpress/?p=2017
 
 
-LEVELS
-Zub level
-Balance on rolling barrel to get across harm
-Blocks drop from sky, players must get to the top
-
-
 URGENT
-Not exiting when window closed
-More barrels in donkey kong
+Level2 - start flames lower, make red, make exit green
+Rope bridge
+Improve gfx
+Check levels are completable
 Player harmed if collision too hard
-	Position player sprite better
-	Level3 - No exit
-	Grenade
-	Explosion
+Test grenades
+	Not exiting when window closed
+	More barrels in donkey kong
+Stop player sticking to walls
 
 
 TODO
