@@ -1,5 +1,6 @@
 package com.scs.physicsplatformer.levels;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import org.jbox2d.common.Vec2;
@@ -37,7 +38,7 @@ public class Level3_DonkeyKong extends AbstractLevel {
 
 		// Platforms
 		for (int i=0 ; i<6 ; i++) {
-			Ground platform = new Ground(main, "platform", world, 0, 0, Statics.WORLD_WIDTH_LOGICAL*.8f, .3f, .5f);
+			Ground platform = new Ground(main, "platform", world, 0, 0, Statics.WORLD_WIDTH_LOGICAL*.8f, .3f, Color.white, .5f);
 			float x = Statics.WORLD_WIDTH_LOGICAL/2;
 			float ang = 0.07f;
 			if (i % 2 == 0) {

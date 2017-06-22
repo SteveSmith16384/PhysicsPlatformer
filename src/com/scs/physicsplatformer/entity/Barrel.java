@@ -18,7 +18,7 @@ public class Barrel extends PhysicalEntity implements IDrawable {
 	public Barrel(Main main, World world, float x, float y, float rad, float weight) {
 		super(main, "Barrel");
 		
-		BodyUserData bud = new BodyUserData("Crate", Color.yellow, this, true);
+		BodyUserData bud = new BodyUserData("Crate", Color.red, this, true);
 		body = JBox2DFunctions.AddCircle(bud, world, x, y, rad, BodyType.DYNAMIC, .1f, .2f, weight);
 	}
 

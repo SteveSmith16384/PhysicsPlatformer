@@ -18,7 +18,7 @@ public class HarmfulBlock extends PhysicalEntity implements IDrawable {
 	public HarmfulBlock(Main main, World world, float x, float y, float w, float h) {
 		super(main, HarmfulBlock.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData("HarmfulBlock", Color.orange, this, true);
+		BodyUserData bud = new BodyUserData("HarmfulBlock", Color.red, this, true);
 		bud.harmsPlayer= true;
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, 0f, .2f, 1f);
 		

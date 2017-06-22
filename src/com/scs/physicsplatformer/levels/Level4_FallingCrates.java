@@ -1,5 +1,6 @@
 package com.scs.physicsplatformer.levels;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
@@ -28,7 +29,7 @@ public class Level4_FallingCrates extends AbstractLevel {
 	
 	@Override
 	public Point getPlayerStartPos() {
-		return new Point(5, Statics.WORLD_HEIGHT_LOGICAL-5);
+		return new Point(5, Statics.WORLD_HEIGHT_LOGICAL-5); // todo - move to below to avoid strrating in ground
 
 	}
 
@@ -38,14 +39,14 @@ public class Level4_FallingCrates extends AbstractLevel {
 		super.addFrame(world, main);
 
 		float landWidth = Statics.WORLD_WIDTH_LOGICAL/3;
-		float landHeight = Statics.WORLD_WIDTH_LOGICAL/7;
+		float landHeight = Statics.WORLD_WIDTH_LOGICAL/5;
 
 		// Left land
-		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
+		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.white, 0.1f);
 		main.addEntity(platform);
 
 		// Right land
-		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
+		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.white, 0.1f);
 		main.addEntity(platform);
 
 		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 3, 2, 2);
@@ -58,10 +59,10 @@ public class Level4_FallingCrates extends AbstractLevel {
 	public void preprocess(long interpol) {
 		this.nextBarrel -= interpol;
 		if (nextBarrel < 0) {		
-			float rad = Functions.rndFloat(.5f,  2f);
+			float rad = Functions.rndFloat(.8f, 3f);
 			//Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/2, 3, rad, .5f);
 			//main.addEntity(barrel);
-			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.25f, Statics.WORLD_WIDTH_LOGICAL*.75f);
+			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.2f, Statics.WORLD_WIDTH_LOGICAL*.8f);
 			Crate crate = new Crate(main, main.world, x, 4, rad, rad, .5f);
 			main.addEntity(crate);
 

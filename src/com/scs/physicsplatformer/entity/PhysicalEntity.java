@@ -4,8 +4,9 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.entity.components.IDrawable;
 
-public class PhysicalEntity extends Entity {
+public abstract class PhysicalEntity extends Entity implements IDrawable {
 
 	public Body body;
 	

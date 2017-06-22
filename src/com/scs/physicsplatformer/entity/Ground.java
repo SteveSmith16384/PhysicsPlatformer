@@ -27,10 +27,10 @@ public class Ground extends PhysicalEntity implements IDrawable {
 	}*/
 
 	
-	public Ground(Main main, String name, World world, float cx, float cy, float w, float h, float bounciness) {
+	public Ground(Main main, String name, World world, float cx, float cy, float w, float h, Color c, float bounciness) {
 		super(main, name);
 		
-		BodyUserData bud = new BodyUserData("Ground", Color.darkGray, this, true);
+		BodyUserData bud = new BodyUserData("Ground", c, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, cx, cy, w, h, BodyType.STATIC, bounciness, FRICTION, 0.8f);
 	}
 

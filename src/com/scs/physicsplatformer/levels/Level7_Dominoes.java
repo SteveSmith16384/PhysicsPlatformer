@@ -1,5 +1,6 @@
 package com.scs.physicsplatformer.levels;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
@@ -30,11 +31,11 @@ public class Level7_Dominoes extends AbstractLevel {
 		playerStart = new Point((int)(landWidth/2), (int)(landHeight-(PlayersAvatar.RAD*2)));
 		
 		// Left land
-		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
+		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.white, 0.1f);
 		main.addEntity(platform);
 
 		// Right land
-		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
+		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.white, 0.1f);
 		main.addEntity(platform);
 		
 		

@@ -20,17 +20,20 @@ public class MovingPlatform extends PhysicalEntity implements IDrawable, IProces
 	
 	private static final float FRICTION = 1f;
 	
-	private static final int MAX_DIST = 5;
+	//private static final int MAX_DIST = 5;
 
 	private Interval interval = new Interval(1000);
 
+	private float maxDist;
 	private Vec2 dir = new Vec2();
 	private float dist = 0;
 	
-	public MovingPlatform(Main main, World world, float x, float y, float w, float h) {
+	public MovingPlatform(Main main, World world, float x, float y, float w, float h, Color c, float maxDist_) {
 		super(main, MovingPlatform.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, true);
+		maxDist = maxDist_;
+		
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), c, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, FRICTION, 1f);
 		
 		dir.x = 1;
@@ -49,7 +52,7 @@ public class MovingPlatform extends PhysicalEntity implements IDrawable, IProces
 	public void postprocess(long interpol) {
 		if (interval.hitInterval()) {
 			dist += dir.length();
-			if(dist > MAX_DIST) {
+			if(dist > maxDist) {
 				dir.mulLocal(-1);
 				dist = 0;
 			}

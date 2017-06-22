@@ -9,17 +9,14 @@ import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
+import com.scs.physicsplatformer.entity.MovingPlatform;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
-import com.scs.physicsplatformer.entity.RotatingCube;
 
-/*
- * Player must get across chasm using a big spinning square
- */
-public class Level5_BigSpinner extends AbstractLevel {
+public class Level8_MovingPlatforms extends AbstractLevel {
 
 	private Point playerStart;
 	
-	public Level5_BigSpinner(Main main) {
+	public Level8_MovingPlatforms(Main main) {
 		super(main);
 	}
 
@@ -40,9 +37,9 @@ public class Level5_BigSpinner extends AbstractLevel {
 		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.white, 0.1f);
 		main.addEntity(platform);
 
-		// Giant square
-		RotatingCube cube = new RotatingCube(main, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, 3f, Statics.WORLD_WIDTH_LOGICAL/2);
-		main.addEntity(cube);
+		// Moving platform
+		MovingPlatform moving = new MovingPlatform(main, world, Statics.WORLD_WIDTH_LOGICAL * .5f, landHeight, 3, 1, Color.cyan, Statics.WORLD_WIDTH_LOGICAL-(landWidth*2));
+		main.addEntity(moving);
 
 		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 3, 2, 2);
 		main.addEntity(eol);

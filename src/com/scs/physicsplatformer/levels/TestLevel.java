@@ -1,5 +1,6 @@
 package com.scs.physicsplatformer.levels;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import org.jbox2d.common.Vec2;
@@ -25,19 +26,19 @@ public class TestLevel extends AbstractLevel {
 		
 		//Platforms
 		
-		Ground platform = new Ground(main, "platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f, 0.1f);
+		Ground platform = new Ground(main, "platform", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2, Statics.WORLD_WIDTH_LOGICAL/2, .3f, Color.white, 0.1f);
 		platform.body.setTransform(new Vec2(Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL/2), 0.06f);
 		main.addEntity(platform);
 		
 		Trampoline tramp = new Trampoline(main, world, Statics.WORLD_WIDTH_LOGICAL/4, Statics.WORLD_HEIGHT_LOGICAL-3, 2, .5f);
 		main.addEntity(tramp);
 
-		MovingPlatform moving = new MovingPlatform(main, world, Statics.WORLD_WIDTH_LOGICAL * .5f, Statics.WORLD_HEIGHT_LOGICAL*.8f, 3, 1);
+		MovingPlatform moving = new MovingPlatform(main, world, Statics.WORLD_WIDTH_LOGICAL * .5f, Statics.WORLD_HEIGHT_LOGICAL*.8f, 3, 1, Color.cyan, 5);
 		main.addEntity(moving);
 		
 		// Rope bridge
-		//RopeBridge rb = new RopeBridge(main, 10f, 20f, 20);
-		//main.addEntity(rb);
+		RopeBridge rb = new RopeBridge(main, 10f, 20f, 20);
+		main.addEntity(rb);
 		
 		/*Crate crate1 = new Crate(main, world, 10, 20, 1, 1, 1f);
 		main.addEntity(crate1);

@@ -27,13 +27,11 @@ public class Level6_Warehouse extends AbstractLevel {
 		// Crates
 		float sy = Statics.WORLD_HEIGHT_LOGICAL/4;
 		int CRATE_SIZE = 2;
-		for (int y=0 ; y<8 ; y++) {
+		for (int y=0 ; y<8 ; y++) { // Not too high or it covers exit
 			float sx = Statics.WORLD_WIDTH_LOGICAL/4;
 			for (int x=0 ; x<4 ; x++) {
-				//if (y <= x) {
-				Crate crate = new Crate(main, world, sx, sy, CRATE_SIZE, CRATE_SIZE, 1f);
+				Crate crate = new Crate(main, world, sx, sy, CRATE_SIZE, CRATE_SIZE, .1f);
 				main.addEntity(crate);
-				//}
 				sx += CRATE_SIZE+1;
 			}
 			sy += CRATE_SIZE+1;
@@ -47,7 +45,7 @@ public class Level6_Warehouse extends AbstractLevel {
 
 	@Override
 	public Point getPlayerStartPos() {
-		return new Point((int)(5), (int)(Statics.WORLD_HEIGHT_LOGICAL-(PlayersAvatar.RAD*2)));
+		return new Point((int)(5), (int)(Statics.WORLD_HEIGHT_LOGICAL-(PlayersAvatar.RAD*4)));
 	}
 
 

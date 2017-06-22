@@ -18,7 +18,7 @@ public class EndOfLevel extends PhysicalEntity implements IDrawable {
 	public EndOfLevel(Main main, World world, float x, float y, float w, float h) {
 		super(main, HarmfulBlock.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData("EndOfLevel", Color.pink, this, true);
+		BodyUserData bud = new BodyUserData("EndOfLevel", Color.green, this, true);
 		bud.endOfLevel = true;
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, 0f, 1f, 10f);
 		

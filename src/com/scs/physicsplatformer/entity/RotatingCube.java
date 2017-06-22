@@ -21,7 +21,7 @@ public class RotatingCube extends PhysicalEntity implements IDrawable {
 	public RotatingCube(Main main, World world, float x, float y, float w, float h) {
 		super(main, RotatingCube.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, true);
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.cyan, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, FRICTION, .1f);
 		
 		//body.applyTorque(100f);

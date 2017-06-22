@@ -24,7 +24,7 @@ public class Enemy extends PhysicalEntity implements IDrawable, IProcessable {
 	public Enemy(Main main, World world, float x, float y, float w, float h) {
 		super(main, Enemy.class.getSimpleName());
 		
-		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.red, this, false);
+		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.orange, this, false);
 		bud.harmsPlayer = true;
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.DYNAMIC, .1f, .2f, 1f);
 		//drawableBody = new DrawableBody(crate);

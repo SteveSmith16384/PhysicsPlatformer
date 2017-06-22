@@ -1,20 +1,19 @@
-http://www.iforce2d.net/b2dtut/jumpability
-http://www.badlogicgames.com/wordpress/?p=2017
-
+GAME IDEAS 
+LEVEL
+Moving platform
 
 URGENT
-Level2 - start flames lower, make red, make exit green
-Rope bridge
-Improve gfx
+Search for todos
+Show level num on screen
 Check levels are completable
-Player harmed if collision too hard
-Test grenades
-	Not exiting when window closed
-	More barrels in donkey kong
-Stop player sticking to walls
 
 
 TODO
+Use Rope bridge
+Use enemy
+Test grenades
+Stop player sticking to walls
+Player harmed if collision too hard
 Pivot on platforms
 Look at JBox2D examples
 Stop moving left/right in air when left/right not pressed
@@ -28,6 +27,9 @@ Aspects that need co-operation
 
 NOTES
 restitution = bounciness
+http://www.iforce2d.net/b2dtut/jumpability
+http://www.badlogicgames.com/wordpress/?p=2017
+
 
 
 

@@ -1,5 +1,7 @@
 package com.scs.physicsplatformer.entity;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +15,12 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.dynamics.joints.RopeJointDef;
 
+import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.entity.components.IDrawable;
+import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
-public class RopeBridge extends Entity {
+public class RopeBridge extends Entity implements IDrawable {
 	
 	private List<Body> bodies = new ArrayList<>();
 
@@ -26,13 +31,15 @@ public class RopeBridge extends Entity {
 	}
 
 
-	private static void addRopeShape(World world, float sx, float y, int segments) {
+	private void addRopeShape(World world, float sx, float y, int segments) {
+		BodyUserData bud = new BodyUserData("RopeBridge", Color.yellow, this, true);
+
 		PolygonShape ropeShape = new PolygonShape();
 		ropeShape.setAsBox(0.5f, 0.125f);
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = ropeShape;
-		fd.density = 20.0f;
+		fd.density = 2.0f;
 		fd.friction = 0.2f;
 		fd.filter.categoryBits = 0x0001;
 		fd.filter.maskBits = 0xFFFF & ~0x0002;
@@ -65,10 +72,12 @@ public class RopeBridge extends Entity {
 			}
 
 			Body body = world.createBody(bd);
-
+			body.setUserData(bud);
+			bodies.add(body);
+			
 			body.createFixture(fd);
 
-			Vec2 anchor = new Vec2(i, y);
+			Vec2 anchor = new Vec2(sx+i, y);
 			if (prevBody != null) {
 				jd.initialize(prevBody, body, anchor);
 				world.createJoint(jd);
@@ -87,6 +96,15 @@ public class RopeBridge extends Entity {
 	public void cleanup(World world) {
 		// TODO Auto-generated method stub
 
+	}
+
+
+	@Override
+	public void draw(Graphics g, DrawingSystem system, Vec2 cam_centre) {
+		for (Body body : bodies) {
+			system.drawShape(tmpPoint, g, body, cam_centre);
+		}
+		
 	}
 
 

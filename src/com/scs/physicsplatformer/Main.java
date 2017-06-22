@@ -35,8 +35,9 @@ import com.scs.physicsplatformer.input.DeviceThread;
 import com.scs.physicsplatformer.input.IInputDevice;
 import com.scs.physicsplatformer.input.NewControllerListener;
 import com.scs.physicsplatformer.levels.AbstractLevel;
+import com.scs.physicsplatformer.levels.TestLevel;
 
-public class Main implements ContactListener, NewControllerListener, KeyListener {//, WindowListener {
+public class Main implements ContactListener, NewControllerListener, KeyListener {
 
 	public World world;
 	private MainWindow window;
@@ -50,7 +51,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = 1;
+	private int levelNum = 6;
 	
 
 	public static void main(String[] args) {
@@ -180,7 +181,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 		world = new World(gravity);
 		world.setContactListener(this);
 
-		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// new TestLevel(this);// 
+		level = AbstractLevel.GetLevel(levelNum, this);//new Level3(this);// new TestLevel(this);//  
 		level.createWorld(world, this);
 		this.addEntity(level);
 

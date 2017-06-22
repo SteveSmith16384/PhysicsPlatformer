@@ -1,5 +1,6 @@
 package com.scs.physicsplatformer.levels;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
@@ -35,22 +36,22 @@ public class Level2 extends AbstractLevel {
 		playerStart= new Point((int)(landWidth/4), (int)(Statics.WORLD_HEIGHT_LOGICAL-landHeight-(PlayersAvatar.RAD*2)));
 		
 		// Left land
-		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
+		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.lightGray, 0.1f);
 		main.addEntity(platform);
 
 		// Right land
-		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, 0.1f);
+		platform = new Ground(main, "right ground", world, Statics.WORLD_WIDTH_LOGICAL-(landWidth/2), Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.lightGray, 0.1f);
 		main.addEntity(platform);
 		
 		// Harm
-		HarmfulBlock harm = new HarmfulBlock(main, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight*4), Statics.WORLD_WIDTH_LOGICAL-(landWidth*2)-1, landHeight/2);
+		HarmfulBlock harm = new HarmfulBlock(main, world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-landHeight, Statics.WORLD_WIDTH_LOGICAL-(landWidth*2)-1, landHeight/2);
 		main.addEntity(harm);
 		
 		
 		// Crates
 		int CRATE_SIZE = 2;
 		for (int i=0 ; i<7 ; i++) {
-			Crate crate = new Crate(main, world, landWidth-CRATE_SIZE,Statics.WORLD_HEIGHT_LOGICAL-landHeight-(i*(CRATE_SIZE+.5f)), CRATE_SIZE, CRATE_SIZE, 1f);
+			Crate crate = new Crate(main, world, landWidth-CRATE_SIZE,Statics.WORLD_HEIGHT_LOGICAL-landHeight-(i*(CRATE_SIZE+.5f)), CRATE_SIZE, CRATE_SIZE, .5f);
 			main.addEntity(crate);
 		}
 
