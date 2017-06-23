@@ -62,16 +62,16 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 		Color c = Color.lightGray;
 		
 		// Borders
-		Ground ground = new Ground(main, "ground", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL-1, Statics.WORLD_WIDTH_LOGICAL, 1, c, 0.1f);
+		Ground ground = new Ground(main, "ground", world, Statics.WORLD_WIDTH_LOGICAL/2, Statics.WORLD_HEIGHT_LOGICAL, Statics.WORLD_WIDTH_LOGICAL, 1, c, 0.1f);
 		main.addEntity(ground);
 
-		Ground leftWall = new Ground(main, "leftWall", world, .5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL, c, 0.1f);
+		Ground leftWall = new Ground(main, "leftWall", world, 0, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL, c, 0.1f);
 		main.addEntity(leftWall);
 
-		Ground rightWall = new Ground(main, "rightWall", world, Statics.WORLD_WIDTH_LOGICAL-.5f, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL, c, 0.1f);
+		Ground rightWall = new Ground(main, "rightWall", world, Statics.WORLD_WIDTH_LOGICAL, Statics.WORLD_HEIGHT_LOGICAL/2, 1, Statics.WORLD_HEIGHT_LOGICAL, c, 0.1f);
 		main.addEntity(rightWall);
 
-		Ground ceiling = new Ground(main, "ceiling", world, Statics.WORLD_WIDTH_LOGICAL/2, 1, Statics.WORLD_WIDTH_LOGICAL, 1, c, 0.1f);
+		Ground ceiling = new Ground(main, "ceiling", world, Statics.WORLD_WIDTH_LOGICAL/2, 0, Statics.WORLD_WIDTH_LOGICAL, 1, c, 0.1f);
 		main.addEntity(ceiling);
 
 

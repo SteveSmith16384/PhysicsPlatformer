@@ -51,7 +51,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = 6;
+	private int levelNum = 4;
 	
 
 	public static void main(String[] args) {
@@ -141,7 +141,8 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 			g.fillRect(0, 0, Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
 			
 			g.setColor(Color.white);
-			g.drawString("Press ESC to Restart", 20, 30);
+			g.drawString("Level " + this.levelNum, 20, 60);
+			g.drawString("Press ESC to Restart", 20, 80);
 
 			for (Entity e : this.entities) {
 				if (e instanceof IDrawable) {
@@ -453,42 +454,6 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	public void keyTyped(KeyEvent arg0) {
 
 	}
-/*
-	@Override
-	public void windowActivated(WindowEvent arg0) {
 
-	}
-
-	@Override
-	public void windowClosed(WindowEvent arg0) {
-	}
-
-	@Override
-	public void windowClosing(WindowEvent arg0) {
-		//this.dispose();
-
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent arg0) {
-
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent arg0) {
-
-	}
-
-	@Override
-	public void windowIconified(WindowEvent arg0) {
-
-	}
-
-	@Override
-	public void windowOpened(WindowEvent arg0) {
-
-	}
-
-*/
 }
 

@@ -39,8 +39,6 @@ public class HW_Rope extends JFrame implements ContactListener {
 	private static final int WALL_HEIGHT = 20;
 	private static final float BALL_RAD = 0.5f;
 
-	private static final Random rnd = new Random();
-
 	private BufferStrategy BS;
 	List<Body> objects = new ArrayList<Body>();
 	Body wall;

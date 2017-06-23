@@ -94,7 +94,9 @@ public class RopeBridge extends Entity implements IDrawable {
 
 	@Override
 	public void cleanup(World world) {
-		// TODO Auto-generated method stub
+		for (Body body : bodies) {
+			world.destroyBody(body);
+		}
 
 	}
 

@@ -36,7 +36,7 @@ public class MovingPlatform extends PhysicalEntity implements IDrawable, IProces
 		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), c, this, true);
 		body = JBox2DFunctions.AddRectangle(bud, world, x, y, w, h, BodyType.KINEMATIC, .1f, FRICTION, 1f);
 		
-		dir.x = 1;
+		dir.x = 2;
 	}
 
 

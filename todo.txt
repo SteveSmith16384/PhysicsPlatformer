@@ -1,11 +1,10 @@
-GAME IDEAS 
 LEVEL
-Moving platform
 
 URGENT
-Search for todos
-Show level num on screen
+Have two moving platforms
 Check levels are completable
+Search for todos
+	Show level num on screen
 
 
 TODO
@@ -15,22 +14,14 @@ Test grenades
 Stop player sticking to walls
 Player harmed if collision too hard
 Pivot on platforms
-Look at JBox2D examples
-Stop moving left/right in air when left/right not pressed
 Ladders
 Crates floating in water
-Wind
-Bridge that wobbles
 Aspects that need co-operation
-
 
 
 NOTES
 restitution = bounciness
 http://www.iforce2d.net/b2dtut/jumpability
 http://www.badlogicgames.com/wordpress/?p=2017
-
-
-
 
 

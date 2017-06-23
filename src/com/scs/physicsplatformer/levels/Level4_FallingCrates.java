@@ -18,8 +18,9 @@ import com.scs.physicsplatformer.entity.Ground;
  */
 public class Level4_FallingCrates extends AbstractLevel {
 
-	private static final int BARREL_INTERVAL = 5 * 1000;
+	private static final int BARREL_INTERVAL = 2 * 1000;
 
+	private Point playerStartPos;
 	private int nextBarrel = 0;
 
 	public Level4_FallingCrates(Main main) {
@@ -29,7 +30,7 @@ public class Level4_FallingCrates extends AbstractLevel {
 	
 	@Override
 	public Point getPlayerStartPos() {
-		return new Point(5, Statics.WORLD_HEIGHT_LOGICAL-5); // todo - move to below to avoid strrating in ground
+		return playerStartPos;
 
 	}
 
@@ -51,6 +52,8 @@ public class Level4_FallingCrates extends AbstractLevel {
 
 		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 3, 2, 2);
 		main.addEntity(eol);
+		
+		this.playerStartPos = new Point(5, (int)(Statics.WORLD_HEIGHT_LOGICAL-landHeight-2));
 
 	}
 
@@ -62,7 +65,7 @@ public class Level4_FallingCrates extends AbstractLevel {
 			float rad = Functions.rndFloat(.8f, 3f);
 			//Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/2, 3, rad, .5f);
 			//main.addEntity(barrel);
-			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.2f, Statics.WORLD_WIDTH_LOGICAL*.8f);
+			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.2f, Statics.WORLD_WIDTH_LOGICAL*.7f);
 			Crate crate = new Crate(main, main.world, x, 4, rad, rad, .5f);
 			main.addEntity(crate);
 

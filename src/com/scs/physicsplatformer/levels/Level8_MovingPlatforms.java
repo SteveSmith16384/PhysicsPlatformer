@@ -38,7 +38,7 @@ public class Level8_MovingPlatforms extends AbstractLevel {
 		main.addEntity(platform);
 
 		// Moving platform
-		MovingPlatform moving = new MovingPlatform(main, world, Statics.WORLD_WIDTH_LOGICAL * .5f, landHeight, 3, 1, Color.cyan, Statics.WORLD_WIDTH_LOGICAL-(landWidth*2));
+		MovingPlatform moving = new MovingPlatform(main, world, landWidth, Statics.WORLD_HEIGHT_LOGICAL-landHeight, 3, 1, Color.cyan, Statics.WORLD_WIDTH_LOGICAL-(landWidth*2));
 		main.addEntity(moving);
 
 		EndOfLevel eol = new EndOfLevel(main, world, Statics.WORLD_WIDTH_LOGICAL-3, 3, 2, 2);

@@ -46,7 +46,7 @@ public class TestLevel extends AbstractLevel {
 		main.addEntity(crate2);*/
 		
 /*		JBox2DFunctions.AddRopeShape(world, new BodyUserData("Rope", Color.yellow, null, true), crate1.drawableBody, crate2.drawableBody, 20f, 7, .1f, .2f, 1);
-		this.entities.add(crate2); - -todo make entity
+		this.entities.add(crate2);
 */
 
 		// Moving stuff
