@@ -51,7 +51,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = 4;
+	private int levelNum = 1;
 	
 
 	public static void main(String[] args) {
