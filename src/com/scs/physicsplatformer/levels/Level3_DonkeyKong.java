@@ -6,6 +6,8 @@ import java.awt.Point;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import ssmith.lang.Functions;
+
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.Main;
 import com.scs.physicsplatformer.Statics;
@@ -18,7 +20,7 @@ import com.scs.physicsplatformer.entity.Ground;
  */
 public class Level3_DonkeyKong extends AbstractLevel {
 
-	private static final int BARREL_INTERVAL = 5 * 1000;
+	private static final int BARREL_INTERVAL = 4 * 1000;
 
 	private int nextBarrel = 0;
 
@@ -66,7 +68,7 @@ public class Level3_DonkeyKong extends AbstractLevel {
 			bud.harmsPlayer = true;
 			main.addEntity(barrel);
 			
-			nextBarrel = BARREL_INTERVAL;
+			nextBarrel = Functions.rnd(1000, BARREL_INTERVAL);
 		}
 	}
 
