@@ -17,12 +17,12 @@ import org.jbox2d.particle.ParticleType;
 
 public class JBox2DFunctions {
 
-	public static Body AddCircle(BodyUserData name, World world, float centre_x, float centre_y, float rad, 
+	public static Body AddCircle(BodyUserData bud, World world, float centre_x, float centre_y, float rad, 
 			BodyType bodytype, float restitution, float friction, float weight_kgm2) {
 		BodyDef bd = new BodyDef();
 		bd.position.set(centre_x, centre_y);  
 		bd.type = bodytype; //BodyType.DYNAMIC;
-		bd.userData = name;
+		bd.userData = bud;
 
 		CircleShape cs = new CircleShape();
 		cs.m_radius = rad;  
@@ -32,10 +32,11 @@ public class JBox2DFunctions {
 		fd.density = weight_kgm2;
 		fd.friction = friction;//0.3f;
 		fd.restitution = restitution;//0.5f;
+		fd.setUserData(bud);
 
 		Body ball = world.createBody(bd);
 		ball.createFixture(fd);
-		ball.setUserData(name);
+		ball.setUserData(bud);
 
 		return ball;
 	}

@@ -15,6 +15,8 @@ import com.scs.physicsplatformer.entity.Barrel;
 import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
 
+import ssmith.lang.Functions;
+
 /*
  * Player must get to the top while avoiding rolling barrels
  */
@@ -62,8 +64,9 @@ public class Level3_DonkeyKong extends AbstractLevel {
 	@Override
 	public void preprocess(long interpol) {
 		this.nextBarrel -= interpol;
-		if (nextBarrel < 0) {		
-			Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/6, 3, .5f, 2f);
+		if (nextBarrel < 0) {
+			float rad = Functions.rndFloat(.5f, 1.5f);
+			Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/6, 3, rad, 2f);
 			BodyUserData bud = (BodyUserData)barrel.body.getUserData();
 			bud.harmsPlayer = true;
 			main.addEntity(barrel);

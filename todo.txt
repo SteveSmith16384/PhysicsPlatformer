@@ -1,10 +1,9 @@
 LEVEL
 
 URGENT
-Not stopping when window closed
 Use new DeviceListener
-	Make barrel interval random
-	change colour of barrels
+Create readme
+"Press jump to start"
 Check levels are completable
 Search for todos
 
