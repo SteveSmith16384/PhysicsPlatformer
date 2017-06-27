@@ -1,16 +1,16 @@
 LEVEL
 
 URGENT
-Make barrel interval random
-Not stopping when window closed
-change colour of barrekls
-Have two moving platforms
+Create readme
+"Press jump to start"
+	Make barrel interval random
 Check levels are completable
 Search for todos
 	Show level num on screen
 
 
 TODO
+Have two moving platforms
 Use Rope bridge
 Use enemy
 Test grenades
