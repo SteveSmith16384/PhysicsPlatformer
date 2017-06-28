@@ -29,7 +29,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 	public static final float RAD = 0.6f;
 	private static final float MAX_VELOCITY = 5;//7f;	
 
-	private IInputDevice input;
+	public IInputDevice input;
 	private boolean isOnGround = false;
 	private long lastJumpTime = 0;
 	private boolean jetpac = false;
@@ -108,7 +108,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 				//Statics.p("Not on ground");
 			}
 		}
-		if (input.isFirePressed()) {
+		if (input.isThrowPressed()) {
 			if (System.currentTimeMillis() > lastGrenadeTime + GRENADE_INT) {
 				Grenade grenade = new Grenade(main, this.body.getWorldCenter(), 1);
 				main.addEntity(grenade);

@@ -1,7 +1,9 @@
 package com.scs.physicsplatformer.input;
 
 import org.gamepad4j.ButtonID;
+import org.gamepad4j.DpadDirection;
 import org.gamepad4j.IController;
+import org.gamepad4j.IStick;
 import org.gamepad4j.StickID;
 import org.gamepad4j.StickPosition;
 
@@ -39,8 +41,17 @@ public final class PS4Controller implements IInputDevice {
 
 
 	@Override
-	public boolean isFirePressed() {
-		return gamepad.isButtonPressed(ButtonID.FACE_UP);
+	public boolean isUpPressed() {
+		StickPosition pos = gamepad.getStick(StickID.LEFT).getPosition();
+		return pos.getDirection() == DpadDirection.UP;
+	}
+
+
+	@Override
+	public boolean isDownPressed() {
+		StickPosition pos = gamepad.getStick(StickID.LEFT).getPosition();
+		//return pos.getDirection() == DpadDirection.DOWN;
+		return pos.getDegree() > 107 && pos.getDegree() < 252;
 	}
 
 
@@ -54,4 +65,29 @@ public final class PS4Controller implements IInputDevice {
 	}
 
 	
+	@Override
+	public int getAngle() {
+		IStick leftStick = gamepad.getStick(StickID.LEFT);
+		StickPosition pos = leftStick.getPosition();
+		return (int)pos.getDegree() -90; // 0=up, 90=right
+	}
+
+
+	@Override
+	public boolean isThrowPressed() {
+		return gamepad.isButtonPressed(ButtonID.FACE_RIGHT);
+	}
+
+
+	@Override
+	public int getID() {
+		return gamepad.getDeviceID();
+	}
+
+
+	@Override
+	public String toString() {
+		return "PS4Controller:" + getID();
+	}
+
 }

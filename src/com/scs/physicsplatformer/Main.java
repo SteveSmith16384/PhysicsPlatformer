@@ -44,6 +44,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 
 	private TSArrayList<Entity> entities;
 	private List<IInputDevice> newControllers = new ArrayList<>();
+	private List<IInputDevice> controllersToRemove = new ArrayList<>();
 	private List<Player> players = new ArrayList<>();
 
 	private DrawingSystem drawingSystem;
@@ -52,7 +53,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	private AbstractLevel level;
 	private boolean restartLevel = false;
 	private int levelNum = 3;
-	
+
 
 	public static void main(String[] args) {
 		new Main();
@@ -77,7 +78,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 
 			startLevel();
 			this.gameLoop();
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(window, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -90,12 +91,33 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 		final float timeStep = 1.0f / Statics.FPS;//10.f;
 		final int velocityIterations = 6;//8;//6;
 		final int positionIterations = 4;//3;//2;
-		
+
 		while (window.isVisible()) {
 			synchronized (newControllers) {
 				while (this.newControllers.isEmpty() == false) {
 					this.loadPlayer(this.newControllers.remove(0));
 					//this.entities.refresh(); // To add avatars to the main list
+				}
+			}
+
+			synchronized (this.controllersToRemove) {
+				while (this.controllersToRemove.isEmpty() == false) {
+					IInputDevice id = this.controllersToRemove.remove(0);
+					for (Player player : this.players) {
+						if (player.input == id) {
+							this.players.remove(player);
+							break;
+						}
+					}
+					for (Entity e : this.entities) {
+						if (e instanceof PlayersAvatar) {
+							PlayersAvatar av = (PlayersAvatar)e;
+							if (av.input == id) {
+								this.entities.remove(e);
+								break;
+							}
+						}
+					}
 				}
 			}
 
@@ -139,7 +161,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 			Graphics g = window.BS.getDrawGraphics();
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
-			
+
 			g.setColor(Color.white);
 			g.drawString("Level " + this.levelNum, 20, 60);
 			g.drawString("Press ESC to Restart", 20, 80);
@@ -221,20 +243,20 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 		//Statics.p("BeginContact BodyUserData B:" + bb_ud);
 
 		if (ba_ud != null && bb_ud != null) {
-		Entity entityA = ba_ud.entity;
-		Entity entityB = bb_ud.entity;
+			Entity entityA = ba_ud.entity;
+			Entity entityB = bb_ud.entity;
 
-		//Statics.p("BeginContact Entity A:" + entityA);
-		//Statics.p("BeginContact Entity B:" + entityB);
+			//Statics.p("BeginContact Entity A:" + entityA);
+			//Statics.p("BeginContact Entity B:" + entityB);
 
-		if (entityA instanceof ICollideable) {
-			ICollideable ic = (ICollideable) entityA;
-			ic.collided(contact, true);
-		} else if (entityB instanceof ICollideable) {
-			ICollideable ic = (ICollideable) entityB;
-			ic.collided(contact, false);
-		}
-		
+			if (entityA instanceof ICollideable) {
+				ICollideable ic = (ICollideable) entityA;
+				ic.collided(contact, true);
+			} else if (entityB instanceof ICollideable) {
+				ICollideable ic = (ICollideable) entityB;
+				ic.collided(contact, false);
+			}
+
 		}
 		//Collisions.Collision(entityA, entityB);
 
@@ -306,71 +328,7 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 	}
 
 
-	/*
-	private void ropeAllDown() {
-		if (new_joints_waiting.size() == 0) {
-			if (this.ropelist == null) {
-				rope_length = Statics.MAX_ROPE_LENGTH;
-				this.createRope();
-			}
-		}
-	}
 
-	private void ropeAllUp() {
-		if (new_joints_waiting.size() == 0) {
-			if (this.ropelist != null) {
-				this.removeRope();
-			}
-		}
-	}
-
-	private void ropeSegmentDown() {
-		if (new_joints_waiting.size() == 0) {
-			if (rope_length < 8) {
-				rope_length++;
-				this.removeRope();
-				this.createRope();
-			}
-		}
-	}
-
-
-	private void ropeSegmentUp() {
-		if (new_joints_waiting.size() == 0) {
-			if (rope_length > 0) {
-				rope_length--;
-				this.removeRope();
-				if (rope_length > 0) {
-					this.createRope();
-				}
-			}
-		}
-	}
-
-
-	private void createRope() {
-		ropelist = JBox2DFunctions.AddRopeShape(new MyUserData("Rope", MyUserData.Type.Rope, Color.yellow),
-				new MyUserData("Rope_End", MyUserData.Type.StickyRope, Color.yellow),
-				world, this, chopper, rope_length, rope_length);
-
-	}
-
-
-	private void removeRope() {
-		if (ropelist != null) {
-			for (RevoluteJointDef rjd : ropelist) {
-				if (rjd.bodyA != chopper) {
-					remove(rjd.bodyA);
-				}
-				if (rjd.bodyB != chopper) {
-					remove(rjd.bodyB);
-				}
-			}
-			ropelist = null;
-		}
-	}
-
-	 */
 	public void removeEntity(Entity b) {
 		b.cleanup(world);
 		/*if (b instanceof PhysicalEntity) {
@@ -452,6 +410,13 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
+
+	}
+
+
+	@Override
+	public void controllerRemoved(IInputDevice input) {
+		// TODO Auto-generated method stub
 
 	}
 
