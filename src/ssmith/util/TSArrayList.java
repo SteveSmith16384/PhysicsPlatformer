@@ -1,8 +1,9 @@
 package ssmith.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TSArrayList<E> extends ArrayList<E> {
+public class TSArrayList<E> extends ArrayList<E> implements List<E> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,5 +45,23 @@ public class TSArrayList<E> extends ArrayList<E> {
 			this.to_remove.add(e);
 		}
 	}
+	
+	
+	@Override
+	public int size() {
+		this.refresh();
+		return super.size();// + this.to_add.size() - this.to_remove.size();
+	}
 
+
+	@Override
+	public boolean isEmpty() {
+		return size() <= 0;
+	}
+	
+	
+	@Override
+	public boolean contains(Object o) {
+		return super.contains(o) || this.to_add.contains(o);
+	}
 }
