@@ -1,7 +1,8 @@
 LEVEL
 
 URGENT
-Use new DeviceListener
+Remove avatar when controller removed
+	Use new DeviceListener
 Create readme
 "Press jump to start"
 Check levels are completable
