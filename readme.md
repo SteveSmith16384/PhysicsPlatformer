@@ -19,13 +19,21 @@ OBJECTIVE
 Get your avatar to the green "exit" box to complete a level.  Press Esc to restart a level.
 
 
+FEATURES!
+* Realistic physics using JBox2D
+* Any number of players, using keyboard or gamepads
+* Runs on any PC regardless of graphics card
+* Code uses an entity system
+* Source code "just works"
+
+
 LICENCE
-All assets and code are licenced under MIT.
+All assets and code are licenced under MIT.  Source code is available from https://bitbucket.org/SteveSmith16384/physicsplatformer
 
 
 CREDITS
 Gamepad Code thanks to Marcel Schoen (https://github.com/marcelschoen/gamepad4j)
-
+Uses JBox2D
 
 Thanks for playing!
 

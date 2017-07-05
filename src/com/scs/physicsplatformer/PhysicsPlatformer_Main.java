@@ -35,9 +35,8 @@ import com.scs.physicsplatformer.input.DeviceThread;
 import com.scs.physicsplatformer.input.IInputDevice;
 import com.scs.physicsplatformer.input.NewControllerListener;
 import com.scs.physicsplatformer.levels.AbstractLevel;
-import com.scs.physicsplatformer.levels.TestLevel;
 
-public class Main implements ContactListener, NewControllerListener, KeyListener {
+public class PhysicsPlatformer_Main implements ContactListener, NewControllerListener, KeyListener {
 
 	public World world;
 	private MainWindow window;
@@ -56,11 +55,11 @@ public class Main implements ContactListener, NewControllerListener, KeyListener
 
 
 	public static void main(String[] args) {
-		new Main();
+		new PhysicsPlatformer_Main();
 	}
 
 
-	public Main() {
+	public PhysicsPlatformer_Main() {
 		super();
 
 		window = new MainWindow(this);

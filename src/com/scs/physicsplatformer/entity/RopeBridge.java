@@ -16,7 +16,7 @@ import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.dynamics.joints.RopeJointDef;
 
 import com.scs.physicsplatformer.BodyUserData;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
@@ -24,7 +24,7 @@ public class RopeBridge extends Entity implements IDrawable {
 	
 	private List<Body> bodies = new ArrayList<>();
 
-	public RopeBridge(Main _main, float x, float y, int segments) {
+	public RopeBridge(PhysicsPlatformer_Main _main, float x, float y, int segments) {
 		super(_main, "RopeBridge");
 		
 		addRopeShape(main.world, x, y, segments);

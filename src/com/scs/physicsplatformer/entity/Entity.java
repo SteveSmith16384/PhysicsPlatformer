@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
 
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 
 public abstract class Entity { 
 	
@@ -12,10 +12,10 @@ public abstract class Entity {
 	private static int next_id = 0;
 	public Point tmpPoint = new Point();
 
-	protected Main main;
+	protected PhysicsPlatformer_Main main;
 	public String name;
 	
-	public Entity(Main _main, String _name) {
+	public Entity(PhysicsPlatformer_Main _main, String _name) {
 		super();
 		
 		main = _main;

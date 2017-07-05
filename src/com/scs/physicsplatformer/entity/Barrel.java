@@ -9,13 +9,13 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class Barrel extends PhysicalEntity implements IDrawable {
 
-	public Barrel(Main main, World world, float x, float y, float rad, float weight) {
+	public Barrel(PhysicsPlatformer_Main main, World world, float x, float y, float rad, float weight) {
 		super(main, "Barrel");
 		
 		BodyUserData bud = new BodyUserData("Barrel", Color.red, this, true);

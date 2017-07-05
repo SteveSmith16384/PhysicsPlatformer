@@ -14,7 +14,7 @@ import org.jbox2d.dynamics.contacts.ContactEdge;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.components.ICollideable;
 import com.scs.physicsplatformer.entity.components.IDrawable;
@@ -37,7 +37,7 @@ public class PlayersAvatar extends PhysicalEntity implements IPlayerControllable
 	private BufferedImage imgl, imgr, img;
 	private long lastGrenadeTime;
 
-	public PlayersAvatar(IInputDevice _input, Main main, World world, float x, float y) {
+	public PlayersAvatar(IInputDevice _input, PhysicsPlatformer_Main main, World world, float x, float y) {
 		super(main, PlayersAvatar.class.getSimpleName());
 
 		input = _input;

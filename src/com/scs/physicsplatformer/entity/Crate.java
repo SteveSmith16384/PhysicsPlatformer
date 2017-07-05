@@ -9,13 +9,13 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class Crate extends PhysicalEntity implements IDrawable {
 
-	public Crate(Main main, World world, float x, float y, float w, float h, float weight) {
+	public Crate(PhysicsPlatformer_Main main, World world, float x, float y, float w, float h, float weight) {
 		super(main, Crate.class.getSimpleName());
 		
 		BodyUserData bud = new BodyUserData("Crate", Color.cyan, this, true);

@@ -11,7 +11,7 @@ import ssmith.util.Interval;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
@@ -21,7 +21,7 @@ public class Enemy extends PhysicalEntity implements IDrawable, IProcessable {
 
 	private Interval interval = new Interval(1000);
 	
-	public Enemy(Main main, World world, float x, float y, float w, float h) {
+	public Enemy(PhysicsPlatformer_Main main, World world, float x, float y, float w, float h) {
 		super(main, Enemy.class.getSimpleName());
 		
 		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.orange, this, false);

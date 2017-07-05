@@ -9,13 +9,13 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
 public class HarmfulBlock extends PhysicalEntity implements IDrawable {
 
-	public HarmfulBlock(Main main, World world, float x, float y, float w, float h) {
+	public HarmfulBlock(PhysicsPlatformer_Main main, World world, float x, float y, float w, float h) {
 		super(main, HarmfulBlock.class.getSimpleName());
 		
 		BodyUserData bud = new BodyUserData("HarmfulBlock", Color.red, this, true);

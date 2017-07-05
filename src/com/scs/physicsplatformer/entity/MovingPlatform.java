@@ -11,7 +11,7 @@ import ssmith.util.Interval;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
@@ -28,7 +28,7 @@ public class MovingPlatform extends PhysicalEntity implements IDrawable, IProces
 	private Vec2 dir = new Vec2();
 	private float dist = 0;
 	
-	public MovingPlatform(Main main, World world, float x, float y, float w, float h, Color c, float maxDist_) {
+	public MovingPlatform(PhysicsPlatformer_Main main, World world, float x, float y, float w, float h, Color c, float maxDist_) {
 		super(main, MovingPlatform.class.getSimpleName());
 		
 		maxDist = maxDist_;

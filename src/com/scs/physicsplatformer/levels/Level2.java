@@ -5,7 +5,7 @@ import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
 
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Crate;
 import com.scs.physicsplatformer.entity.EndOfLevel;
@@ -21,13 +21,13 @@ public class Level2 extends AbstractLevel {
 
 	private Point playerStart;
 	
-	public Level2(Main main) {
+	public Level2(PhysicsPlatformer_Main main) {
 		super(main);
 	}
 
 	
 	@Override
-	public void createWorld(World world, Main main) {
+	public void createWorld(World world, PhysicsPlatformer_Main main) {
 		super.addFrame(world, main);
 		
 		float landWidth = Statics.WORLD_WIDTH_LOGICAL/3;

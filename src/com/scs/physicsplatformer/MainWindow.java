@@ -8,7 +8,7 @@ public class MainWindow extends JFrame {
 
 	public BufferStrategy BS;
 
-	public MainWindow(Main main) {
+	public MainWindow(PhysicsPlatformer_Main main) {
 		this.setSize(Statics.WINDOW_WIDTH, Statics.WINDOW_HEIGHT);
 		this.setVisible(true);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

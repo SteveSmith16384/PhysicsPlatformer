@@ -5,7 +5,7 @@ import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
 
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Entity;
 import com.scs.physicsplatformer.entity.Ground;
@@ -13,7 +13,7 @@ import com.scs.physicsplatformer.entity.components.IProcessable;
 
 public abstract class AbstractLevel extends Entity implements IProcessable {
 
-	public static AbstractLevel GetLevel(int id, Main main) {
+	public static AbstractLevel GetLevel(int id, PhysicsPlatformer_Main main) {
 		switch (id) {
 		case 1:
 			return new Level1(main);
@@ -37,14 +37,14 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 	}
 
 
-	public AbstractLevel(Main main) {
+	public AbstractLevel(PhysicsPlatformer_Main main) {
 		super(main, "level");
 	}
 
 
 	public abstract Point getPlayerStartPos();
 
-	public abstract void createWorld(World world, Main main);
+	public abstract void createWorld(World world, PhysicsPlatformer_Main main);
 
 	@Override
 	public void preprocess(long interpol) {
@@ -58,7 +58,7 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 	}
 
 
-	protected void addFrame(World world, Main main) {
+	protected void addFrame(World world, PhysicsPlatformer_Main main) {
 		Color c = Color.lightGray;
 		
 		// Borders

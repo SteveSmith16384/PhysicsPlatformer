@@ -8,7 +8,7 @@ import org.jbox2d.dynamics.BodyType;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
@@ -18,7 +18,7 @@ public class Grenade extends PhysicalEntity implements IDrawable, IProcessable {
 	
 	private long explode = 3000;
 
-	public Grenade(Main main, Vec2 pos, int dir) {
+	public Grenade(PhysicsPlatformer_Main main, Vec2 pos, int dir) {
 		super(main, PlayersAvatar.class.getSimpleName());
 
 		BodyUserData bud = new BodyUserData("Grenade", Color.yellow, this, false);

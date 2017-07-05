@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
@@ -27,7 +27,7 @@ public class Ground extends PhysicalEntity implements IDrawable {
 	}*/
 
 	
-	public Ground(Main main, String name, World world, float cx, float cy, float w, float h, Color c, float bounciness) {
+	public Ground(PhysicsPlatformer_Main main, String name, World world, float cx, float cy, float w, float h, Color c, float bounciness) {
 		super(main, name);
 		
 		BodyUserData bud = new BodyUserData("Ground", c, this, true);

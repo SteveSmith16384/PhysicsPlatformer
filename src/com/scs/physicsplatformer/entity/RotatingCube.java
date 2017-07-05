@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.World;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.systems.DrawingSystem;
 
@@ -18,7 +18,7 @@ public class RotatingCube extends PhysicalEntity implements IDrawable {
 	private static final float FRICTION = .1f;
 	
 
-	public RotatingCube(Main main, World world, float x, float y, float w, float h) {
+	public RotatingCube(PhysicsPlatformer_Main main, World world, float x, float y, float w, float h) {
 		super(main, RotatingCube.class.getSimpleName());
 		
 		BodyUserData bud = new BodyUserData(this.getClass().getSimpleName(), Color.cyan, this, true);

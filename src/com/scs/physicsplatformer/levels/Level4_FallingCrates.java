@@ -7,7 +7,7 @@ import org.jbox2d.dynamics.World;
 
 import ssmith.lang.Functions;
 
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Crate;
 import com.scs.physicsplatformer.entity.EndOfLevel;
@@ -23,7 +23,7 @@ public class Level4_FallingCrates extends AbstractLevel {
 	private Point playerStartPos;
 	private int nextBarrel = 0;
 
-	public Level4_FallingCrates(Main main) {
+	public Level4_FallingCrates(PhysicsPlatformer_Main main) {
 		super(main);
 	}
 
@@ -36,7 +36,7 @@ public class Level4_FallingCrates extends AbstractLevel {
 
 	
 	@Override
-	public void createWorld(World world, Main main) {
+	public void createWorld(World world, PhysicsPlatformer_Main main) {
 		super.addFrame(world, main);
 
 		float landWidth = Statics.WORLD_WIDTH_LOGICAL/3;

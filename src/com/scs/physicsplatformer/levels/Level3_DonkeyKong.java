@@ -9,13 +9,11 @@ import org.jbox2d.dynamics.World;
 import ssmith.lang.Functions;
 
 import com.scs.physicsplatformer.BodyUserData;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Barrel;
 import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
-
-import ssmith.lang.Functions;
 
 /*
  * Player must get to the top while avoiding rolling barrels
@@ -26,7 +24,7 @@ public class Level3_DonkeyKong extends AbstractLevel {
 
 	private int nextBarrel = 0;
 
-	public Level3_DonkeyKong(Main main) {
+	public Level3_DonkeyKong(PhysicsPlatformer_Main main) {
 		super(main);
 	}
 
@@ -37,7 +35,7 @@ public class Level3_DonkeyKong extends AbstractLevel {
 	}
 
 	@Override
-	public void createWorld(World world, Main main) {
+	public void createWorld(World world, PhysicsPlatformer_Main main) {
 		super.addFrame(world, main);
 
 		// Platforms

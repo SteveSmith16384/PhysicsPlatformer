@@ -6,7 +6,7 @@ import java.awt.Point;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Ground;
 import com.scs.physicsplatformer.entity.HarmfulBlock;
@@ -16,12 +16,12 @@ import com.scs.physicsplatformer.entity.Trampoline;
 
 public class TestLevel extends AbstractLevel {
 
-	public TestLevel(Main main) {
+	public TestLevel(PhysicsPlatformer_Main main) {
 		super(main);
 	}
 
 
-	public void createWorld(World world, Main main) {
+	public void createWorld(World world, PhysicsPlatformer_Main main) {
 		super.addFrame(world, main);
 		
 		//Platforms

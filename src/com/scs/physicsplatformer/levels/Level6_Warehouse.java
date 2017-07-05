@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import org.jbox2d.dynamics.World;
 
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Crate;
 import com.scs.physicsplatformer.entity.EndOfLevel;
@@ -15,13 +15,13 @@ import com.scs.physicsplatformer.entity.PlayersAvatar;
  */
 public class Level6_Warehouse extends AbstractLevel {
 
-	public Level6_Warehouse(Main main) {
+	public Level6_Warehouse(PhysicsPlatformer_Main main) {
 		super(main);
 	}
 	
 
 	@Override
-	public void createWorld(World world, Main main) {
+	public void createWorld(World world, PhysicsPlatformer_Main main) {
 		super.addFrame(world, main);
 
 		// Crates

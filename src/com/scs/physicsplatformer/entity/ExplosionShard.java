@@ -10,7 +10,7 @@ import ssmith.lang.Functions;
 
 import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.JBox2DFunctions;
-import com.scs.physicsplatformer.Main;
+import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.components.IDrawable;
 import com.scs.physicsplatformer.entity.components.IProcessable;
@@ -20,7 +20,7 @@ public class ExplosionShard extends PhysicalEntity implements IDrawable, IProces
 
 	private long removeTime = 3000;
 
-	public ExplosionShard(Main main, Vec2 pos) {
+	public ExplosionShard(PhysicsPlatformer_Main main, Vec2 pos) {
 		super(main, ExplosionShard.class.getSimpleName());
 
 		BodyUserData bud = new BodyUserData("ExplosionShard", Color.red, this, false);
