@@ -1,5 +1,7 @@
 # PHYSICS PLATFORMER
 
+[Download jar here](https://github.com/SteveSmith16384/PhysicsPlatformer/blob/master/PhysicsPlatformer.jar)
+
 ![ss1.png](https://bytebucket.org/SteveSmith16384/physicsplatformer/raw/6aa4faa897fc18e7bc4e7492b59f44a05b606ad3/docs/screenshots/ss2_20170624.png?token=371a0c3653d879c827b4d4810e81b43b21fc653b)
 
 by Stephen Carlyle-Smith (https://twitter.com/stephencsmith)
