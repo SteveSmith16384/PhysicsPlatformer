@@ -8,11 +8,10 @@ import ssmith.awt.ImageCache;
 
 public class Statics {
 
-	public static final boolean DEBUG = false;
+	public static final boolean RELEASE_MODE = true;
 	
 	public static final float PLAYER_MOVE_FORCE = .5f; // 5f;//.2f; // 100f;
 	public static final float PLAYER_JUMP_FORCE = 8f;//.2f; // 100f;
-	
 	public static final int FPS = 30;
 	public static final int LOGICAL_TO_PIXELS = 20;
 	public static final int MAX_ROPE_LENGTH = 8;

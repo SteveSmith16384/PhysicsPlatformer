@@ -33,7 +33,7 @@ public class Level2 extends AbstractLevel {
 		float landWidth = Statics.WORLD_WIDTH_LOGICAL/3;
 		float landHeight = Statics.WORLD_WIDTH_LOGICAL/10;
 
-		playerStart= new Point((int)(landWidth/4), (int)(Statics.WORLD_HEIGHT_LOGICAL-landHeight-(PlayersAvatar.RAD*2)));
+		playerStart = new Point((int)(landWidth/4), (int)(Statics.WORLD_HEIGHT_LOGICAL-landHeight-(PlayersAvatar.RAD*2)));
 		
 		// Left land
 		Ground platform = new Ground(main, "left ground", world, landWidth/2, Statics.WORLD_HEIGHT_LOGICAL-(landHeight/2), landWidth, landHeight, Color.lightGray, 0.1f);

@@ -14,7 +14,7 @@ import com.scs.physicsplatformer.entity.PlayersAvatar;
 
 /*
  * Player must jump across chasm using a precarious pile of crates. 
- *
+ * 5/11/2019 - This level seems impossible?
  */
 public class Level1 extends AbstractLevel {
 

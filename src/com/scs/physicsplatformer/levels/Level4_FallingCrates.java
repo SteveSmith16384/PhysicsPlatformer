@@ -63,8 +63,6 @@ public class Level4_FallingCrates extends AbstractLevel {
 		this.nextBarrel -= interpol;
 		if (nextBarrel < 0) {		
 			float rad = Functions.rndFloat(.8f, 3f);
-			//Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/2, 3, rad, .5f);
-			//main.addEntity(barrel);
 			float x = Functions.rndFloat(Statics.WORLD_WIDTH_LOGICAL*.2f, Statics.WORLD_WIDTH_LOGICAL*.7f);
 			Crate crate = new Crate(main, main.world, x, 4, rad, rad, .5f);
 			main.addEntity(crate);

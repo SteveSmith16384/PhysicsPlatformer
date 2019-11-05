@@ -32,7 +32,10 @@ public abstract class AbstractLevel extends Entity implements IProcessable {
 		case 8:
 			return new Level8_MovingPlatforms(main);
 		default:
-			throw new RuntimeException("No such level: " + id);
+			while (id > 8) {
+				id -= 7; // Loop around
+			}
+			return GetLevel(id, main);
 		}
 	}
 

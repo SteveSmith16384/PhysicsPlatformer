@@ -6,21 +6,20 @@ import java.awt.Point;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import ssmith.lang.Functions;
-
-import com.scs.physicsplatformer.BodyUserData;
 import com.scs.physicsplatformer.PhysicsPlatformer_Main;
 import com.scs.physicsplatformer.Statics;
 import com.scs.physicsplatformer.entity.Barrel;
 import com.scs.physicsplatformer.entity.EndOfLevel;
 import com.scs.physicsplatformer.entity.Ground;
 
+import ssmith.lang.Functions;
+
 /*
  * Player must get to the top while avoiding rolling barrels
  */
 public class Level3_DonkeyKong extends AbstractLevel {
 
-	private static final int BARREL_INTERVAL = 4 * 1000;
+	private static final int BARREL_INTERVAL = 10 * 1000;
 
 	private int nextBarrel = 0;
 
@@ -65,8 +64,6 @@ public class Level3_DonkeyKong extends AbstractLevel {
 		if (nextBarrel < 0) {
 			float rad = Functions.rndFloat(.5f, 1.5f);
 			Barrel barrel = new Barrel(main, main.world, Statics.WORLD_WIDTH_LOGICAL/6, 3, rad, 2f);
-			BodyUserData bud = (BodyUserData)barrel.body.getUserData();
-			bud.harmsPlayer = true;
 			main.addEntity(barrel);
 			
 			nextBarrel = Functions.rnd(1000, BARREL_INTERVAL);

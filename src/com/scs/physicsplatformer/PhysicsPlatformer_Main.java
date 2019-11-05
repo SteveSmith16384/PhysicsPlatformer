@@ -51,7 +51,7 @@ public class PhysicsPlatformer_Main implements ContactListener, NewControllerLis
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = 1;
+	private int levelNum = Statics.RELEASE_MODE ? 2 : 4; // Level 1 is too hard
 
 
 	public static void main(String[] args) {
@@ -90,8 +90,10 @@ public class PhysicsPlatformer_Main implements ContactListener, NewControllerLis
 		final float timeStep = 1.0f / Statics.FPS;//10.f;
 		final int velocityIterations = 6;//8;//6;
 		final int positionIterations = 4;//3;//2;
-
+		
 		while (window.isVisible()) {
+			long start = System.currentTimeMillis();
+
 			synchronized (newControllers) {
 				while (this.newControllers.isEmpty() == false) {
 					this.loadPlayer(this.newControllers.remove(0));
@@ -163,7 +165,8 @@ public class PhysicsPlatformer_Main implements ContactListener, NewControllerLis
 
 			g.setColor(Color.white);
 			g.drawString("Level " + this.levelNum, 20, 60);
-			g.drawString("Press ESC to Restart", 20, 80);
+			g.drawString("Press Fire to join game", 20, 80);
+			g.drawString("Press ESC to Restart", 20, 100);
 
 			for (Entity e : this.entities) {
 				if (e instanceof IDrawable) {
@@ -185,9 +188,13 @@ public class PhysicsPlatformer_Main implements ContactListener, NewControllerLis
 
 			window.BS.show();
 
+			long end = System.currentTimeMillis();
+			long diff = end-start;
 			try {
-				interpol = 1000/Statics.FPS;
-				Thread.sleep(interpol); // todo - calc start-end diff
+				interpol = (1000/Statics.FPS) - diff;
+				if (interpol > 0) {
+					Thread.sleep(interpol);
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -380,7 +387,7 @@ public class PhysicsPlatformer_Main implements ContactListener, NewControllerLis
 
 	public void addEntity(Entity o) {
 		synchronized (entities) {
-			if (Statics.DEBUG) {
+			if (!Statics.RELEASE_MODE) {
 				if (this.entities.contains(o)) {
 					throw new RuntimeException(o + " has already been added");
 				}

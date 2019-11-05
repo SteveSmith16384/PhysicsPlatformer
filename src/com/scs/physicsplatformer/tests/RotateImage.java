@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 
 public class RotateImage extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private BufferStrategy BS;
 
 	public static void main(String[] args) {

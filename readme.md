@@ -10,13 +10,13 @@ by Stephen Carlyle-Smith (https://twitter.com/stephencsmith)
 ### CONTROLS
 Keyboard 1 - Arrow keys and Ctrl
 Keyboard 2 - W, A, S, D and Space
-Gamepads - Left joystick and X to jump
+Gamepads - Left joystick and X to jump (on a PS4 controller anyways)
 
-Press fire to join the game!  This game can handle as many players as you have control methods for.
+Hold down fire to join the game!  This game can handle as many players as you have control methods for.
 
 
 ### OBJECTIVE
-Get your avatar to the green "exit" box to complete a level.  Press Esc to restart a level.
+Get your avatar to the green "exit" box to complete a level.  Red entities are normally fatal.  Press Esc to restart a level.  The players can also throw grenades, which affect the physics but otherwise cause no harm.
 
 
 ### FEATURES!
@@ -28,12 +28,12 @@ Get your avatar to the green "exit" box to complete a level.  Press Esc to resta
 
 
 ### LICENCE
-All assets and code are licenced under MIT.  Source code is available from https://bitbucket.org/SteveSmith16384/physicsplatformer
+All assets and code are licenced under MIT.  Source code is available from https://github.com/SteveSmith16384/PhysicsPlatformer
 
 
 ### CREDITS
 Gamepad Code thanks to Marcel Schoen (https://github.com/marcelschoen/gamepad4j)
-Uses JBox2D
+Uses JBox2D (www.jbox2d.org)
 
 Thanks for playing!
 
