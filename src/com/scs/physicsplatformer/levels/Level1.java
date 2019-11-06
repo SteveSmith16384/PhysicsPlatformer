@@ -13,8 +13,8 @@ import com.scs.physicsplatformer.entity.Ground;
 import com.scs.physicsplatformer.entity.PlayersAvatar;
 
 /*
- * Player must jump across chasm using a precarious pile of crates. 
- * 5/11/2019 - This level seems impossible?
+ * Player must jump across chasm using a precarious pile of crates.
+ * Use the grenade to complete this level by launching the player 
  */
 public class Level1 extends AbstractLevel {
 
@@ -44,9 +44,9 @@ public class Level1 extends AbstractLevel {
 		
 		
 		// Crates
-		float CRATE_SIZE = 2.5f;
-		for (int i=0 ; i<16 ; i++) {
-			Crate crate = new Crate(main, world, Statics.WORLD_WIDTH_LOGICAL/2, i*(CRATE_SIZE+1), CRATE_SIZE, CRATE_SIZE, .5f);
+		float CRATE_SIZE = 2;//2.5f;
+		for (int i=0 ; i<45 ; i++) {
+			Crate crate = new Crate(main, world, Statics.WORLD_WIDTH_LOGICAL/2, i*(CRATE_SIZE+.2f), CRATE_SIZE, CRATE_SIZE, .5f);
 			main.addEntity(crate);
 		}
 		

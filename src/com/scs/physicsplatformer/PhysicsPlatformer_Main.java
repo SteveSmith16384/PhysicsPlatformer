@@ -51,7 +51,7 @@ public class PhysicsPlatformer_Main implements ContactListener, NewControllerLis
 	private List<Contact> collisions = new LinkedList<>();
 	private AbstractLevel level;
 	private boolean restartLevel = false;
-	private int levelNum = Statics.RELEASE_MODE ? 2 : 4; // Level 1 is too hard
+	private int levelNum = Statics.RELEASE_MODE ? 1 : 1;
 
 
 	public static void main(String[] args) {
